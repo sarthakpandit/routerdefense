@@ -9,3 +9,8 @@ Router Defense audit Cisco network devices and advices some security best practi
 Bugs and feature requests are welcome! :)
 
 Have fun
+
+= Contact =
+
+http://www.packetfault.org (for the old IPv4 continent users)
+http://www6.packetfault.org (for the hype guys and gals)
