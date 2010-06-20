@@ -1,0 +1,11 @@
+#summary Cisco IOS configuration security assessment tool
+
+= Introduction =
+
+Router Defense audit Cisco network devices and advices some security best practices.
+
+= Details =
+
+Bugs and feature requests are welcome! :)
+
+Have fun
