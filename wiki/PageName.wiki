@@ -6,12 +6,9 @@ Router Defense audit Cisco network devices and advices some security best practi
 
 = Details =
 
-I'm currently implementing features that I think is mandatory so the first release will not be public disclosed until those are ready.
+The tool will be officially released at the BRUCON 2010 security conference.
 
 Bugs and feature requests are welcome! :)
-Open to willing beta-testers...
-
-Have fun
 
 = Contact =
 
