@@ -6,7 +6,9 @@ Router Defense audit Cisco network devices and advices some security best practi
 
 = Details =
 
-The tool will be officially released at the BRUCON 2010 security conference.
+The tool will be officially released after the BRUCON 2010 security conference.
+The development is actually frozen until his official release.
+Version 0.2 actually include 138 tests.
 
 Bugs and feature requests are welcome! :)
 
