@@ -1,0 +1,51 @@
+ToDo
+===========
+
+- aux to aux protection (http://www.phiral.net/cisco.htm)
+- enhance ipv6 support
+- jquery button to dynamically remove specific entry in html report
+- enhance pdf output
+- enhance cvss scoring
+- enhance xml entries descriptions
+- enhance ios versioning support
+- improve overall speed
+- ACL tcp flags
+- MPLS LDP: lossless MD5 session auth, MD5 global configuration, label filtering
+- IS-IS authenticaiton
+- QoS
+- fix all analyzor.py return values
+- Use of all template.conf variables
+
+Summary of changes from v0.1 to v0.2
+============================================
+
+<clucas@altern.org>
+	[common.py] readCfg fix
+		- Perl Net::Cisco put extra-space in front of each IOS configuratio                  n lines.
+	[analyzor.py] analyzorSyslog
+		- logging trap level not converted in integer.
+
+<fropert@packetfault.org>
+	[all] TCLSH usage detection glad to EEM
+		- TCL shell script abuse
+	[report.py] Reporting source code split
+		- reportpdf.py
+		- reportcsv.py
+	[all] project renaming to RouterDefense
+		- IOS is a Cisco Systems trademark and 'IOS checker' is already 		  used by another open-source project
+	[all] IPSEC Support
+		- IPSEC plane security
+	[all] IKE resources exhaustion prevention
+		- IKE SA Call Admisssion Control
+		- IKE system resources Call Admisssion Control
+	[all] IPv6 Type 0 Routing Headers
+		- Coutermeasures have been implemented (except CoPP handling)
+	[main.py/metrics.py] Add IPv4 and IPv6 and support
+		- Each IPv4 ACL is registered in a table
+		- Each IPv6 ACL is registered in a table
+	[common.py] performance issue
+		- Replace readlines() by 'for' 'in'
+	[common.py] searchString
+		- Add lower() to stringLookup (fix uppercase at interface name b		  eginning)
+	[analyzor.py/metrics.py] IPv6 vty access-class
+		- Add the IPv6 access-class check in vty
