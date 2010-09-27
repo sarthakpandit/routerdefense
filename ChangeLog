@@ -12,7 +12,6 @@ ToDo
 - MPLS LDP: lossless MD5 session auth, MD5 global configuration, label filtering
 - IS-IS authenticaiton
 - QoS
-- fix all analyzor.py return values
 - Use of all template.conf variables
 
 Summary of changes from v0.1 to v0.2

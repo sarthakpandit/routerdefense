@@ -86,7 +86,7 @@ def analyzorCdp(cdpConfiguration, fullConfig, ifaceCfg):
 		cdpConfiguration.cdp['howtofix'] = cdpConfiguration.cdp['howtofix'].strip().replace('[%CdpifsDisabled]', ", ".join(cdpConfiguration.cdp['disabledIfsCdp']), 1)
 		cdpConfiguration.cdp['cvss'] = cvssMetrics
 				
-		return cdpConfiguration.cdp['definition'] + cdpConfiguration.cdp['threatInfo'] + cdpConfiguration.cdp['howtofix']
+		return cdpConfiguration.cdp['definition'] + '\n' + cdpConfiguration.cdp['threatInfo'] + '\n\n' + cdpConfiguration.cdp['howtofix'] + '\n'
 
 def analyzorLldp(lldpConfiguration, fullConfig, ifaceCfg):
 	globalLldpFound = True
@@ -114,6 +114,7 @@ def analyzorLldp(lldpConfiguration, fullConfig, ifaceCfg):
 			if not 'Loopback' in ifaceCfg[i].name.strip():
 				lldpConfiguration.lldp['disabledIfsLldp'].append(ifaceCfg[i].name.strip())	
 
+	ToBeReturned = 'LLDP is OK.'
 	if ( (lldpConfiguration.lldp['globalLldp'] == True) or (lldpConfiguration.lldp['enabledTransmitLldp']) or (lldpConfiguration.lldp['enabledReceiveLldp']) ):
 		if __builtin__.iosVersion >= 12.237:
 			items = searchInXml('serviceLLDP')
@@ -139,7 +140,36 @@ def analyzorLldp(lldpConfiguration, fullConfig, ifaceCfg):
 
 			lldpConfiguration.lldp['cvss'] = cvssMetrics
 			
-			return lldpConfiguration.lldp['definition'] + lldpConfiguration.lldp['threatInfo'] + lldpConfiguration.lldp['howtofix']
+			ToBeReturned = lldpConfiguration.lldp['definition'] + '\n' + lldpConfiguration.lldp['threatInfo'] + '\n\n' + lldpConfiguration.lldp['howtofix'] + '\n'
+			return ToBeReturned
+		elif __builtin__.iosVersion == None:
+			items = searchInXml('serviceLLDP')
+			cvssMetrics = str(calculateCVSS2Score(items[5]))
+			lldpConfiguration.lldp['mustBeReported'] = True
+			lldpConfiguration.lldp['fixImpact'] = items[0]
+			lldpConfiguration.lldp['definition'] = items[1]
+			lldpConfiguration.lldp['threatInfo'] = items[2]
+			lldpConfiguration.lldp['howtofix'] = items[3]
+
+			if lldpConfiguration.lldp['enabledTransmitLldp']:
+				lldpConfiguration.lldp['howtofix'] = lldpConfiguration.lldp['howtofix'].strip().replace('[%LldpEnabledTx]', ", ".join(lldpConfiguration.lldp['enabledTransmitLldp']), 1)
+			else:
+				lldpConfiguration.lldp['howtofix'] = lldpConfiguration.lldp['howtofix'].strip().replace('[%LldpEnabledTx]', "None", 1)
+			if lldpConfiguration.lldp['enabledReceiveLldp']:
+				lldpConfiguration.lldp['howtofix'] = lldpConfiguration.lldp['howtofix'].strip().replace('[%LldpEnabledRx]', ", ".join(lldpConfiguration.lldp['enabledReceiveLldp']), 1)
+			else:
+				lldpConfiguration.lldp['howtofix'] = lldpConfiguration.lldp['howtofix'].strip().replace('[%LldpEnabledRx]', "None", 1)
+			if lldpConfiguration.lldp['disabledIfsLldp']:
+				lldpConfiguration.lldp['howtofix'] = lldpConfiguration.lldp['howtofix'].strip().replace('[%LldpifsDisabled]', ", ".join(lldpConfiguration.lldp['disabledIfsLldp']), 1)
+			else:
+				lldpConfiguration.lldp['howtofix'] = lldpConfiguration.lldp['howtofix'].strip().replace('[%LldpifsDisabled]', "None", 1)			
+
+			lldpConfiguration.lldp['cvss'] = cvssMetrics
+			
+			ToBeReturned = lldpConfiguration.lldp['definition'] + '\n' + lldpConfiguration.lldp['threatInfo'] + '\n\n' + lldpConfiguration.lldp['howtofix'] + '\n'
+			return ToBeReturned	
+	else:
+		return ToBeReturned
 
 def analyzorConsole(consoleCfg,con0,lines):
 	try:	
@@ -219,9 +249,9 @@ def analyzorConsole(consoleCfg,con0,lines):
 
 	toBeReturned = ''
 	if con0.privilegezero['mustBeReported'] == True:
-		toBeReturned = con0.privilegezero['definition'] + con0.privilegezero['threatInfo'] + con0.privilegezero['howtofix']
+		toBeReturned = con0.privilegezero['definition'] + '\n' + con0.privilegezero['threatInfo'] + '\n\n' + con0.privilegezero['howtofix'] + '\n'
 	if con0.execTimeout['mustBeReported'] == True:
-		toBeReturned = toBeReturned + con0.execTimeout['definition'] + con0.execTimeout['threatInfo'] + con0.execTimeout['howtofix']
+		toBeReturned = toBeReturned + con0.execTimeout['definition'] + '\n' + con0.execTimeout['threatInfo'] + '\n\n' + con0.execTimeout['howtofix'] + '\n'
 	return toBeReturned
 
 def analyzorAux(auxCfg,aux0):
@@ -315,13 +345,13 @@ def analyzorAux(auxCfg,aux0):
 	
 	toBeReturned = ''
 	if aux0.execTimeout['mustBeReported'] == True:
-		toBeReturned = aux0.execTimeout['definition'] + aux0.execTimeout['threatInfo'] + aux0.execTimeout['howtofix']
+		toBeReturned = aux0.execTimeout['definition'] + '\n' + aux0.execTimeout['threatInfo'] + '\n\n' + aux0.execTimeout['howtofix'] + '\n'
 	if aux0.transportInput['mustBeReported'] == True:
-		toBeReturned = toBeReturned + aux0.transportInput['definition'] + aux0.transportInput['threatInfo'] + aux0.transportInput['howtofix']
+		toBeReturned = toBeReturned + aux0.transportInput['definition'] + '\n' + aux0.transportInput['threatInfo'] + '\n\n' + aux0.transportInput['howtofix'] + '\n'
 	if aux0.transportOutput['mustBeReported'] == True:
-		toBeReturned = toBeReturned + aux0.transportOutput['definition'] + aux0.transportOutput['threatInfo'] + aux0.transportOutput['howtofix']
+		toBeReturned = toBeReturned + aux0.transportOutput['definition'] + '\n' + aux0.transportOutput['threatInfo'] + '\n\n' + aux0.transportOutput['howtofix'] + '\n'
 	if aux0.noExec['mustBeReported'] == True:
-		toBeReturned = toBeReturned + aux0.noExec['definition'] + aux0.noExec['threatInfo'] + aux0.noExec['howtofix']
+		toBeReturned = toBeReturned + aux0.noExec['definition'] + '\n' + aux0.noExec['threatInfo']+ '\n\n' + aux0.noExec['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -418,13 +448,13 @@ def analyzorVty(vtyCfg,vty):
 
 	toBeReturned = ''
 	if vty.execTimeout['mustBeReported'] == True:
-		toBeReturned = vty.execTimeout['definition'] + vty.execTimeout['threatInfo'] + vty.execTimeout['howtofix']
+		toBeReturned = vty.execTimeout['definition'] + '\n' + vty.execTimeout['threatInfo'] + '\n\n' + vty.execTimeout['howtofix'] + '\n'
 	if vty.transportInput['mustBeReported'] == True:
-		toBeReturned = toBeReturned + vty.transportInput['definition'] + vty.transportInput['threatInfo'] + vty.transportInput['howtofix']
+		toBeReturned = toBeReturned + vty.transportInput['definition'] + '\n' + vty.transportInput['threatInfo'] + '\n\n' + vty.transportInput['howtofix'] + '\n'
 	if vty.transportOutput['mustBeReported'] == True:
-		toBeReturned = toBeReturned + vty.transportOutput['definition'] + vty.transportOutput['threatInfo'] + vty.transportOutput['howtofix']
+		toBeReturned = toBeReturned + vty.transportOutput['definition'] + '\n' + vty.transportOutput['threatInfo'] + '\n\n' + vty.transportOutput['howtofix'] + '\n'
 	if vty.IPv6accessClass['mustBeReported'] == True:
-		toBeReturned = toBeReturned + vty.IPv6accessClass['definition'] + vty.IPv6accessClass['threatInfo'] + vty.IPv6accessClass['howtofix']
+		toBeReturned = toBeReturned + vty.IPv6accessClass['definition'] + '\n' + vty.IPv6accessClass['threatInfo'] + '\n\n' + vty.IPv6accessClass['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -453,9 +483,9 @@ def analyzorBanner(bannerMotd, motd, bannerType):
 				"howtofix": (items[3]),
 				"cvss": (cvssMetrics)}
 		if motd.configured['mustBeReported'] == True:
-			toBeReturned = motd.configured['definition'] + motd.configured['threatInfo'] + motd.configured['howtofix']
+			toBeReturned = motd.configured['definition'] + '\n' + motd.configured['threatInfo'] + '\n\n' + motd.configured['howtofix'] + '\n'
 		if motd.routerName['mustBeReported'] == True:
-			toBeReturned = toBeReturned + motd.routerName['definition'] + motd.routerName['threatInfo'] + motd.routerName['howtofix']
+			toBeReturned = toBeReturned + motd.routerName['definition'] + '\n' + motd.routerName['threatInfo'] + '\n\n' + motd.routerName['howtofix'] + '\n'
 
 	if bannerType == 1:	
 		if len(bannerMotd) == 0:
@@ -480,9 +510,9 @@ def analyzorBanner(bannerMotd, motd, bannerType):
 				"howtofix": (items[3]),
 				"cvss": (cvssMetrics)}
 		if banLogin.configured['mustBeReported'] == True:
-			toBeReturned = toBeReturned + banLogin.configured['definition'] + banLogin.configured['threatInfo'] + banLogin.configured['howtofix']
+			toBeReturned = toBeReturned + banLogin.configured['definition'] + '\n' + banLogin.configured['threatInfo'] + '\n\n' + banLogin.configured['howtofix']
 		if banLogin.routerName['mustBeReported'] == True:
-			toBeReturned = toBeReturned + banLogin.routerName['definition'] + banLogin.routerName['threatInfo'] + banLogin.routerName['howtofix']
+			toBeReturned = toBeReturned + banLogin.routerName['definition'] + '\n' + banLogin.routerName['threatInfo']+ '\n\n' + banLogin.routerName['howtofix']
 
 	if bannerType == 2:	
 		if len(bannerMotd) == 0:
@@ -508,9 +538,9 @@ def analyzorBanner(bannerMotd, motd, bannerType):
 				"cvss": (cvssMetrics)}
 
 		if banExec.configured['mustBeReported'] == True:
-			toBeReturned = toBeReturned + banExec.configured['definition'] + banExec.configured['threatInfo'] + banExec.configured['howtofix']
+			toBeReturned = toBeReturned + banExec.configured['definition'] + '\n' + banExec.configured['threatInfo'] + '\n\n' + banExec.configured['howtofix'] + '\n'
 		if banExec.routerName['mustBeReported'] == True:
-			toBeReturned = toBeReturned + banExec.routerName['definition'] + banExec.routerName['threatInfo'] + banExec.routerName['howtofix']
+			toBeReturned = toBeReturned + banExec.routerName['definition'] + '\n' + banExec.routerName['threatInfo'] + '\n\n' + banExec.routerName['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -839,35 +869,35 @@ def analyzorServices(lines, services):
 
 	toBeReturned = ''
 	if services.pwdRecovery['mustBeReported'] == True:
-		toBeReturned = services.pwdRecovery['definition'] + services.pwdRecovery['threatInfo'] + services.pwdRecovery['howtofix']
+		toBeReturned = services.pwdRecovery['definition'] + '\n' + services.pwdRecovery['threatInfo'] + '\n\n' + services.pwdRecovery['howtofix'] + '\n'
 	if services.tcpSmallServers['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.tcpSmallServers['definition'] + services.tcpSmallServers['threatInfo'] + services.tcpSmallServers['howtofix']
+		toBeReturned = toBeReturned + services.tcpSmallServers['definition'] + '\n' + services.tcpSmallServers['threatInfo'] + '\n\n' + services.tcpSmallServers['howtofix'] + '\n'
 	if services.udpSmallServers['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.udpSmallServers['definition'] + services.udpSmallServers['threatInfo'] + services.udpSmallServers['howtofix']
+		toBeReturned = toBeReturned + services.udpSmallServers['definition'] + '\n' + services.udpSmallServers['threatInfo'] + '\n\n' + services.udpSmallServers['howtofix'] + '\n'
 	if services.serviceFinger['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceFinger['definition'] + services.serviceFinger['threatInfo'] + services.serviceFinger['howtofix']
+		toBeReturned = toBeReturned + services.serviceFinger['definition'] + '\n' + services.serviceFinger['threatInfo'] + '\n\n' + services.serviceFinger['howtofix'] + '\n'
 	if services.serviceBootpServer['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceBootpServer['definition'] + services.serviceBootpServer['threatInfo'] + services.serviceBootpServer['howtofix']
+		toBeReturned = toBeReturned + services.serviceBootpServer['definition'] + '\n' + services.serviceBootpServer['threatInfo'] + '\n\n' + services.serviceBootpServer['howtofix'] + '\n'
 	if services.serviceTcpKeepAliveIn['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceTcpKeepAliveIn['definition'] + services.serviceTcpKeepAliveIn['threatInfo'] + services.serviceTcpKeepAliveIn['howtofix']
+		toBeReturned = toBeReturned + services.serviceTcpKeepAliveIn['definition'] + '\n' + services.serviceTcpKeepAliveIn['threatInfo'] + '\n\n' + services.serviceTcpKeepAliveIn['howtofix'] + '\n'
 	if services.serviceTcpKeepAliveOut['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceTcpKeepAliveOut['definition'] + services.serviceTcpKeepAliveOut['threatInfo'] + services.serviceTcpKeepAliveOut['howtofix']
+		toBeReturned = toBeReturned + services.serviceTcpKeepAliveOut['definition'] + '\n' + services.serviceTcpKeepAliveOut['threatInfo'] + '\n\n' + services.serviceTcpKeepAliveOut['howtofix'] + '\n'
 	if services.serviceIpDhcpBootIgnore['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceIpDhcpBootIgnore['definition'] + services.serviceIpDhcpBootIgnore['threatInfo'] + services.serviceIpDhcpBootIgnore['howtofix']
+		toBeReturned = toBeReturned + services.serviceIpDhcpBootIgnore['definition'] + '\n' + services.serviceIpDhcpBootIgnore['threatInfo'] + '\n\n' + services.serviceIpDhcpBootIgnore['howtofix'] + '\n'
 	if services.serviceDhcp['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceDhcp['definition'] + services.serviceDhcp['threatInfo'] + services.serviceDhcp['howtofix']
+		toBeReturned = toBeReturned + services.serviceDhcp['definition'] + '\n' + services.serviceDhcp['threatInfo'] + '\n\n' + services.serviceDhcp['howtofix'] + '\n'
 	if services.Mop['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.Mop['definition'] + services.Mop['threatInfo'] + services.Mop['howtofix']
+		toBeReturned = toBeReturned + services.Mop['definition'] + '\n' + services.Mop['threatInfo'] + '\n\n' + services.Mop['howtofix'] + '\n'
 	if services.ipDomainLookup['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.ipDomainLookup['definition'] + services.ipDomainLookup['threatInfo'] + services.ipDomainLookup['howtofix']
+		toBeReturned = toBeReturned + services.ipDomainLookup['definition'] + '\n' + services.ipDomainLookup['threatInfo'] + '\n\n' + services.ipDomainLookup['howtofix'] + '\n'
 	if services.servicePad['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.servicePad['definition'] + services.servicePad['threatInfo'] + services.servicePad['howtofix']
+		toBeReturned = toBeReturned + services.servicePad['definition'] + '\n' + services.servicePad['threatInfo'] + '\n\n' + services.servicePad['howtofix'] + '\n'
 	if services.serviceHttpServer['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceHttpServer['definition'] + services.serviceHttpServer['threatInfo'] + services.serviceHttpServer['howtofix']
+		toBeReturned = toBeReturned + services.serviceHttpServer['definition'] + '\n' + services.serviceHttpServer['threatInfo'] + '\n\n' + services.serviceHttpServer['howtofix'] + '\n'
 	if services.serviceHttpsServer['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceHttpsServer['definition'] + services.serviceHttpsServer['threatInfo'] + services.serviceHttpsServer['howtofix']
+		toBeReturned = toBeReturned + services.serviceHttpsServer['definition'] + '\n' + services.serviceHttpsServer['threatInfo'] + '\n\n' + services.serviceHttpsServer['howtofix'] + '\n'
 	if services.serviceConfig['mustBeReported'] == True:
-		toBeReturned = toBeReturned + services.serviceConfig['definition'] + services.serviceConfig['threatInfo'] + services.serviceConfig['howtofix']
+		toBeReturned = toBeReturned + services.serviceConfig['definition'] + '\n' + services.serviceConfig['threatInfo'] + '\n\n' + services.serviceConfig['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -1091,19 +1121,19 @@ def analyzorMemCpu(lines, memCpu):
 
 	toBeReturned = ''
 	if memCpu.lowWatermarkProcessor['mustBeReported'] == True:
-		toBeReturned = memCpu.lowWatermarkProcessor['definition'] + memCpu.lowWatermarkProcessor['threatInfo'] + memCpu.lowWatermarkProcessor['howtofix']
+		toBeReturned = memCpu.lowWatermarkProcessor['definition'] + '\n' + memCpu.lowWatermarkProcessor['threatInfo'] + '\n\n' + memCpu.lowWatermarkProcessor['howtofix'] + '\n'
 	if memCpu.lowWatermarkIo['mustBeReported'] == True:
-		toBeReturned = toBeReturned + memCpu.lowWatermarkIo['definition'] + memCpu.lowWatermarkIo['threatInfo'] + memCpu.lowWatermarkIo['howtofix']
+		toBeReturned = toBeReturned + memCpu.lowWatermarkIo['definition'] + '\n' + memCpu.lowWatermarkIo['threatInfo'] + '\n\n' + memCpu.lowWatermarkIo['howtofix'] + '\n'
 	if memCpu.memReserveCritical['mustBeReported'] == True:
-		toBeReturned = toBeReturned + memCpu.memReserveCritical['definition'] + memCpu.memReserveCritical['threatInfo'] + memCpu.memReserveCritical['howtofix']
+		toBeReturned = toBeReturned + memCpu.memReserveCritical['definition'] + '\n' + memCpu.memReserveCritical['threatInfo'] + '\n\n' + memCpu.memReserveCritical['howtofix'] + '\n'
 	if memCpu.memReserveConsole['mustBeReported'] == True:
-		toBeReturned = toBeReturned + memCpu.memReserveConsole['definition'] + memCpu.memReserveConsole['threatInfo'] + memCpu.memReserveConsole['howtofix']
+		toBeReturned = toBeReturned + memCpu.memReserveConsole['definition'] + '\n' + memCpu.memReserveConsole['threatInfo'] + '\n\n' + memCpu.memReserveConsole['howtofix'] + '\n'
 	if memCpu.memIgnoreOverflowIo['mustBeReported'] == True:
-		toBeReturned = toBeReturned + memCpu.memIgnoreOverflowIo['definition'] + memCpu.memIgnoreOverflowIo['threatInfo'] + memCpu.memIgnoreOverflowIo['howtofix']
+		toBeReturned = toBeReturned + memCpu.memIgnoreOverflowIo['definition'] + '\n' + memCpu.memIgnoreOverflowIo['threatInfo'] + '\n\n' + memCpu.memIgnoreOverflowIo['howtofix'] + '\n'
 	if memCpu.memIgnoreOverflowCpu['mustBeReported'] == True:
-		toBeReturned = toBeReturned + memCpu.memIgnoreOverflowCpu['definition'] + memCpu.memIgnoreOverflowCpu['threatInfo'] + memCpu.memIgnoreOverflowCpu['howtofix']
+		toBeReturned = toBeReturned + memCpu.memIgnoreOverflowCpu['definition'] + '\n' + memCpu.memIgnoreOverflowCpu['threatInfo'] + '\n\n' + memCpu.memIgnoreOverflowCpu['howtofix'] + '\n'
 	if memCpu.cpuThresholdNotice['mustBeReported'] == True:
-		toBeReturned = toBeReturned + memCpu.cpuThresholdNotice['definition'] + memCpu.cpuThresholdNotice['threatInfo'] + memCpu.cpuThresholdNotice['howtofix']
+		toBeReturned = toBeReturned + memCpu.cpuThresholdNotice['definition'] + '\n' + memCpu.cpuThresholdNotice['threatInfo'] + '\n\n' + memCpu.cpuThresholdNotice['howtofix'] + '\n'
 
 	return toBeReturned
 					
@@ -1128,7 +1158,7 @@ def analyzorCrashinfo(lines, crashinfo):
 
 	toBeReturned = ''
 	if crashinfo.crashinfoMaxFiles['mustBeReported'] == True:
-		toBeReturned = crashinfo.crashinfoMaxFiles['definition'] + crashinfo.crashinfoMaxFiles['threatInfo'] + crashinfo.crashinfoMaxFiles['howtofix']
+		toBeReturned = crashinfo.crashinfoMaxFiles['definition'] + '\n' + crashinfo.crashinfoMaxFiles['threatInfo'] + '\n\n' + crashinfo.crashinfoMaxFiles['howtofix'] + '\n'
 	return toBeReturned
 
 def analyzorMPP(lines, vtyList, vtyCfg, mpp):
@@ -1350,19 +1380,19 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
 
 	toBeReturned = ''
 	if mpp.managementInterface['mustBeReported'] == True:
-		toBeReturned = mpp.managementInterface['definition'] + mpp.managementInterface['threatInfo'] + mpp.managementInterface['howtofix']
+		toBeReturned = mpp.managementInterface['definition'] + '\n' + mpp.managementInterface['threatInfo'] + '\n\n' + mpp.managementInterface['howtofix'] + '\n'
 	if mpp.sshServerTimeout['mustBeReported'] == True:
-		toBeReturned = toBeReturned + mpp.sshServerTimeout['definition'] + mpp.sshServerTimeout['threatInfo'] + mpp.sshServerTimeout['howtofix']
+		toBeReturned = toBeReturned + mpp.sshServerTimeout['definition'] + '\n' + mpp.sshServerTimeout['threatInfo'] + '\n\n' + mpp.sshServerTimeout['howtofix'] + '\n'
 	if mpp.sshServerAuthRetries['mustBeReported'] == True:
-		toBeReturned = toBeReturned + mpp.sshServerAuthRetries['definition'] + mpp.sshServerAuthRetries['threatInfo'] + mpp.sshServerAuthRetries['howtofix']
+		toBeReturned = toBeReturned + mpp.sshServerAuthRetries['definition'] + '\n' + mpp.sshServerAuthRetries['threatInfo'] + '\n\n' + mpp.sshServerAuthRetries['howtofix'] + '\n'
 	if mpp.sshServerSourceInterface['mustBeReported'] == True:
-		toBeReturned = toBeReturned + mpp.sshServerSourceInterface['definition'] + mpp.sshServerSourceInterface['threatInfo'] + mpp.sshServerSourceInterface['howtofix']
+		toBeReturned = toBeReturned + mpp.sshServerSourceInterface['definition'] + '\n' + mpp.sshServerSourceInterface['threatInfo'] + '\n\n' + mpp.sshServerSourceInterface['howtofix'] + '\n'
 	if mpp.scpServer['mustBeReported'] == True:
-		toBeReturned = toBeReturned + mpp.scpServer['definition'] + mpp.scpServer['threatInfo'] + mpp.scpServer['howtofix']
+		toBeReturned = toBeReturned + mpp.scpServer['definition'] + '\n' + mpp.scpServer['threatInfo'] + '\n\n' + mpp.scpServer['howtofix'] + '\n'
 	if mpp.httpSecureServer['mustBeReported'] == True:
-		toBeReturned = toBeReturned + mpp.httpSecureServer['definition'] + mpp.httpSecureServer['threatInfo'] + mpp.httpSecureServer['howtofix']
+		toBeReturned = toBeReturned + mpp.httpSecureServer['definition'] + '\n' + mpp.httpSecureServer['threatInfo'] + '\n\n' + mpp.httpSecureServer['howtofix'] + '\n'
 	if mpp.loginbruteforce['mustBeReported'] == True:
-		toBeReturned = toBeReturned + mpp.loginbruteforce['definition'] + mpp.loginbruteforce['threatInfo'] + mpp.loginbruteforce['howtofix']
+		toBeReturned = toBeReturned + mpp.loginbruteforce['definition'] + '\n' + mpp.loginbruteforce['threatInfo'] + '\n\n' + mpp.loginbruteforce['howtofix'] + '\n'
 
 	return toBeReturned
 		
@@ -1476,13 +1506,13 @@ def analyzorPasswordManagement(lines, pwdManagement):
 
 	toBeReturned = ''
 	if pwdManagement.enableSecret['mustBeReported'] == True:
-		toBeReturned = pwdManagement.enableSecret['definition'] + pwdManagement.enableSecret['threatInfo'] + pwdManagement.enableSecret['howtofix']
+		toBeReturned = pwdManagement.enableSecret['definition'] + '\n' + pwdManagement.enableSecret['threatInfo'] + '\n\n' + pwdManagement.enableSecret['howtofix'] + '\n'
 	if pwdManagement.svcPwdEncryption['mustBeReported'] == True:
-		toBeReturned = toBeReturned + pwdManagement.svcPwdEncryption['definition'] + pwdManagement.svcPwdEncryption['threatInfo'] + pwdManagement.svcPwdEncryption['howtofix']
+		toBeReturned = toBeReturned + pwdManagement.svcPwdEncryption['definition'] + '\n' + pwdManagement.svcPwdEncryption['threatInfo'] + '\n\n' + pwdManagement.svcPwdEncryption['howtofix'] + '\n'
 	if pwdManagement.usernameSecret['mustBeReported'] == True:
-		toBeReturned = toBeReturned + pwdManagement.usernameSecret['definition'] + pwdManagement.usernameSecret['threatInfo'] + pwdManagement.usernameSecret['howtofix']
+		toBeReturned = toBeReturned + pwdManagement.usernameSecret['definition'] + '\n' + pwdManagement.usernameSecret['threatInfo'] + '\n\n' + pwdManagement.usernameSecret['howtofix'] + '\n'
 	if pwdManagement.retryLockout['mustBeReported'] == True:
-		toBeReturned = toBeReturned + pwdManagement.retryLockout['definition'] + pwdManagement.retryLockout['threatInfo'] + pwdManagement.retryLockout['howtofix']
+		toBeReturned = toBeReturned + pwdManagement.retryLockout['definition'] + '\n' + pwdManagement.retryLockout['threatInfo'] + '\n\n' + pwdManagement.retryLockout['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -1714,32 +1744,32 @@ def analyzorTacacs(lines, tacacs, mode):
 
 	if mode == 'RedundantAAA':		
 		if tacacs.redundant['mustBeReported'] == True:
-			toBeReturned = tacacs.redundant['definition'] + tacacs.redundant['threatInfo'] + tacacs.redundant['howtofix']
+			toBeReturned = tacacs.redundant['definition'] + '\n' + tacacs.redundant['threatInfo'] + '\n\n' + tacacs.redundant['howtofix'] + '\n'
 	elif mode == 'Authentication':
 		if tacacs.aaaNewModel['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.aaaNewModel['definition'] + tacacs.aaaNewModel['threatInfo'] + tacacs.aaaNewModel['howtofix']
+			toBeReturned = toBeReturned + tacacs.aaaNewModel['definition'] + '\n' + tacacs.aaaNewModel['threatInfo'] + '\n\n' + tacacs.aaaNewModel['howtofix'] + '\n'
 		if tacacs.authTacacs['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.authTacacs['definition'] + tacacs.authTacacs['threatInfo'] + tacacs.authTacacs['howtofix']
+			toBeReturned = toBeReturned + tacacs.authTacacs['definition'] + '\n' + tacacs.authTacacs['threatInfo'] + '\n\n' + tacacs.authTacacs['howtofix'] + '\n'
 		if tacacs.authFallback['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.authFallback['definition'] + tacacs.authFallback['threatInfo'] + tacacs.authFallback['howtofix']
+			toBeReturned = toBeReturned + tacacs.authFallback['definition'] + '\n' + tacacs.authFallback['threatInfo'] + '\n\n' + tacacs.authFallback['howtofix'] + '\n'
 	elif mode == 'Authorization':
 		if tacacs.authExec['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.authExec['definition'] + tacacs.authExec['threatInfo'] + tacacs.authExec['howtofix']
+			toBeReturned = toBeReturned + tacacs.authExec['definition'] + '\n' + tacacs.authExec['threatInfo'] + '\n\n' + tacacs.authExec['howtofix'] + '\n'
 		if tacacs.level0['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.level0['definition'] + tacacs.level0['threatInfo'] + tacacs.level0['howtofix']
+			toBeReturned = toBeReturned + tacacs.level0['definition'] + '\n' + tacacs.level0['threatInfo'] + '\n\n' + tacacs.level0['howtofix'] + '\n'
 		if tacacs.level1['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.level1['definition'] + tacacs.level1['threatInfo'] + tacacs.level1['howtofix']
+			toBeReturned = toBeReturned + tacacs.level1['definition'] + '\n' + tacacs.level1['threatInfo'] + '\n\n' + tacacs.level1['howtofix'] + '\n'
 		if tacacs.level15['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.level15['definition'] + tacacs.level15['threatInfo'] + tacacs.level15['howtofix']
+			toBeReturned = toBeReturned + tacacs.level15['definition'] + '\n' + tacacs.level15['threatInfo'] + '\n\n' + tacacs.level15['howtofix'] + '\n'
 	elif mode == 'Accounting':	
 		if tacacs.authAccounting['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.authAccounting['definition'] + tacacs.authAccounting['threatInfo'] + tacacs.authAccounting['howtofix']
+			toBeReturned = toBeReturned + tacacs.authAccounting['definition'] + '\n' + tacacs.authAccounting['threatInfo'] + '\n\n' + tacacs.authAccounting['howtofix'] + '\n'
 		if tacacs.level0['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.level0['definition'] + tacacs.level0['threatInfo'] + tacacs.level0['howtofix']
+			toBeReturned = toBeReturned + tacacs.level0['definition'] + '\n' + tacacs.level0['threatInfo'] + '\n\n' + tacacs.level0['howtofix'] + '\n'
 		if tacacs.level1['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.level1['definition'] + tacacs.level1['threatInfo'] + tacacs.level1['howtofix']
+			toBeReturned = toBeReturned + tacacs.level1['definition'] + '\n' + tacacs.level1['threatInfo'] + '\n\n' + tacacs.level1['howtofix'] + '\n'
 		if tacacs.level15['mustBeReported'] == True:
-			toBeReturned = toBeReturned + tacacs.level15['definition'] + tacacs.level15['threatInfo'] + tacacs.level15['howtofix']
+			toBeReturned = toBeReturned + tacacs.level15['definition'] + '\n' + tacacs.level15['threatInfo'] + '\n\n' + tacacs.level15['howtofix'] + '\n'
 
 	return toBeReturned
 			
@@ -1982,23 +2012,23 @@ def analyzorSNMP(lines, snmp):
 
 	toBeReturned = ''
 	if snmp.ROcommunity['mustBeReported'] == True:
-		toBeReturned = snmp.ROcommunity['definition'] + snmp.ROcommunity['threatInfo'] + snmp.ROcommunity['howtofix']
+		toBeReturned = snmp.ROcommunity['definition'] + '\n' + snmp.ROcommunity['threatInfo'] + '\n\n' + snmp.ROcommunity['howtofix'] + '\n'
 	if snmp.ROcommunityACL['mustBeReported'] == True:
-		toBeReturned = toBeReturned + snmp.ROcommunityACL['definition'] + snmp.ROcommunityACL['threatInfo'] + snmp.ROcommunityACL['howtofix']
+		toBeReturned = toBeReturned + snmp.ROcommunityACL['definition'] + '\n' + snmp.ROcommunityACL['threatInfo'] + '\n\n' + snmp.ROcommunityACL['howtofix'] + '\n'
 	if snmp.RWcommunity['mustBeReported'] == True:
-		toBeReturned = toBeReturned + snmp.RWcommunity['definition'] + snmp.RWcommunity['threatInfo'] + snmp.RWcommunity['howtofix']
+		toBeReturned = toBeReturned + snmp.RWcommunity['definition'] + '\n' + snmp.RWcommunity['threatInfo'] + '\n\n' + snmp.RWcommunity['howtofix'] + '\n'
 	if snmp.RWcommunityACL['mustBeReported'] == True:
-		toBeReturned = toBeReturned + snmp.RWcommunityACL['definition'] + snmp.RWcommunityACL['threatInfo'] + snmp.RWcommunityACL['howtofix']
+		toBeReturned = toBeReturned + snmp.RWcommunityACL['definition'] + '\n' + snmp.RWcommunityACL['threatInfo'] + '\n\n' + snmp.RWcommunityACL['howtofix'] + '\n'
 	if snmp.ViewROcommunity['mustBeReported'] == True:
-		toBeReturned = toBeReturned + snmp.ViewROcommunity['definition'] + snmp.ViewROcommunity['threatInfo'] + snmp.ViewROcommunity['howtofix']
+		toBeReturned = toBeReturned + snmp.ViewROcommunity['definition'] + '\n' + snmp.ViewROcommunity['threatInfo'] + '\n\n' + snmp.ViewROcommunity['howtofix'] + '\n'
 	if snmp.ViewROcommunityACL['mustBeReported'] == True:
-		toBeReturned = toBeReturned + snmp.ViewROcommunityACL['definition'] + snmp.ViewROcommunityACL['threatInfo'] + snmp.ViewROcommunityACL['howtofix']
+		toBeReturned = toBeReturned + snmp.ViewROcommunityACL['definition'] + '\n' + snmp.ViewROcommunityACL['threatInfo'] + '\n\n' + snmp.ViewROcommunityACL['howtofix'] + '\n'
 	if snmp.ViewRWcommunity['mustBeReported'] == True:
-		toBeReturned = toBeReturned + snmp.ViewRWcommunity['definition'] + snmp.ViewRWcommunity['threatInfo'] + snmp.ViewRWcommunity['howtofix']
+		toBeReturned = toBeReturned + snmp.ViewRWcommunity['definition'] + '\n' + snmp.ViewRWcommunity['threatInfo'] + '\n\n' + snmp.ViewRWcommunity['howtofix'] + '\n'
 	if snmp.ViewRWcommunityACL['mustBeReported'] == True:
-		toBeReturned = toBeReturned + snmp.ViewRWcommunityACL['definition'] + snmp.ViewRWcommunityACL['threatInfo'] + snmp.ViewRWcommunityACL['howtofix']
+		toBeReturned = toBeReturned + snmp.ViewRWcommunityACL['definition'] + '\n' + snmp.ViewRWcommunityACL['threatInfo'] + '\n\n' + snmp.ViewRWcommunityACL['howtofix'] + '\n'
 	if snmp.snmpV3['mustBeReported'] == True:
-		toBeReturned = toBeReturned + snmp.snmpV3['definition'] + snmp.snmpV3['threatInfo'] + snmp.snmpV3['howtofix']
+		toBeReturned = toBeReturned + snmp.snmpV3['definition'] + '\n' + snmp.snmpV3['threatInfo'] + '\n\n' + snmp.snmpV3['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -2267,23 +2297,23 @@ def analyzorSyslog(lines, syslog):
 
 	toBeReturned = ''
 	if syslog.Server['mustBeReported'] == True:
-		toBeReturned = syslog.Server['definition'] + syslog.Server['threatInfo'] + syslog.Server['howtofix']
+		toBeReturned = syslog.Server['definition'] + '\n' + syslog.Server['threatInfo'] + '\n\n' + syslog.Server['howtofix'] + '\n'
 	if syslog.levelTrap['mustBeReported'] == True:
-		toBeReturned = toBeReturned + syslog.levelTrap['definition'] + syslog.levelTrap['threatInfo'] + syslog.levelTrap['howtofix']
+		toBeReturned = toBeReturned + syslog.levelTrap['definition'] + '\n' + syslog.levelTrap['threatInfo'] + '\n\n' + syslog.levelTrap['howtofix'] + '\n'
 	if syslog.levelBuffered['mustBeReported'] == True:
-		toBeReturned = toBeReturned + syslog.levelBuffered['definition'] + syslog.levelBuffered['threatInfo'] + syslog.levelBuffered['howtofix']
+		toBeReturned = toBeReturned + syslog.levelBuffered['definition'] + '\n' + syslog.levelBuffered['threatInfo'] + '\n\n' + syslog.levelBuffered['howtofix'] + '\n'
 	if syslog.loggingConsole['mustBeReported'] == True:
-		toBeReturned = toBeReturned + syslog.loggingConsole['definition'] + syslog.loggingConsole['threatInfo'] + syslog.loggingConsole['howtofix']
+		toBeReturned = toBeReturned + syslog.loggingConsole['definition'] + '\n' + syslog.loggingConsole['threatInfo'] + '\n\n' + syslog.loggingConsole['howtofix'] + '\n'
 	if syslog.loggingMonitor['mustBeReported'] == True:
-		toBeReturned = toBeReturned + syslog.loggingMonitor['definition'] + syslog.loggingMonitor['threatInfo'] + syslog.loggingMonitor['howtofix']
+		toBeReturned = toBeReturned + syslog.loggingMonitor['definition'] + '\n' + syslog.loggingMonitor['threatInfo'] + '\n\n' + syslog.loggingMonitor['howtofix'] + '\n'
 	if syslog.loggingBuffered['mustBeReported'] == True:
-		toBeReturned = toBeReturned + syslog.loggingBuffered['definition'] + syslog.loggingBuffered['threatInfo'] + syslog.loggingBuffered['howtofix']
+		toBeReturned = toBeReturned + syslog.loggingBuffered['definition'] + '\n' + syslog.loggingBuffered['threatInfo'] + '\n\n' + syslog.loggingBuffered['howtofix'] + '\n'
 	if syslog.Interface['mustBeReported'] == True:
-		toBeReturned = toBeReturned + syslog.Interface['definition'] + syslog.Interface['threatInfo'] + syslog.Interface['howtofix']
+		toBeReturned = toBeReturned + syslog.Interface['definition'] + '\n' + syslog.Interface['threatInfo'] + '\n\n' + syslog.Interface['howtofix'] + '\n'
 	if syslog.timestamp['mustBeReported'] == True:
-		toBeReturned = toBeReturned + syslog.timestamp['definition'] + syslog.timestamp['threatInfo'] + syslog.timestamp['howtofix']
+		toBeReturned = toBeReturned + syslog.timestamp['definition'] + '\n' + syslog.timestamp['threatInfo'] + '\n\n' + syslog.timestamp['howtofix'] + '\n'
 	if syslog.serverarp['mustBeReported'] == True:
-		toBeReturned = toBeReturned + syslog.serverarp['definition'] + syslog.serverarp['threatInfo'] + syslog.serverarp['howtofix']
+		toBeReturned = toBeReturned + syslog.serverarp['definition'] + '\n' + syslog.serverarp['threatInfo'] + '\n\n' + syslog.serverarp['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -2438,15 +2468,15 @@ def analyzorArchive(lines, archive):
 
 	toBeReturned = ''
 	if archive.configuration['mustBeReported'] == True:
-		toBeReturned = archive.configuration['definition'] + archive.configuration['threatInfo'] + archive.configuration['howtofix']
+		toBeReturned = archive.configuration['definition'] + '\n' + archive.configuration['threatInfo'] + '\n\n' + archive.configuration['howtofix'] + '\n'
 	if archive.exclusive['mustBeReported'] == True:
-		toBeReturned = toBeReturned + archive.exclusive['definition'] + archive.exclusive['threatInfo'] + archive.exclusive['howtofix']
+		toBeReturned = toBeReturned + archive.exclusive['definition'] + '\n' + archive.exclusive['threatInfo'] + '\n\n' + archive.exclusive['howtofix'] + '\n'
 	if archive.secureBoot['mustBeReported'] == True:
-		toBeReturned = toBeReturned + archive.secureBoot['definition'] + archive.secureBoot['threatInfo'] + archive.secureBoot['howtofix']
+		toBeReturned = toBeReturned + archive.secureBoot['definition'] + '\n' + archive.secureBoot['threatInfo'] + '\n\n' + archive.secureBoot['howtofix'] + '\n'
 	if archive.secureConfig['mustBeReported'] == True:
-		toBeReturned = toBeReturned + archive.secureConfig['definition'] + archive.secureConfig['threatInfo'] + archive.secureConfig['howtofix']
+		toBeReturned = toBeReturned + archive.secureConfig['definition'] + '\n' + archive.secureConfig['threatInfo'] + '\n\n' + archive.secureConfig['howtofix'] + '\n'
 	if archive.logs['mustBeReported'] == True:
-		toBeReturned = toBeReturned + archive.logs['definition'] + archive.logs['threatInfo'] + archive.logs['howtofix']
+		toBeReturned = toBeReturned + archive.logs['definition'] + '\n' + archive.logs['threatInfo'] + '\n\n' + archive.logs['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -2489,7 +2519,7 @@ def analyzorICMPRedirects(icmpRedirects, fullConfig, ifaceCfg):
 
 	toBeReturned = ''
 	if icmpRedirects.redirects['mustBeReported'] == True:
-		toBeReturned = icmpRedirects.redirects['definition'] + icmpRedirects.redirects['threatInfo'] + icmpRedirects.redirects['howtofix']
+		toBeReturned = icmpRedirects.redirects['definition'] + '\n' + icmpRedirects.redirects['threatInfo'] + '\n\n' + icmpRedirects.redirects['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -2539,7 +2569,7 @@ def analyzorICMPUnreachable(icmpUnreachable, fullConfig, ifaceCfg):
 
 	toBeReturned = ''
 	if icmpUnreachable.unreachable['mustBeReported'] == True:
-		toBeReturned = icmpUnreachable.unreachable['definition'] + icmpUnreachable.unreachable['threatInfo'] + icmpUnreachable.unreachable['howtofix']
+		toBeReturned = icmpUnreachable.unreachable['definition'] + '\n' + icmpUnreachable.unreachable['threatInfo'] + '\n\n' + icmpUnreachable.unreachable['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -2580,7 +2610,7 @@ def analyzorARPproxy(proxyArp, fullConfig, ifaceCfg):
 
 	toBeReturned = ''
 	if proxyArp.proxy['mustBeReported'] == True:
-		toBeReturned = proxyArp.proxy['definition'] + proxyArp.proxy['threatInfo'] + proxyArp.proxy['howtofix']
+		toBeReturned = proxyArp.proxy['definition'] + '\n' + proxyArp.proxy['threatInfo'] + '\n\n' + proxyArp.proxy['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -2610,7 +2640,7 @@ def analyzorNtp(lines, ntp):
 
 	toBeReturned = ''
 	if ntp.authentication['mustBeReported'] == True:
-		toBeReturned = ntp.authentication['definition'] + ntp.authentication['threatInfo'] + ntp.authentication['howtofix']
+		toBeReturned = ntp.authentication['definition'] + '\n' + ntp.authentication['threatInfo'] + '\n\n' + ntp.authentication['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -2715,15 +2745,15 @@ def analyzorBgp(lines, bgp):
 
 	toBeReturned = ''
 	if bgp.ttlSecurity['mustBeReported'] == True:
-		toBeReturned = bgp.ttlSecurity['definition'] + bgp.ttlSecurity['threatInfo'] + bgp.ttlSecurity['howtofix']
+		toBeReturned = bgp.ttlSecurity['definition'] + '\n'+ bgp.ttlSecurity['threatInfo'] + '\n\n' + bgp.ttlSecurity['howtofix'] + '\n'
 	if bgp.sessionPassword['mustBeReported'] == True:
-		toBeReturned = toBeReturned + bgp.sessionPassword['definition'] + bgp.sessionPassword['threatInfo'] + bgp.sessionPassword['howtofix']
+		toBeReturned = toBeReturned + bgp.sessionPassword['definition'] + '\n' + bgp.sessionPassword['threatInfo'] + '\n\n' + bgp.sessionPassword['howtofix'] + '\n'
 	if bgp.maxPrefixes['mustBeReported'] == True:
-		toBeReturned = toBeReturned + bgp.maxPrefixes['definition'] + bgp.maxPrefixes['threatInfo'] + bgp.maxPrefixes['howtofix']
+		toBeReturned = toBeReturned + bgp.maxPrefixes['definition'] + '\n' + bgp.maxPrefixes['threatInfo'] + '\n\n' + bgp.maxPrefixes['howtofix'] + '\n'
 	if bgp.prefixList['mustBeReported'] == True:
-		toBeReturned = toBeReturned + bgp.prefixList['definition'] + bgp.prefixList['threatInfo'] + bgp.prefixList['howtofix']
+		toBeReturned = toBeReturned + bgp.prefixList['definition'] + '\n' + bgp.prefixList['threatInfo'] + '\n\n' + bgp.prefixList['howtofix'] + '\n'
 	if bgp.aspathList['mustBeReported'] == True:
-		toBeReturned = toBeReturned + bgp.aspathList['definition'] + bgp.aspathList['threatInfo'] + bgp.aspathList['howtofix']
+		toBeReturned = toBeReturned + bgp.aspathList['definition'] + '\n' + bgp.aspathList['threatInfo'] + '\n\n' + bgp.aspathList['howtofix'] + '\n'
 
 	return toBeReturned
 		
@@ -2834,13 +2864,13 @@ def analyzorEigrp(lines, eigrp, ifaceCfg):
 
 	toBeReturned = ''
 	if eigrp.passiveDefault['mustBeReported'] == True:
-		toBeReturned = eigrp.passiveDefault['definition'] + eigrp.passiveDefault['threatInfo'] + eigrp.passiveDefault['howtofix']
+		toBeReturned = eigrp.passiveDefault['definition'] + '\n' + eigrp.passiveDefault['threatInfo'] + '\n\n' + eigrp.passiveDefault['howtofix'] + '\n'
 	if eigrp.authModeMD5['mustBeReported'] == True:
-		toBeReturned = toBeReturned + eigrp.authModeMD5['definition'] + eigrp.authModeMD5['threatInfo'] + eigrp.authModeMD5['howtofix']
+		toBeReturned = toBeReturned + eigrp.authModeMD5['definition'] + '\n' + eigrp.authModeMD5['threatInfo'] + '\n\n' + eigrp.authModeMD5['howtofix'] + '\n'
 	if eigrp.routeFilteringIn['mustBeReported'] == True:
-		toBeReturned = toBeReturned + eigrp.routeFilteringIn['definition'] + eigrp.routeFilteringIn['threatInfo'] + eigrp.routeFilteringIn['howtofix']
+		toBeReturned = toBeReturned + eigrp.routeFilteringIn['definition'] + '\n' + eigrp.routeFilteringIn['threatInfo'] + '\n\n' + eigrp.routeFilteringIn['howtofix'] + '\n'
 	if eigrp.routeFilteringOut['mustBeReported'] == True:
-		toBeReturned = toBeReturned + eigrp.routeFilteringOut['definition'] + eigrp.routeFilteringOut['threatInfo'] + eigrp.routeFilteringOut['howtofix']
+		toBeReturned = toBeReturned + eigrp.routeFilteringOut['definition'] + '\n' + eigrp.routeFilteringOut['threatInfo'] + '\n\n' + eigrp.routeFilteringOut['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -2905,7 +2935,7 @@ def analyzorRip(lines, rip, ifaceCfg):
 
 	toBeReturned = ''
 	if rip.authModeMD5['mustBeReported'] == True:
-		toBeReturned = rip.authModeMD5['definition'] + rip.authModeMD5['threatInfo'] + rip.authModeMD5['howtofix']
+		toBeReturned = rip.authModeMD5['definition'] + '\n' + rip.authModeMD5['threatInfo'] + '\n\n' + rip.authModeMD5['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3068,15 +3098,15 @@ def analyzorOspf(lines, ospf, ifaceCfg):
 
 	toBeReturned = ''
 	if ospf.passiveDefault['mustBeReported'] == True:
-		toBeReturned = ospf.passiveDefault['definition'] + ospf.passiveDefault['threatInfo'] + ospf.passiveDefault['howtofix']
+		toBeReturned = ospf.passiveDefault['definition'] + '\n' + ospf.passiveDefault['threatInfo'] + '\n\n' + ospf.passiveDefault['howtofix'] + '\n'
 	if ospf.authModeMD5['mustBeReported'] == True:
-		toBeReturned = toBeReturned + ospf.authModeMD5['definition'] + ospf.authModeMD5['threatInfo'] + ospf.authModeMD5['howtofix']
+		toBeReturned = toBeReturned + ospf.authModeMD5['definition'] + '\n' + ospf.authModeMD5['threatInfo'] + '\n\n' + ospf.authModeMD5['howtofix'] + '\n'
 	if ospf.routeFilteringIn['mustBeReported'] == True:
-		toBeReturned = toBeReturned + ospf.routeFilteringIn['definition'] + ospf.routeFilteringIn['threatInfo'] + ospf.routeFilteringIn['howtofix']
+		toBeReturned = toBeReturned + ospf.routeFilteringIn['definition'] + '\n' + ospf.routeFilteringIn['threatInfo'] + '\n\n' + ospf.routeFilteringIn['howtofix'] + '\n'
 	if ospf.routeFilteringOut['mustBeReported'] == True:
-		toBeReturned = toBeReturned + ospf.routeFilteringOut['definition'] + ospf.routeFilteringOut['threatInfo'] + ospf.routeFilteringOut['howtofix']
+		toBeReturned = toBeReturned + ospf.routeFilteringOut['definition'] + '\n' + ospf.routeFilteringOut['threatInfo'] + '\n\n' + ospf.routeFilteringOut['howtofix'] + '\n'
 	if ospf.maxLSA['mustBeReported'] == True:
-		toBeReturned = toBeReturned + ospf.maxLSA['definition'] + ospf.maxLSA['threatInfo'] + ospf.maxLSA['howtofix']
+		toBeReturned = toBeReturned + ospf.maxLSA['definition'] + '\n' + ospf.maxLSA['threatInfo'] + '\n\n' + ospf.maxLSA['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3104,7 +3134,7 @@ def analyzorGlbp(lines, glbp, ifaceCfg):
 
 	toBeReturned = ''
 	if glbp.authModeMD5['mustBeReported'] == True:
-		toBeReturned = glbp.authModeMD5['definition'] + glbp.authModeMD5['threatInfo'] + glbp.authModeMD5['howtofix']
+		toBeReturned = glbp.authModeMD5['definition'] + '\n' + glbp.authModeMD5['threatInfo'] + '\n\n' + glbp.authModeMD5['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3133,7 +3163,7 @@ def analyzorHsrp(lines, hsrp, ifaceCfg):
 
 	toBeReturned = ''
 	if hsrp.authModeMD5['mustBeReported'] == True:
-		toBeReturned = hsrp.authModeMD5['definition'] + hsrp.authModeMD5['threatInfo'] + hsrp.authModeMD5['howtofix']
+		toBeReturned = hsrp.authModeMD5['definition'] + '\n' + hsrp.authModeMD5['threatInfo'] + '\n\n' + hsrp.authModeMD5['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3161,7 +3191,7 @@ def analyzorVrrp(lines, vrrp, ifaceCfg):
 
 	toBeReturned = ''
 	if vrrp.authModeMD5['mustBeReported'] == True:
-		toBeReturned = vrrp.authModeMD5['definition'] + vrrp.authModeMD5['threatInfo'] + vrrp.authModeMD5['howtofix']
+		toBeReturned = vrrp.authModeMD5['definition'] + '\n' + vrrp.authModeMD5['threatInfo'] + '\n\n' + vrrp.authModeMD5['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3187,7 +3217,7 @@ def analyzorIPoptions(lines, ipoptions):
 
 	toBeReturned = ''
 	if ipoptions.drop['mustBeReported'] == True:
-		toBeReturned = ipoptions.drop['definition'] + ipoptions.drop['threatInfo'] + ipoptions.drop['howtofix']
+		toBeReturned = ipoptions.drop['definition'] + '\n' + ipoptions.drop['threatInfo'] + '\n\n' + ipoptions.drop['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3213,7 +3243,7 @@ def analyzorIPsrcRoute(lines, ipsrcroute):
 
 	toBeReturned = ''
 	if ipsrcroute.drop['mustBeReported'] == True:
-		toBeReturned = ipsrcroute.drop['definition'] + ipsrcroute.drop['threatInfo'] + ipsrcroute.drop['howtofix']
+		toBeReturned = ipsrcroute.drop['definition'] + '\n' + ipsrcroute.drop['threatInfo'] + '\n\n' + ipsrcroute.drop['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3239,7 +3269,7 @@ def analyzorICMPdeny(lines, denyicmp):
 
 	toBeReturned = ''
 	if denyicmp.filtered['mustBeReported'] == True:
-		toBeReturned = denyicmp.filtered['definition'] + denyicmp.filtered['threatInfo'] + denyicmp.filtered['howtofix']
+		toBeReturned = denyicmp.filtered['definition'] + '\n' + denyicmp.filtered['threatInfo'] + '\n\n' + denyicmp.filtered['howtofix'] + '\n'
 
 	return toBeReturned
 		
@@ -3284,7 +3314,7 @@ def analyzorIPfragments(lines, ipfrags):
 
 	toBeReturned = ''
 	if ipfrags.filtered['mustBeReported'] == True:
-		toBeReturned = ipfrags.filtered['definition'] + ipfrags.filtered['threatInfo'] + ipfrags.filtered['howtofix']
+		toBeReturned = ipfrags.filtered['definition'] + '\n' + ipfrags.filtered['threatInfo'] + '\n\n' + ipfrags.filtered['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3316,7 +3346,9 @@ def analyzorURPF(lines, urpf, ifaceCfg):
 		if urpf.spoofing['candidates']:
 			urpf.spoofing['howtofix'] = urpf.spoofing['howtofix'].strip().replace('[%URPFCandidates]', ", ".join(urpf.spoofing['candidates']), 1)
 		
-		return urpf.spoofing['definition'] + urpf.spoofing['threatInfo'] + urpf.spoofing['howtofix']
+		return urpf.spoofing['definition'] + '\n' + urpf.spoofing['threatInfo'] + '\n\n' + urpf.spoofing['howtofix'] + '\n'
+	else:
+		return "URPF configuration is OK."
 
 def analyzorURPFv6(lines, urpfv6, ifaceCfg):
 
@@ -3344,7 +3376,9 @@ def analyzorURPFv6(lines, urpfv6, ifaceCfg):
 		if urpfv6.spoofing['candidates']:
 			urpfv6.spoofing['howtofix'] = urpfv6.spoofing['howtofix'].strip().replace('[%URPFv6Candidates]', ", ".join(urpfv6.spoofing['candidates']), 1)
 
-		return urpfv6.spoofing['definition'] + urpfv6.spoofing['threatInfo'] + urpfv6.spoofing['howtofix']
+		return urpfv6.spoofing['definition'] + '\n' + urpfv6.spoofing['threatInfo'] + '\n\n' + urpfv6.spoofing['howtofix'] + '\n'
+	else:
+		return "URPFv6 configuration is OK."
 
 def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
 	for i in range(0, len(ifaceCfg)):
@@ -3438,15 +3472,15 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
 
 	toBeReturned = ''
 	if portsecurity.sticky['mustBeReported'] == True:
-		toBeReturned = portsecurity.sticky['definition'] + portsecurity.sticky['threatInfo'] + portsecurity.sticky['howtofix']
+		toBeReturned = portsecurity.sticky['definition'] + '\n' + portsecurity.sticky['threatInfo'] + '\n\n' + portsecurity.sticky['howtofix'] + '\n'
 	if portsecurity.violation['mustBeReported'] == True:
-		toBeReturned = toBeReturned + portsecurity.violation['definition'] + portsecurity.violation['threatInfo'] + portsecurity.violation['howtofix']
+		toBeReturned = toBeReturned + portsecurity.violation['definition'] + '\n' + portsecurity.violation['threatInfo'] + '\n\n' + portsecurity.violation['howtofix'] + '\n'
 	if portsecurity.maximumTotal['mustBeReported'] == True:
-		toBeReturned = toBeReturned + portsecurity.maximumTotal['definition'] + portsecurity.maximumTotal['threatInfo'] + portsecurity.maximumTotal['howtofix']
+		toBeReturned = toBeReturned + portsecurity.maximumTotal['definition'] + '\n' + portsecurity.maximumTotal['threatInfo'] + '\n\n' + portsecurity.maximumTotal['howtofix'] + '\n'
 	if portsecurity.maximumAccess['mustBeReported'] == True:
-		toBeReturned = toBeReturned + portsecurity.maximumAccess['definition'] + portsecurity.maximumAccess['threatInfo'] + portsecurity.maximumAccess['howtofix']
+		toBeReturned = toBeReturned + portsecurity.maximumAccess['definition'] + '\n' + portsecurity.maximumAccess['threatInfo'] + '\n\n' + portsecurity.maximumAccess['howtofix'] + '\n'
 	if portsecurity.maximumVoice['mustBeReported'] == True:
-		toBeReturned = toBeReturned + portsecurity.maximumVoice['definition'] + portsecurity.maximumVoice['threatInfo'] + portsecurity.maximumVoice['howtofix']
+		toBeReturned = toBeReturned + portsecurity.maximumVoice['definition'] + '\n' + portsecurity.maximumVoice['threatInfo'] + '\n\n' + portsecurity.maximumVoice['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3487,7 +3521,7 @@ def analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg):
 
 	toBeReturned = ''
 	if ipv6.rh0['mustBeReported'] == True:
-		toBeReturned = ipv6.rh0['definition'] + ipv6.rh0['threatInfo'] + ipv6.rh0['howtofix']
+		toBeReturned = ipv6.rh0['definition'] + '\n' + ipv6.rh0['threatInfo'] + '\n\n' + ipv6.rh0['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3532,9 +3566,9 @@ def analyzorIPSEC(lines, ipsec):
 
 	toBeReturned = ''
 	if ipsec.cacIKE['mustBeReported'] == True:
-		toBeReturned = ipsec.cacIKE['definition'] + ipsec.cacIKE['threatInfo'] + ipsec.cacIKE['howtofix']
+		toBeReturned = ipsec.cacIKE['definition'] + '\n' + ipsec.cacIKE['threatInfo'] + '\n\n' + ipsec.cacIKE['howtofix'] + '\n'
 	if ipsec.cacRSC['mustBeReported'] == True:
-		toBeReturned = toBeReturned + ipsec.cacRSC['definition'] + ipsec.cacRSC['threatInfo'] + ipsec.cacRSC['howtofix']
+		toBeReturned = toBeReturned + ipsec.cacRSC['definition'] + '\n' + ipsec.cacRSC['threatInfo'] + '\n\n' + ipsec.cacRSC['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3560,7 +3594,7 @@ def analyzorTclSH(lines, tclsh):
 
 	toBeReturned = ''
 	if tclsh.shell['mustBeReported'] == True:
-		toBeReturned = tclsh.shell['definition'] + tclsh.shell['threatInfo'] + tclsh.shell['howtofix']
+		toBeReturned = tclsh.shell['definition'] + '\n' + tclsh.shell['threatInfo'] + '\n\n' + tclsh.shell['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3593,7 +3627,7 @@ def analyzorTcp(lines, tcp):
 
 	toBeReturned = ''
 	if tcp.synwait['mustBeReported'] == True:
-		toBeReturned = tcp.synwait['definition'] + tcp.synwait['threatInfo'] + tcp.synwait['howtofix']
+		toBeReturned = tcp.synwait['definition'] + '\n' + tcp.synwait['threatInfo'] + '\n\n' + tcp.synwait['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3779,27 +3813,27 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 
 	toBeReturned = ''
 	if level2protocols.nonegotiate['mustBeReported'] == True:
-		toBeReturned = level2protocols.nonegotiate['definition'] + level2protocols.nonegotiate['threatInfo'] + level2protocols.nonegotiate['howtofix']
+		toBeReturned = level2protocols.nonegotiate['definition'] + '\n' + level2protocols.nonegotiate['threatInfo'] + '\n\n' + level2protocols.nonegotiate['howtofix'] + '\n'
 	if level2protocols.flowcontrol['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.flowcontrol['definition'] + level2protocols.flowcontrol['threatInfo'] + level2protocols.flowcontrol['howtofix']
+		toBeReturned = toBeReturned + level2protocols.flowcontrol['definition'] + '\n' + level2protocols.flowcontrol['threatInfo'] + '\n\n' + level2protocols.flowcontrol['howtofix'] + '\n'
 	if level2protocols.schedulerallocate['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.schedulerallocate['definition'] + level2protocols.schedulerallocate['threatInfo'] + level2protocols.schedulerallocate['howtofix']
+		toBeReturned = toBeReturned + level2protocols.schedulerallocate['definition'] + '\n' + level2protocols.schedulerallocate['threatInfo'] + '\n\n' + level2protocols.schedulerallocate['howtofix'] + '\n'
 	if level2protocols.schedulerinterval['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.schedulerinterval['definition'] + level2protocols.schedulerinterval['threatInfo'] + level2protocols.schedulerinterval['howtofix']
+		toBeReturned = toBeReturned + level2protocols.schedulerinterval['definition'] + '\n' + level2protocols.schedulerinterval['threatInfo'] + '\n\n' + level2protocols.schedulerinterval['howtofix'] + '\n'
 	if level2protocols.udld['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.udld['definition'] + level2protocols.udld['threatInfo'] + level2protocols.udld['howtofix']
+		toBeReturned = toBeReturned + level2protocols.udld['definition'] + '\n' + level2protocols.udld['threatInfo'] + '\n\n' + level2protocols.udld['howtofix'] + '\n'
 	if level2protocols.vlan1['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.vlan1['definition'] + level2protocols.vlan1['threatInfo'] + level2protocols.vlan1['howtofix']
+		toBeReturned = toBeReturned + level2protocols.vlan1['definition'] + '\n' + level2protocols.vlan1['threatInfo'] + '\n\n' + level2protocols.vlan1['howtofix'] + '\n'
 	if level2protocols.unusedports['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.unusedports['definition'] + level2protocols.unusedports['threatInfo'] + level2protocols.unusedports['howtofix']
+		toBeReturned = toBeReturned + level2protocols.unusedports['definition'] + '\n' + level2protocols.unusedports['threatInfo'] + '\n\n' + level2protocols.unusedports['howtofix'] + '\n'
 	if level2protocols.vtpsecure['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.vtpsecure['definition'] + level2protocols.vtpsecure['threatInfo'] + level2protocols.vtpsecure['howtofix']
+		toBeReturned = toBeReturned + level2protocols.vtpsecure['definition'] + '\n' + level2protocols.vtpsecure['threatInfo'] + '\n\n' + level2protocols.vtpsecure['howtofix'] + '\n'
 	if level2protocols.bpduguard['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.bpduguard['definition'] + level2protocols.bpduguard['threatInfo'] + level2protocols.bpduguard['howtofix']
+		toBeReturned = toBeReturned + level2protocols.bpduguard['definition'] + '\n' + level2protocols.bpduguard['threatInfo'] + '\n\n' + level2protocols.bpduguard['howtofix'] + '\n'
 	if level2protocols.stproot['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.stproot['definition'] + level2protocols.stproot['threatInfo'] + level2protocols.stproot['howtofix']
+		toBeReturned = toBeReturned + level2protocols.stproot['definition'] + '\n' + level2protocols.stproot['threatInfo'] + '\n\n' + level2protocols.stproot['howtofix'] + '\n'
 	if level2protocols.dot1x['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.dot1x['definition'] + level2protocols.dot1x['threatInfo'] + level2protocols.dot1x['howtofix']
+		toBeReturned = toBeReturned + level2protocols.dot1x['definition'] + '\n' + level2protocols.dot1x['threatInfo'] + '\n\n' + level2protocols.dot1x['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3866,7 +3900,7 @@ def analyzorNetflow(lines, netflow, ifaceCfg):
 
 	toBeReturned = ''
 	if netflow.V9securityL2['mustBeReported'] == True:
-		toBeReturned = netflow.V9securityL2['definition'] + netflow.V9securityL2['threatInfo'] + netflow.V9securityL2['howtofix']
+		toBeReturned = netflow.V9securityL2['definition'] + '\n' + netflow.V9securityL2['threatInfo'] + '\n\n' + netflow.V9securityL2['howtofix'] + '\n'
 
 	return toBeReturned
 
@@ -3904,7 +3938,7 @@ def analyzorMulticast(lines, multicast):
 	else:
 		toBeReturned = 'Multicast MSDP is not configured.'
 	if multicast.msdp['mustBeReported'] == True:
-		toBeReturned = multicast.msdp['definition'] + multicast.msdp['threatInfo'] + multicast.msdp['howtofix']
+		toBeReturned = multicast.msdp['definition'] + '\n' + multicast.msdp['threatInfo'] + '\n\n' + multicast.msdp['howtofix'] + '\n'
 
 	return toBeReturned
 
