@@ -3901,7 +3901,8 @@ def analyzorMulticast(lines, multicast):
 			"howtofix": (items[3]),
 			"cvss": (cvssMetrics)}
 
-	toBeReturned = ''
+	else:
+		toBeReturned = 'Multicast MSDP is not configured.'
 	if multicast.msdp['mustBeReported'] == True:
 		toBeReturned = multicast.msdp['definition'] + multicast.msdp['threatInfo'] + multicast.msdp['howtofix']
 
