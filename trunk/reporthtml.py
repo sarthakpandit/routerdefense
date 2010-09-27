@@ -107,7 +107,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
 						htmlMPlane.append('</table>')
 						htmlMPlane.append('</p></article><br />')
 
-						htmlTOC.append('<li><a href=#MP'+ str(MPlaneCounter) + '>' + definition + '</a></li>')
+						htmlTOC.append('<li><a href=#MP'+ str(MPlaneCounter) + '>' + name.longName + ': ' + definition + '</a></li>')
 						MPlaneCounter = MPlaneCounter + 1
 							
 	htmlCPlane.append('<a id="planeTitle" name="CPlane">Control Plane</a><br /><br />')	
@@ -178,7 +178,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
 						htmlCPlane.append('</table>')
 						htmlCPlane.append('</p></article><br />')
 
-						htmlTOC.append('<li><a href=#CP'+ str(CPlaneCounter) + '>' + definition + '</a></li>')
+						htmlTOC.append('<li><a href=#CP'+ str(CPlaneCounter) + '>' + name.longName + ': ' + definition + '</a></li>')
 						CPlaneCounter = CPlaneCounter + 1
 
 	htmlDPlane.append('<a id="planeTitle" name="DPlane">Data Plane</a><br /><br />')	
@@ -242,7 +242,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
 						htmlDPlane.append('</table>')
 						htmlDPlane.append('</p></article><br />')
 
-						htmlTOC.append('<li><a href=#DP'+ str(DPlaneCounter) + '>' + definition + '</a></li>')
+						htmlTOC.append('<li><a href=#DP'+ str(DPlaneCounter) + '>' + name.longName + ': ' + definition + '</a></li>')
 						DPlaneCounter = DPlaneCounter + 1
 
 
