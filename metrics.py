@@ -265,7 +265,7 @@ class lineAux():
 	def __init__(self):
 		self.password = None
 		self.metricName = 'Aux'
-		self.longName = 'Auxiliary port'
+		self.longName = 'Aux port'
 		self.execTimeout = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -365,7 +365,7 @@ class lineVty():
 class motdBanner():
 	def __init__(self):
 		self.metricName = 'motdBanner'
-		self.longName = 'Message Of The Day banner'
+		self.longName = 'MOTD banner'
 		self.configured = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -446,7 +446,7 @@ class loginBanner():
 class globalServices():
 	def __init__(self):
 		self.metricName = 'globalServices'
-		self.longName = 'IOS TCP/UDP global services'
+		self.longName = 'IOS TCP/UDP services'
 		self.pwdRecovery = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -604,7 +604,29 @@ class globalServices():
 class memCpu():
 	def __init__(self):
 		self.metricName = 'memCpu'
-		self.longName = 'CPU/Memory threshold notifications'
+		self.longName = 'CPU/Memory'
+		self.schedulerallocate = {
+		"cmdInCfg": (None),
+		"mustBeReported": False,
+		"fixImpact": (None),
+		"definition": (None),
+		"desc": (None),
+		"threatInfo": (None),
+		"howtofix": (None),
+		"upgrade": (None),
+		"cvss": (None)
+		}
+		self.schedulerinterval = {
+		"cmdInCfg": (None),
+		"mustBeReported": False,
+		"fixImpact": (None),
+		"definition": (None),
+		"desc": (None),
+		"threatInfo": (None),
+		"howtofix": (None),
+		"upgrade": (None),
+		"cvss": (None)
+		}		
 		self.lowWatermarkProcessor = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -690,7 +712,7 @@ class memCpu():
 class exceptionCrash():
 	def __init__(self):
 		self.metricName = 'exceptionCrash'
-		self.longName = 'Exceptions and crashes files'	
+		self.longName = 'Exceptions/crashes'	
 		self.crashinfoMaxFiles = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -706,7 +728,7 @@ class exceptionCrash():
 class managementProtection():
 	def __init__(self):
 		self.metricName = 'managementProtection'
-		self.longName = 'Management plane protection'	
+		self.longName = 'Management protection'	
 		self.managementInterface = {
 		"cpHostCfg": (None),
 		"mgmtIfaceCfg": (None),
@@ -969,7 +991,7 @@ class tacacsAccounting():
 class passwordManagement():
 	def __init__(self):
 		self.metricName = 'passwordManagement'
-		self.longName = 'Global passwords and authentication management'
+		self.longName = 'Passwords and authentication management'
 		self.enableSecret = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -1263,7 +1285,7 @@ class Syslog():
 class ArchiveConfiguration():
 	def __init__(self):
 		self.metricName = 'archive'
-		self.longName = 'Configuration Replace and Configuration Rollback'
+		self.longName = 'Configuration Replace/Rollback'
 		self.configuration = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -1323,7 +1345,7 @@ class ArchiveConfiguration():
 class IPicmpRedirects():
 	def __init__(self):
 		self.metricName = 'icmpRedirects'
-		self.longName = 'IP ICMP redirects'
+		self.longName = 'ICMPv4 redirects'
 		self.redirects = {
 		"disabledIfsFeature": [],
 		"enabledIfsFeature": [],
@@ -1338,7 +1360,7 @@ class IPicmpRedirects():
 class IPicmpUnreachable():
 	def __init__(self):
 		self.metricName = 'icmpUnreachable'
-		self.longName = 'IP ICMP unreachable'
+		self.longName = 'ICMPv4 unreachable'
 		self.unreachable = {
 		"unreachableRate": None,
 		"disabledIfsFeature": [],
@@ -1632,7 +1654,7 @@ class Vrrp():
 class IPoptions():
 	def __init__(self):
 		self.metricName = 'ipoptions'
-		self.longName = 'IP Options'
+		self.longName = 'IPv4 Options'
 		self.drop = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -1648,7 +1670,7 @@ class IPoptions():
 class IPsourceRoute():
 	def __init__(self):
 		self.metricName = 'ipsourceroute'
-		self.longName = 'IP source route'
+		self.longName = 'IPv4 source route'
 		self.drop = {
 		"cmdInCfg": (None),
 		"mustBeReported": False,
@@ -1680,7 +1702,7 @@ class ICMPdeny():
 class IPfrags():
 	def __init__(self):
 		self.metricName = 'ipfrags'
-		self.longName = 'IP fragments'
+		self.longName = 'IPv4 fragments'
 		self.filtered = {
 		"tcp": (None),
 		"udp": (None),
@@ -1699,7 +1721,7 @@ class IPfrags():
 class URPF():
 	def __init__(self):
 		self.metricName = 'urpf'
-		self.longName = 'Unicast Reverse Path Forwarding'
+		self.longName = 'Unicast Reverse Path Forwarding (IPv4)'
 		self.spoofing = {
 		"candidates": [],
 		"mustBeReported": False,
@@ -1870,7 +1892,7 @@ class Tcp():
 class dtpstpvlan():
 	def __init__(self):
 		self.metricName = 'level2protocols'
-		self.longName = 'DTP STP VLAN'
+		self.longName = 'Level 2'
 		self.nonegotiate = {
 		"candidates": [],
 		"cmdInCfg": (None),
@@ -1887,28 +1909,6 @@ class dtpstpvlan():
 		"candidates": [],
 		"receive": (None),
 		"transmit": (None),
-		"mustBeReported": False,
-		"fixImpact": (None),
-		"definition": (None),
-		"desc": (None),
-		"threatInfo": (None),
-		"howtofix": (None),
-		"upgrade": (None),
-		"cvss": (None)
-		}
-		self.schedulerallocate = {
-		"cmdInCfg": (None),
-		"mustBeReported": False,
-		"fixImpact": (None),
-		"definition": (None),
-		"desc": (None),
-		"threatInfo": (None),
-		"howtofix": (None),
-		"upgrade": (None),
-		"cvss": (None)
-		}
-		self.schedulerinterval = {
-		"cmdInCfg": (None),
 		"mustBeReported": False,
 		"fixImpact": (None),
 		"definition": (None),
@@ -2001,7 +2001,7 @@ class dtpstpvlan():
 class Netflow():
 	def __init__(self):
 		self.metricName = 'Netflow'
-		self.longName = 'Netflow security monitoring'
+		self.longName = 'Netflow'
 		self.V9securityL2 = {
 		"fragoffset": (None),
 		"icmp": (None),

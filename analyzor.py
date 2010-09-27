@@ -67,11 +67,11 @@ def analyzorCdp(cdpConfiguration, fullConfig, ifaceCfg):
 	for i in range(0, len(ifaceCfg)):
 		for line in ifaceCfg[i].configuration:
 			if line == 'no cdp enable':
-				if not 'Loopback' in ifaceCfg[i].name.strip():
+				if not 'Loopback' in ifaceCfg[i].name.strip() and not 'Vlan' in ifaceCfg[i].name.strip():
 					cdpConfiguration.cdp['disabledIfsCdp'].append(ifaceCfg[i].name.strip())
 					noCdpEnableFound = True
 		if noCdpEnableFound == False:
-			if not 'Loopback' in ifaceCfg[i].name.strip():
+			if not 'Loopback' in ifaceCfg[i].name.strip() and not 'Vlan' in ifaceCfg[i].name.strip():
 				cdpConfiguration.cdp['enabledIfsCdp'].append(ifaceCfg[i].name.strip())		
 
 	if ( (cdpConfiguration.cdp['globalCdp'] == True) or (cdpConfiguration.cdp['enabledIfsCdp']) ):
@@ -105,13 +105,13 @@ def analyzorLldp(lldpConfiguration, fullConfig, ifaceCfg):
 			if line == 'no lldp receive':
 				lldpReceive = False
 		if lldpTransmit == True:
-			if not 'Loopback' in ifaceCfg[i].name.strip():
+			if not 'Loopback' in ifaceCfg[i].name.strip() and not 'Vlan' in ifaceCfg[i].name.strip():
 				lldpConfiguration.lldp['enabledTransmitLldp'].append(ifaceCfg[i].name.strip())
 		if lldpReceive == True:
-			if not 'Loopback' in ifaceCfg[i].name.strip():
+			if not 'Loopback' in ifaceCfg[i].name.strip() and not 'Vlan' in ifaceCfg[i].name.strip():
 				lldpConfiguration.lldp['enabledReceiveLldp'].append(ifaceCfg[i].name.strip())
 		if lldpTransmit == False and lldpReceive == False:
-			if not 'Loopback' in ifaceCfg[i].name.strip():
+			if not 'Loopback' in ifaceCfg[i].name.strip() and not 'Vlan' in ifaceCfg[i].name.strip():
 				lldpConfiguration.lldp['disabledIfsLldp'].append(ifaceCfg[i].name.strip())	
 
 	ToBeReturned = 'LLDP is OK.'
@@ -371,7 +371,7 @@ def analyzorVty(vtyCfg,vty):
 	except AttributeError:
 		vty.transportOutput['cmdInCfg'] = None
 
-	if __builtin__.genericCfg.ipv6 == "Enabled":	
+	if __builtin__.genericCfg.ipv6 == "Enabled":
 		try:	
 			vty.IPv6accessClass['cmdInCfg'] = searchRegexString(vtyCfg, '^ipv6 access-class .* in$')
 		except AttributeError:
@@ -428,7 +428,7 @@ def analyzorVty(vtyCfg,vty):
 		"howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
 		"cvss": (cvssMetrics)}
 
-	if vty.IPv6accessClass['cmdInCfg'] != None:
+	if vty.IPv6accessClass['cmdInCfg'] == None:
 		vty.IPv6accessClass['mustBeReported'] = False
 	else:
 		items = searchInXml('vtyIPv6AccessClass')
@@ -902,10 +902,51 @@ def analyzorServices(lines, services):
 	return toBeReturned
 
 def analyzorMemCpu(lines, memCpu):
+
+	try:
+		memCpu.schedulerallocate['cmdInCfg'] = searchString(lines, 'scheduler allocate 4000 400')
+	except AttributeError:
+		pass
+
+	if memCpu.schedulerallocate['cmdInCfg'] == None:
+		memCpu.schedulerallocate['mustBeReported'] = True
+		
+	try:
+		memCpu.schedulerinterval['cmdInCfg'] = searchString(lines, 'scheduler interval 500')
+	except AttributeError:
+		pass
+
+	if memCpu.schedulerinterval['cmdInCfg'] == None:
+		memCpu.schedulerinterval['mustBeReported'] = True
+
+	if memCpu.schedulerallocate['mustBeReported'] == True:
+		items = searchInXml('schedulerallocate')
+		cvssMetrics = str(calculateCVSS2Score(items[5]))
+		memCpu.schedulerallocate = {
+		"mustBeReported": True,
+		"fixImpact": (items[0]),
+		"definition": (items[1]),
+		"threatInfo": (items[2]),			
+		"howtofix": (items[3]),
+		"cvss": (cvssMetrics)}
+
+	if memCpu.schedulerinterval['mustBeReported'] == True:
+		items = searchInXml('schedulerinterval')
+		cvssMetrics = str(calculateCVSS2Score(items[5]))
+		memCpu.schedulerinterval = {
+		"mustBeReported": True,
+		"fixImpact": (items[0]),
+		"definition": (items[1]),
+		"threatInfo": (items[2]),			
+		"howtofix": (items[3]),
+		"cvss": (cvssMetrics)}
+
+
 	try:
 		memCpu.lowWatermarkProcessor['cmdInCfg'] = searchString(lines, 'memory free low-watermark processor')
 	except AttributeError:
 		pass
+
 	if memCpu.lowWatermarkProcessor['cmdInCfg'] != None:
 		# feature already configured
 		memCpu.lowWatermarkProcessor['mustBeReported'] = False
@@ -1120,6 +1161,10 @@ def analyzorMemCpu(lines, memCpu):
 			"cvss": (cvssMetrics)}
 
 	toBeReturned = ''
+	if memCpu.schedulerallocate['mustBeReported'] == True:
+		toBeReturned = toBeReturned + memCpu.schedulerallocate['definition'] + '\n' + memCpu.schedulerallocate['threatInfo'] + '\n\n' + memCpu.schedulerallocate['howtofix'] + '\n'
+	if memCpu.schedulerinterval['mustBeReported'] == True:
+		toBeReturned = toBeReturned + memCpu.schedulerinterval['definition'] + '\n' + memCpu.schedulerinterval['threatInfo'] + '\n\n' + memCpu.schedulerinterval['howtofix'] + '\n'
 	if memCpu.lowWatermarkProcessor['mustBeReported'] == True:
 		toBeReturned = memCpu.lowWatermarkProcessor['definition'] + '\n' + memCpu.lowWatermarkProcessor['threatInfo'] + '\n\n' + memCpu.lowWatermarkProcessor['howtofix'] + '\n'
 	if memCpu.lowWatermarkIo['mustBeReported'] == True:
@@ -1177,19 +1222,40 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
 				mpp.sshServer['mustBeReported'] = False
 				mpp.scpServer['mustBeReported'] = False
 				return				
+	if __builtin__.deviceType == 'router':
+		try:
+			mpp.managementInterface['cpHostCfg'] = searchString(lines, 'control-plane host')
+		except AttributeError:
+			pass
+		try:
+			mpp.managementInterface['mgmtIfaceCfg'] = searchRegexString(lines, 'management-interface .* allow .*')
+		except AttributeError:
+			pass
 
-	try:
-		mpp.managementInterface['cpHostCfg'] = searchString(lines, 'control-plane host')
-	except AttributeError:
-		pass
-	try:
-		mpp.managementInterface['mgmtIfaceCfg'] = searchRegexString(lines, 'management-interface .* allow .*')
-	except AttributeError:
-		pass
-
-	if mpp.managementInterface['cpHostCfg'] != None:
-		if mpp.managementInterface['mgmtIfaceCfg'] != None:
-			mpp.managementInterface['mustBeReported'] = False
+		if mpp.managementInterface['cpHostCfg'] != None:
+			if mpp.managementInterface['mgmtIfaceCfg'] != None:
+				mpp.managementInterface['mustBeReported'] = False
+			else:
+				if __builtin__.iosVersion >= 12.46:	
+					items = searchInXml('ManagementPlaneProtection')
+					cvssMetrics = str(calculateCVSS2Score(items[5]))
+					mpp.managementInterface = {
+					"mustBeReported": True,
+					"fixImpact": (items[0]),
+					"definition": (items[1]),
+					"threatInfo": (items[2]),			
+					"howtofix": (items[3]),
+					"cvss": (cvssMetrics)}
+				else:
+					items = searchInXml('ManagementPlaneProtection')
+					cvssMetrics = str(calculateCVSS2Score(items[5]))
+					mpp.managementInterface = {
+					"mustBeReported": True,
+					"fixImpact": (items[0]),
+					"definition": (items[1]),
+					"threatInfo": (items[2]),			
+					"howtofix": (items[4]),
+					"cvss": (cvssMetrics)}
 		else:
 			if __builtin__.iosVersion >= 12.46:	
 				items = searchInXml('ManagementPlaneProtection')
@@ -1211,28 +1277,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
 				"threatInfo": (items[2]),			
 				"howtofix": (items[4]),
 				"cvss": (cvssMetrics)}
-	else:
-		if __builtin__.iosVersion >= 12.46:	
-			items = searchInXml('ManagementPlaneProtection')
-			cvssMetrics = str(calculateCVSS2Score(items[5]))
-			mpp.managementInterface = {
-			"mustBeReported": True,
-			"fixImpact": (items[0]),
-			"definition": (items[1]),
-			"threatInfo": (items[2]),			
-			"howtofix": (items[3]),
-			"cvss": (cvssMetrics)}
-		else:
-			items = searchInXml('ManagementPlaneProtection')
-			cvssMetrics = str(calculateCVSS2Score(items[5]))
-			mpp.managementInterface = {
-			"mustBeReported": True,
-			"fixImpact": (items[0]),
-			"definition": (items[1]),
-			"threatInfo": (items[2]),			
-			"howtofix": (items[4]),
-			"cvss": (cvssMetrics)}
-			
+				
 	try:
 		mpp.sshServerTimeout['timeout'] = searchString(lines, 'ip ssh time-out')
 	except AttributeError:
@@ -3637,10 +3682,10 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 		if searchRegexString(lines,'^vtp password .*$') == None:
 			level2protocols.vtpsecure['mustBeReported'] = True
 
-	if searchRegexString(lines,'^spanning-tree portfast bpduguard default$') == None:
+	if __builtin__.deviceType != 'router' and searchRegexString(lines,'^spanning-tree portfast bpduguard default$') == None:
 			level2protocols.bpduguard['mustBeReported'] = True
 
-	if searchRegexString(lines,'^dot1x system-auth-control$') == None:
+	if __builtin__.deviceType == 'switch' and searchRegexString(lines,'^dot1x system-auth-control$') == None:
 		level2protocols.dot1x['mustBeReported'] = True
 		
 	for i in range(0, len(ifaceCfg)):
@@ -3653,30 +3698,15 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 				level2protocols.vlan1['mustBeReported'] = True				
 
 		if searchRegexString(ifaceCfg[i].configuration, '^flowcontrol receive off$') == None:
-			level2protocols.flowcontrol['candidates'].append(ifaceCfg[i].name.strip())
-			level2protocols.flowcontrol['mustBeReported'] = True
+			if not 'Loopback' in ifaceCfg[i].name.strip() and not 'Vlan' in ifaceCfg[i].name.strip():
+				level2protocols.flowcontrol['candidates'].append(ifaceCfg[i].name.strip())
+				level2protocols.flowcontrol['mustBeReported'] = True
 
 		if searchRegexString(ifaceCfg[i].configuration, '^shutdown$') != None:	
 			if searchRegexString(ifaceCfg[i].configuration,'^switchport access vlan 999$') == None:
 				if __builtin__.deviceType == 'switch':
 					level2protocols.unusedports['candidates'].append(ifaceCfg[i].name.strip())
 					level2protocols.unusedports['mustBeReported'] = True						
-
-	try:
-		level2protocols.schedulerallocate['cmdInCfg'] = searchString(lines, 'scheduler allocate 4000 400')
-	except AttributeError:
-		pass
-
-	if level2protocols.schedulerallocate['cmdInCfg'] == None:
-		level2protocols.schedulerallocate['mustBeReported'] = True
-		
-	try:
-		level2protocols.schedulerinterval['cmdInCfg'] = searchString(lines, 'scheduler interval 500')
-	except AttributeError:
-		pass
-
-	if level2protocols.schedulerinterval['cmdInCfg'] == None:
-		level2protocols.schedulerinterval['mustBeReported'] = True
 
 	try:
 		level2protocols.udld['cmdInCfg'] = searchString(lines, 'no udld enable')
@@ -3686,28 +3716,6 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 	if level2protocols.udld['cmdInCfg'] == None:
 		level2protocols.udld['mustBeReported'] = True
 
-	if level2protocols.schedulerallocate['mustBeReported'] == True:
-		items = searchInXml('schedulerallocate')
-		cvssMetrics = str(calculateCVSS2Score(items[5]))
-		level2protocols.schedulerallocate = {
-		"mustBeReported": True,
-		"fixImpact": (items[0]),
-		"definition": (items[1]),
-		"threatInfo": (items[2]),			
-		"howtofix": (items[3]),
-		"cvss": (cvssMetrics)}
-
-	if level2protocols.schedulerinterval['mustBeReported'] == True:
-		items = searchInXml('schedulerinterval')
-		cvssMetrics = str(calculateCVSS2Score(items[5]))
-		level2protocols.schedulerinterval = {
-		"mustBeReported": True,
-		"fixImpact": (items[0]),
-		"definition": (items[1]),
-		"threatInfo": (items[2]),			
-		"howtofix": (items[3]),
-		"cvss": (cvssMetrics)}
-	
 	if level2protocols.nonegotiate['mustBeReported'] == True:
 		items = searchInXml('nonegotiate')
 		cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -3816,10 +3824,6 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 		toBeReturned = level2protocols.nonegotiate['definition'] + '\n' + level2protocols.nonegotiate['threatInfo'] + '\n\n' + level2protocols.nonegotiate['howtofix'] + '\n'
 	if level2protocols.flowcontrol['mustBeReported'] == True:
 		toBeReturned = toBeReturned + level2protocols.flowcontrol['definition'] + '\n' + level2protocols.flowcontrol['threatInfo'] + '\n\n' + level2protocols.flowcontrol['howtofix'] + '\n'
-	if level2protocols.schedulerallocate['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.schedulerallocate['definition'] + '\n' + level2protocols.schedulerallocate['threatInfo'] + '\n\n' + level2protocols.schedulerallocate['howtofix'] + '\n'
-	if level2protocols.schedulerinterval['mustBeReported'] == True:
-		toBeReturned = toBeReturned + level2protocols.schedulerinterval['definition'] + '\n' + level2protocols.schedulerinterval['threatInfo'] + '\n\n' + level2protocols.schedulerinterval['howtofix'] + '\n'
 	if level2protocols.udld['mustBeReported'] == True:
 		toBeReturned = toBeReturned + level2protocols.udld['definition'] + '\n' + level2protocols.udld['threatInfo'] + '\n\n' + level2protocols.udld['howtofix'] + '\n'
 	if level2protocols.vlan1['mustBeReported'] == True:

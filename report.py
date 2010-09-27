@@ -55,7 +55,6 @@ def stdoutReport(genericCfg, ManagementPlaneMetrics, ControlPlaneMetrics, DataPl
 			counter = 0
 			total = 0		
 			if name != 'interface':
-				total = total + 1
 				print createStdoutBanner(name.longName)
 				for k,v in inspect.getmembers(name):
 					if isinstance(v, dict):
@@ -69,8 +68,6 @@ def stdoutReport(genericCfg, ManagementPlaneMetrics, ControlPlaneMetrics, DataPl
 							cvss = v['cvss'].strip()
 							print formatStdoutContent(definition, threatInfo, howtofix, fixImpact, cvss)
 				
-				if counter == 0:
-					print "Congrats! this part of the configuration is secure."
 				print '\nNumber of threat(s) to fix: %d/%d' % (counter, total)
 				if ( (name.longName == 'Vty lines') and (vtyAlreadyReported == False)):
 					summaryTable.append('%s: %d/%d' % (name.longName, counter, total))
@@ -86,11 +83,10 @@ def stdoutReport(genericCfg, ManagementPlaneMetrics, ControlPlaneMetrics, DataPl
 			total = 0
 			counter = 0
 			if name != 'interface':
-				total = total + 1
 				print createStdoutBanner(name.longName)
 				for k,v in inspect.getmembers(name):
-					total = total + 1
 					if isinstance(v, dict):
+						total = total + 1
 						if v['mustBeReported'] == True:
 							counter = counter + 1
 							definition = v['definition'].strip()
@@ -126,8 +122,6 @@ def stdoutReport(genericCfg, ManagementPlaneMetrics, ControlPlaneMetrics, DataPl
 							howtofix = v['howtofix']
 							print formatStdoutContent(definition, threatInfo, howtofix, fixImpact, cvss)
 
-				if counter == 0:
-					print "Congrats! this part of the configuration is secure."
 				print '\nNumber of threat(s) to fix: %d/%d' % (counter, total) 
 				summaryTable.append('%s: %d/%d' % (name.longName, counter, total))
 
@@ -139,11 +133,10 @@ def stdoutReport(genericCfg, ManagementPlaneMetrics, ControlPlaneMetrics, DataPl
 			total = 0
 			counter = 0
 			if name != 'interface':
-				total = total + 1
 				print createStdoutBanner(name.longName)
 				for k,v in inspect.getmembers(name):
-					total = total + 1
 					if isinstance(v, dict):
+						total = total + 1
 						if v['mustBeReported'] == True:
 							counter = counter + 1
 							definition = v['definition'].strip()
@@ -172,8 +165,6 @@ def stdoutReport(genericCfg, ManagementPlaneMetrics, ControlPlaneMetrics, DataPl
 							howtofix = v['howtofix']
 							print formatStdoutContent(definition, threatInfo, howtofix, fixImpact, cvss)
 
-				if counter == 0:
-					print "Congrats! this part of the configuration is secure."
 				print '\nNumber of threat(s) to fix: %d/%d' % (counter, total) 
 				summaryTable.append('%s: %d/%d' % (name.longName, counter, total))
 
