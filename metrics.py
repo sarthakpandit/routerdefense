@@ -218,8 +218,9 @@ class ACLv4():
 	def populateMetricsFromConfig(self):
 		for line in range (0, len(self.configuration)):
 			if self.configuration[line].startswith('ip access-list'):
-				#self.name = self.configuration[line].split[' '][3]
-				self.type = self.configuration[line].split[' '][2]
+				#self.name = self.configuration[line].split(' ')[3]
+				self.type = self.configuration[line].split(' ')[2]
+				
 
 class ACLv6():
 	def __init__(self):
