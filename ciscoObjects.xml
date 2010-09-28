@@ -181,7 +181,9 @@
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session timeout</definition>
     <threatInfo>Someone could type commands when you aren't in front of the console</threatInfo>    
-    <howtofix>You should set the command exec-timeout 0 10</howtofix>
+    <howtofix>
+	(config)# line con 0
+    (config-line)# exec-timeout 0 10</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
   </unique_object>
