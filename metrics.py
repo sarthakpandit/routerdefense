@@ -3,7 +3,7 @@
 from common import *
 import __builtin__
 
-class metrics():
+class metrics:
 	
 	metricsList = list()
 	
@@ -65,7 +65,7 @@ class metrics():
 	def listMetric(self):
 		return self.metricsList
 
-class IFSmetrics():
+class IFSmetrics:
 	def __init__(self):
 		pass	 
 	def addInterface(self,metricName, name):
@@ -74,7 +74,7 @@ class IFSmetrics():
 			metricAdded.name = name
 		return metricAdded	
 
-class ACLV4metrics():
+class ACLV4metrics:
 	def __init__(self):
 		pass	 
 	def addInterface(self,metricName, name):
@@ -83,7 +83,7 @@ class ACLV4metrics():
 			metricAdded.name = name
 		return metricAdded
 	
-class ACLV6metrics():
+class ACLV6metrics:
 	def __init__(self):
 		pass	 
 	def addInterface(self,metricName, name):
@@ -92,7 +92,7 @@ class ACLV6metrics():
 			metricAdded.name = name
 		return metricAdded
 
-class CPmetrics():
+class CPmetrics:
 	
 	metricsList = list()
 	
@@ -145,7 +145,7 @@ class CPmetrics():
 		return self.metricsList
 
 
-class DPmetrics():
+class DPmetrics:
 	
 	metricsList = list()
 	
@@ -192,7 +192,7 @@ class DPmetrics():
 		return self.metricsList
 
 		
-class interfaces():
+class interfaces:
 	def __init__(self):
 		self.name = ''
 		self.ipAddress = 'no ip address'
@@ -209,7 +209,7 @@ class interfaces():
 			if self.configuration[line].startswith('shutdown'):
 				self.ShutdownState = 'shutdown'		
 					
-class ACLv4():
+class ACLv4:
 	def __init__(self):
 		self.name = ''
 		self.type = ''		
@@ -222,7 +222,7 @@ class ACLv4():
 				self.type = self.configuration[line].split(' ')[2]
 				
 
-class ACLv6():
+class ACLv6:
 	def __init__(self):
 		self.name = ''
 		self.configuration = []
@@ -232,7 +232,7 @@ class ACLv6():
 			if self.configuration[line].startswith('ipv6 access-list'):
 				self.name = self.configuration[line].split[' '][2]
 
-class lineConsole():
+class lineConsole:
 	def __init__(self):
 		self.metricName = 'Console'
 		self.longName = 'Console port'
@@ -262,7 +262,7 @@ class lineConsole():
 		"cvss": (None)
 		}		
 
-class lineAux():
+class lineAux:
 	def __init__(self):
 		self.password = None
 		self.metricName = 'Aux'
@@ -312,7 +312,7 @@ class lineAux():
 		"cvss": (None)
 		}			
 
-class lineVty():
+class lineVty:
 	def __init__(self):
 		self.metricName = 'Vty'
 		self.longName = 'Vty lines'
@@ -363,7 +363,7 @@ class lineVty():
 		"cvss": (None)
 		}		
 
-class motdBanner():
+class motdBanner:
 	def __init__(self):
 		self.metricName = 'motdBanner'
 		self.longName = 'MOTD banner'
@@ -390,7 +390,7 @@ class motdBanner():
 		"cvss": (None)
 		}
 		
-class execBanner():
+class execBanner:
 	def __init__(self):
 		self.metricName = 'execBanner'
 		self.longName = 'EXEC banner'
@@ -417,7 +417,7 @@ class execBanner():
 		"cvss": (None)
 		}
 		
-class loginBanner():
+class loginBanner:
 	def __init__(self):
 		self.metricName = 'loginBanner'
 		self.longName = 'LOGIN banner'
@@ -444,7 +444,7 @@ class loginBanner():
 		"cvss": (None)
 		}			
 					
-class globalServices():
+class globalServices:
 	def __init__(self):
 		self.metricName = 'globalServices'
 		self.longName = 'IOS TCP/UDP services'
@@ -602,7 +602,7 @@ class globalServices():
 		"cvss": (None)
 		}
 
-class memCpu():
+class memCpu:
 	def __init__(self):
 		self.metricName = 'memCpu'
 		self.longName = 'CPU/Memory'
@@ -710,7 +710,7 @@ class memCpu():
 		"cvss": (None)
 		}		
 
-class exceptionCrash():
+class exceptionCrash:
 	def __init__(self):
 		self.metricName = 'exceptionCrash'
 		self.longName = 'Exceptions/crashes'	
@@ -726,7 +726,7 @@ class exceptionCrash():
 		"cvss": (None)
 		}
 
-class managementProtection():
+class managementProtection:
 	def __init__(self):
 		self.metricName = 'managementProtection'
 		self.longName = 'Management protection'	
@@ -815,7 +815,7 @@ class managementProtection():
 		"cvss": (None)
 		}
 
-class tacacsRedun():
+class tacacsRedun:
 	def __init__(self):
 		self.metricName = 'tacacsRedundant'
 		self.longName = 'Tacacs+ servers redundancy'
@@ -830,7 +830,7 @@ class tacacsRedun():
 		"cvss": (None)
 		}
 
-class tacacsAuth():
+class tacacsAuth:
 	def __init__(self):
 		self.metricName = 'tacacsAuthentication'
 		self.longName = 'Tacacs+ authentication'
@@ -868,7 +868,7 @@ class tacacsAuth():
 		"cvss": (None)
 		}		
 
-class tacacsAuthorization():
+class tacacsAuthorization:
 	def __init__(self):
 		self.metricName = 'tacacsAuthorization'
 		self.longName = 'Tacacs+ authorization'
@@ -928,7 +928,7 @@ class tacacsAuthorization():
 		"cvss": (None)
 		}				
 		
-class tacacsAccounting():
+class tacacsAccounting:
 	def __init__(self):
 		self.metricName = 'tacacsAccounting'
 		self.longName = 'Tacacs+ accounting'
@@ -989,7 +989,7 @@ class tacacsAccounting():
 		}				
 
 		
-class passwordManagement():
+class passwordManagement:
 	def __init__(self):
 		self.metricName = 'passwordManagement'
 		self.longName = 'Passwords and authentication management'
@@ -1041,7 +1041,7 @@ class passwordManagement():
 		"cvss": (None)
 		}
 				
-class cdp():
+class cdp:
 	def __init__(self):
 		self.metricName = 'cdp'
 		self.longName = 'CDP'
@@ -1056,7 +1056,7 @@ class cdp():
 		"howtofix": None,
 		"cvss": None}				
 
-class lldp():
+class lldp:
 	def __init__(self):
 		self.metricName = 'lldp'
 		self.longName = 'LLDP'
@@ -1073,7 +1073,7 @@ class lldp():
 		"cvss": None}	
 		
 		
-class Snmp():
+class Snmp:
 	def __init__(self):
 		self.metricName = 'snmp'
 		self.longName = 'SNMP'
@@ -1179,7 +1179,7 @@ class Snmp():
 		"cvss": (None)
 		}
 		
-class Syslog():
+class Syslog:
 	def __init__(self):
 		self.metricName = 'syslog'
 		self.longName = 'Syslog'
@@ -1283,7 +1283,7 @@ class Syslog():
 		"cvss": (None)
 		}
 		
-class ArchiveConfiguration():
+class ArchiveConfiguration:
 	def __init__(self):
 		self.metricName = 'archive'
 		self.longName = 'Configuration Replace/Rollback'
@@ -1343,7 +1343,7 @@ class ArchiveConfiguration():
 		"cvss": (None)
 		}
 		
-class IPicmpRedirects():
+class IPicmpRedirects:
 	def __init__(self):
 		self.metricName = 'icmpRedirects'
 		self.longName = 'ICMPv4 redirects'
@@ -1358,7 +1358,7 @@ class IPicmpRedirects():
 		"cvss": (None)
 		}
 		
-class IPicmpUnreachable():
+class IPicmpUnreachable:
 	def __init__(self):
 		self.metricName = 'icmpUnreachable'
 		self.longName = 'ICMPv4 unreachable'
@@ -1374,7 +1374,7 @@ class IPicmpUnreachable():
 		"cvss": None}
 
 
-class ARPproxy():
+class ARPproxy:
 	def __init__(self):
 		self.metricName = 'proxyArp'
 		self.longName = 'ARP proxy'
@@ -1389,7 +1389,7 @@ class ARPproxy():
 		"cvss": None}
 
 
-class Ntp():
+class Ntp:
 	def __init__(self):
 		self.metricName = 'ntp'
 		self.longName = 'NTP'
@@ -1405,7 +1405,7 @@ class Ntp():
 		"upgrade": (None),
 		"cvss": (None)
 		}
-class Bgp():
+class Bgp:
 	def __init__(self):
 		self.metricName = 'bgp'
 		self.longName = 'BGP'
@@ -1460,7 +1460,7 @@ class Bgp():
 		"cvss": (None)
 		}
 		
-class Eigrp():
+class Eigrp:
 	def __init__(self):
 		self.metricName = 'eigrp'
 		self.longName = 'EIGRP'
@@ -1516,7 +1516,7 @@ class Eigrp():
 		"cvss": (None)
 		}
 
-class Rip():
+class Rip:
 	def __init__(self):
 		self.metricName = 'rip'
 		self.longName = 'RIP'
@@ -1534,7 +1534,7 @@ class Rip():
 		"cvss": (None)
 		}
 
-class Ospf():
+class Ospf:
 	def __init__(self):
 		self.metricName = 'ospf'
 		self.longName = 'OSPF'
@@ -1604,7 +1604,7 @@ class Ospf():
 		"cvss": (None)
 		}
 
-class Glbp():
+class Glbp:
 	def __init__(self):
 		self.metricName = 'glbp'
 		self.longName = 'GLBP'
@@ -1620,7 +1620,7 @@ class Glbp():
 		"cvss": (None)
 		}
 
-class Hsrp():
+class Hsrp:
 	def __init__(self):
 		self.metricName = 'hsrp'
 		self.longName = 'HSRP'
@@ -1636,7 +1636,7 @@ class Hsrp():
 		"cvss": (None)
 		}
 		
-class Vrrp():
+class Vrrp:
 	def __init__(self):
 		self.metricName = 'vrrp'
 		self.longName = 'VRRP'
@@ -1652,7 +1652,7 @@ class Vrrp():
 		"cvss": (None)
 		}		
 
-class IPoptions():
+class IPoptions:
 	def __init__(self):
 		self.metricName = 'ipoptions'
 		self.longName = 'IPv4 Options'
@@ -1668,7 +1668,7 @@ class IPoptions():
 		"cvss": (None)
 		}		
 
-class IPsourceRoute():
+class IPsourceRoute:
 	def __init__(self):
 		self.metricName = 'ipsourceroute'
 		self.longName = 'IPv4 source route'
@@ -1684,7 +1684,7 @@ class IPsourceRoute():
 		"cvss": (None)
 		}		
 
-class ICMPdeny():
+class ICMPdeny:
 	def __init__(self):
 		self.metricName = 'icmpdeny'
 		self.longName = 'ICMP deny any any'
@@ -1700,7 +1700,7 @@ class ICMPdeny():
 		"cvss": (None)
 		}
 
-class IPfrags():
+class IPfrags:
 	def __init__(self):
 		self.metricName = 'ipfrags'
 		self.longName = 'IPv4 fragments'
@@ -1719,7 +1719,7 @@ class IPfrags():
 		"cvss": (None)
 		}
 
-class URPF():
+class URPF:
 	def __init__(self):
 		self.metricName = 'urpf'
 		self.longName = 'Unicast Reverse Path Forwarding (IPv4)'
@@ -1734,7 +1734,7 @@ class URPF():
 		"cvss": (None)
 		}
 
-class URPFv6():
+class URPFv6:
 	def __init__(self):
 		self.metricName = 'urpfv6'
 		self.longName = 'Unicast Reverse Path Forwarding (IPv6)'
@@ -1749,7 +1749,7 @@ class URPFv6():
 		"cvss": (None)
 		}
 		
-class PortSecurity():
+class PortSecurity:
 	def __init__(self):
 		self.metricName = 'portsecurity'
 		self.longName = 'Port Security'
@@ -1814,7 +1814,7 @@ class PortSecurity():
 		"cvss": (None)
 		}
 
-class IPv6():
+class IPv6:
 	def __init__(self):
 		self.metricName = 'ipv6'
 		self.longName = 'IPv6'
@@ -1831,7 +1831,7 @@ class IPv6():
 		"cvss": (None)
 		}
 
-class IPSEC():
+class IPSEC:
 	def __init__(self):
 		self.metricName = 'ipsec'
 		self.longName = 'IPSEC'
@@ -1858,7 +1858,7 @@ class IPSEC():
 		"cvss": (None)
 		}
 		
-class TclSH():
+class TclSH:
 	def __init__(self):
 		self.metricName = 'tclsh'
 		self.longName = 'TCLSH shell scripting'
@@ -1874,7 +1874,7 @@ class TclSH():
 		"cvss": (None)
 		}
 
-class Tcp():
+class Tcp:
 	def __init__(self):
 		self.metricName = 'tcp'
 		self.longName = 'TCP'
@@ -1890,7 +1890,7 @@ class Tcp():
 		"cvss": (None)
 		}
 
-class dtpstpvlan():
+class dtpstpvlan:
 	def __init__(self):
 		self.metricName = 'level2protocols'
 		self.longName = 'Level 2'
@@ -1999,7 +1999,7 @@ class dtpstpvlan():
 		"cvss": (None)
 		}
 
-class Netflow():
+class Netflow:
 	def __init__(self):
 		self.metricName = 'Netflow'
 		self.longName = 'Netflow'
@@ -2022,7 +2022,7 @@ class Netflow():
 		"cvss": (None)
 		}
 
-class Multicast():
+class Multicast:
 	def __init__(self):
 		self.metricName = 'Multicast'
 		self.longName = 'Multicast'

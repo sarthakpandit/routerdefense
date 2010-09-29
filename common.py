@@ -5,6 +5,7 @@ import re
 import random
 import string
 import os
+import sys
 __builtin__.iosVersion = None
 from xml.dom.minidom import parse
 
@@ -43,61 +44,61 @@ def readTemplate(File):
 	lines = config.readlines()
 	for i in range(0,len(lines)):
 		if ( (lines[i].startswith('#') == False) and (len(lines[i]) >=3) ):
-			if lines[i].strip().partition('=')[0] == 'iosversion':
-				templateLines[0] = lines[i].strip().partition('=')[2]
-			if lines[i].strip().partition('=')[0] == 'outputFormat':
-				if re.search('(^stdout$|^csv$|^html$|^pdf$)',lines[i].strip().partition('=')[2].lower()) != None:
-					templateLines[1] = lines[i].strip().partition('=')[2].lower()
+			if lines[i].strip().split('=',1)[0] == 'iosversion':
+				templateLines[0] = lines[i].strip().split('=',1)[1]
+			if lines[i].strip().split('=',1)[0] == 'outputFormat':
+				if re.search('(^stdout$|^csv$|^html$|^pdf$)',lines[i].strip().split('=',1)[1].lower()) != None:
+					templateLines[1] = lines[i].strip().split('=',1)[1].lower()
 				else:
 					printTmplError(lines[i], i)
 					exit(1)
-			if lines[i].strip().partition('=')[0] == 'outputFile':
-				if os.path.exists(os.path.dirname(lines[i].strip().partition('=')[2])):
-					templateLines[2] = lines[i].strip().partition('=')[2]
+			if lines[i].strip().split('=',1)[0] == 'outputFile':
+				if os.path.exists(os.path.dirname(lines[i].strip().split('=',1)[1])):
+					templateLines[2] = lines[i].strip().split('=',1)[1]
 				else:
 					printTmplError(lines[i], i)
 					exit(1)	
-			if lines[i].strip().partition('=')[0] == 'deviceType':
-				if re.search('(^router$|^switch$|^both$)',lines[i].strip().partition('=')[2].lower()) != None:
-					templateLines[3] = lines[i].strip().partition('=')[2].lower()
+			if lines[i].strip().split('=',1)[0] == 'deviceType':
+				if re.search('(^router$|^switch$|^both$)',lines[i].strip().split('=',1)[1].lower()) != None:
+					templateLines[3] = lines[i].strip().split('=',1)[1].lower()
 				else:
 					printTmplError(lines[i], i)
 					exit(1)
 
-			if lines[i].strip().partition('=')[0] == 'IPv4trustedBGPpeers':
-				if re.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}',lines[i].strip().partition('=')[2]) != None:
-					templateLines[4] = lines[i].strip().partition('=')[2]
-				elif not lines[i].strip().partition('=')[2]:
+			if lines[i].strip().split('=',1)[0] == 'IPv4trustedBGPpeers':
+				if re.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}',lines[i].strip().split('=',1)[1]) != None:
+					templateLines[4] = lines[i].strip().split('=',1)[1]
+				elif not lines[i].strip().split('=',1)[1]:
 					templateLines[4] = '' 
 				else:
 					printTmplError(lines[i], i)
 					exit(1)															
-			if lines[i].strip().partition('=')[0] == 'IPv4localEBGPaddress':
-				if re.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}',lines[i].strip().partition('=')[2]) != None:
-					templateLines[5] = lines[i].strip().partition('=')[2]
-				elif not lines[i].strip().partition('=')[2]:
+			if lines[i].strip().split('=',1)[0] == 'IPv4localEBGPaddress':
+				if re.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}',lines[i].strip().split('=',1)[1]) != None:
+					templateLines[5] = lines[i].strip().split('=',1)[1]
+				elif not lines[i].strip().split('=',1)[1]:
 					templateLines[5] = '' 
 				else:
 					printTmplError(lines[i], i)
 					exit(1)															
-			if lines[i].strip().partition('=')[0] == 'IPv4trustedManagementStations':
-				templateLines[6] = lines[i].strip().partition('=')[2]
-			if lines[i].strip().partition('=')[0] == 'IPv4trustedNetManagementServers':
-				templateLines[7] = lines[i].strip().partition('=')[2]
-			if lines[i].strip().partition('=')[0] == 'IPv4trustedNetworks':
-				templateLines[8] = lines[i].strip().partition('=')[2]
-			if lines[i].strip().partition('=')[0] == 'IPv4infrastructureAddressSpace':
-				templateLines[9] = lines[i].strip().partition('=')[2]																
+			if lines[i].strip().split('=',1)[0] == 'IPv4trustedManagementStations':
+				templateLines[6] = lines[i].strip().split('=',1)[1]
+			if lines[i].strip().split('=',1)[0] == 'IPv4trustedNetManagementServers':
+				templateLines[7] = lines[i].strip().split('=',1)[1]
+			if lines[i].strip().split('=',1)[0] == 'IPv4trustedNetworks':
+				templateLines[8] = lines[i].strip().split('=',1)[1]
+			if lines[i].strip().split('=',1)[0] == 'IPv4infrastructureAddressSpace':
+				templateLines[9] = lines[i].strip().split('=',1)[1]																
 
-			if lines[i].strip().partition('=')[0] == 'macro':
-				if re.search('(^(?i)Yes$|^No$)',lines[i].strip().partition('=')[2].lower()) != None:
-					templateLines[10] = lines[i].strip().partition('=')[2].lower()
+			if lines[i].strip().split('=',1)[0] == 'macro':
+				if re.search('(^(?i)Yes$|^No$)',lines[i].strip().split('=',1)[1].lower()) != None:
+					templateLines[10] = lines[i].strip().split('=',1)[1].lower()
 				else:
 					printTmplError(lines[i], i)
 					exit(1)
 
-			if lines[i].strip().partition('=')[0] == 'IPv6TrustedPrefixes':
-					templateLines[11] = lines[i].strip().partition('=')[2].lower()
+			if lines[i].strip().split('=',1)[0] == 'IPv6TrustedPrefixes':
+					templateLines[11] = lines[i].strip().split('=',1)[1].lower()
 
 	config.close()
 	if templateLines[-1] == '# NOTCONFIGURED -- Remove me to run the tool':
@@ -190,18 +191,30 @@ def stripping(line):
 
 def searchString(iosConfig, searchString):
 	stringLookup = None
-	try:
-		stringLookup = next((line for line in iosConfig if line.lower().rfind(searchString) != -1), None)
-	except:
-		print "ECHEC"
-	return stringLookup
+	if sys.version_info < (2, 5):
+		for line in iosConfig:
+			if line.lower().rfind(searchString) != -1:
+				stringLookup = line
+				return stringLookup
+	else:
+		try:
+			stringLookup = next((line for line in iosConfig if line.lower().rfind(searchString) != -1), None)
+		except:
+			raise "FAIL during the searchString() function."
+		return stringLookup
 
 def searchRegexString(iosConfig, searchString):
 	stringLookup = None
-	try:
-		stringLookup = next((line for line in iosConfig if re.search(searchString, line) != None), None)
-	except:
-		print "ECHEC"
+	if sys.version_info < (2, 5):
+		for line in iosConfig:
+			if re.search(searchString, line) != None:
+				stringLookup = line
+				return stringLookup	
+	else:
+		try:
+			stringLookup = next((line for line in iosConfig if re.search(searchString, line) != None), None)
+		except:
+			raise "FAIL during the searchRegexString() function."
 	return stringLookup
 
 def searchRegexMultiString(iosConfig, searchString):
@@ -376,7 +389,7 @@ It is for this reason that when securing a network device it is important to pro
 def calculateCVSS2Score(metrics):
 	
 	metrics = metrics.split('/')
-	accessVector = str(metrics[0]).partition(':')[2]
+	accessVector = str(metrics[0]).split(':')[1]
 	if accessVector == "L":
 		AV = float(0.395)
 	elif accessVector == "A":
@@ -385,7 +398,7 @@ def calculateCVSS2Score(metrics):
 		AV = float(1.0)
 	else:
 		raise Exception		
-	accessComplexity = str(metrics[1]).partition(':')[2]
+	accessComplexity = str(metrics[1]).split(':')[1]
 	if accessComplexity == "H":
 		AC = float(0.35)
 	elif accessComplexity == "M":
@@ -394,7 +407,7 @@ def calculateCVSS2Score(metrics):
 		AC = float(0.71)
 	else:
 		raise Exception		
-	authentication = str(metrics[2]).partition(':')[2]
+	authentication = str(metrics[2]).split(':')[1]
 	if authentication == "N":
 		AU = float(0.704)
 	elif authentication == "S":
@@ -403,7 +416,7 @@ def calculateCVSS2Score(metrics):
 		AU = float(0.45)
 	else:
 		raise Exception
-	confidentialityImpact = str(metrics[3]).partition(':')[2]
+	confidentialityImpact = str(metrics[3]).split(':')[1]
 	if confidentialityImpact == "N":
 		CI = float(0.0)
 	elif confidentialityImpact == "P":
@@ -412,7 +425,7 @@ def calculateCVSS2Score(metrics):
 		CI = float(0.660)
 	else:
 		raise Exception	
-	integrityImpact = str(metrics[4]).partition(':')[2]
+	integrityImpact = str(metrics[4]).split(':')[1]
 	if integrityImpact == "N":
 		II = float(0.0)
 	elif integrityImpact == "P":
@@ -421,7 +434,7 @@ def calculateCVSS2Score(metrics):
 		II = float(0.660)
 	else:
 		raise Exception	
-	availabilityImpact = str(metrics[5]).partition(':')[2]
+	availabilityImpact = str(metrics[5]).split(':')[1]
 	if availabilityImpact == "N":
 		AI = float(0.0)
 	elif availabilityImpact == "P":
