@@ -4,7 +4,7 @@ from common import *
 from xml import *
 import __builtin__
 
-class genericInfo():	
+class genericInfo:	
 	def __init__(self):
 		self.iosVersion = None
 		self.hostName = None
@@ -17,10 +17,12 @@ def addBasicInfo(lines):
 	genericCfg.switchingMethod = "Unknown"
 	genericCfg.hostName = "Unknown"
 	genericCfg.iosVersion = "Unknown"
-	
-	genericCfg.hostName = searchString(lines, 'hostname').split(' ',2)[1]
-	genericCfg.iosVersion = searchString(lines, 'version').split(' ',2)[1]
-	
+	try:
+		genericCfg.hostName = searchString(lines, 'hostname').split(' ',1)[1]
+		genericCfg.iosVersion = searchString(lines, 'version').split(' ',1)[1]
+	except:
+		raise "No hostname nor version detected in the configuration file."
+		
 	if searchString(lines, 'ip cef') != None:
 		genericCfg.switchingMethod = "CEF"
 	if searchString(lines, 'no ip route-cache') != None:
