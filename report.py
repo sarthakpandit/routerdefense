@@ -26,6 +26,7 @@ ______            _             ______      __
 
 =[ Cisco IOS security assessment tool
 =[ http://www.packetfault.org
+=[ BruCON 2010 edition - version 0.5
 """
 	return header;
 
