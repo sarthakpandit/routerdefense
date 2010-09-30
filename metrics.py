@@ -2039,3 +2039,7 @@ class Multicast:
 		"upgrade": (None),
 		"cvss": (None)
 		}
+class Qos:
+	def __init__(self):
+		self.metricName = 'Qos'
+		self.longName = 'Qos'

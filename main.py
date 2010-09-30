@@ -208,7 +208,7 @@ if __builtin__.deviceType == 'router' or __builtin__.deviceType == 'both':
 		analyzorMulticast(lines, multicast)
 
 	if __builtin__.genericCfg.qos == "Enabled":
-		__builtin__.qos = DataPlaneAudit.addMetric('qos')
+		__builtin__.qos = ControlPlaneAudit.addMetric('qos')
 		analyzorQos(lines, qos, ifaceCfg)
 
 	if __builtin__.genericCfg.ipv6 == "Enabled":

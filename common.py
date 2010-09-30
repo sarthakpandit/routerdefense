@@ -461,6 +461,8 @@ def SNMPsecureCommunity(communityName):
 	if len(communityName) <= 7:
 		return False
 	else:
+		if communityName == '<removed>':
+			return True
 		if not re.findall('[0-9]', communityName):
 			return False
 		else:

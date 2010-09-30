@@ -1558,7 +1558,7 @@
     <threatInfo>blarg.</threatInfo>    
     <howtofix>
     (config)# interface [%interface]
-    (config-if)# switchport port-security violation 'violation-mode'
+    (config-if)# switchport port-security violation 'violation-mode' where violation-mode is shutdown, restrict or protect
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
@@ -1606,7 +1606,7 @@
     <threatInfo>blarg.</threatInfo>    
     <howtofix>
     (config)# interface [%interface]
-    (config-if)# switchport port-security maximum 1 vlan voice
+    (config-if)# switchport port-security maximum 2 vlan voice
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
