@@ -2133,22 +2133,22 @@ def analyzorSyslog(lines, syslog):
 		if level.isdigit() == False:
 			if level.strip().lower() == "emergencies":
 				level = 0
-			if level.strip().lower() == "alerts":
+			elif level.strip().lower() == "alerts":
 				level = 1
-			if level.strip().lower() == "critical":
+			elif level.strip().lower() == "critical":
 				level = 2
-			if level.strip().lower() == "errors":
+			elif level.strip().lower() == "errors":
 				level = 3
-			if level.strip().lower() == "warnings":
+			elif level.strip().lower() == "warnings":
 				level = 4
-			if level.strip().lower() == "notification":
+			elif level.strip().lower() == "notifications":
 				level = 5
-			if level.strip().lower() == "informational":
+			elif level.strip().lower() == "informational":
 				level = 6
-			if level.strip().lower() == "debugging":
+			elif level.strip().lower() == "debugging":
 				level = 7
 
-		if int(level) == 6: 
+		if int(level) <= 6: 
 			syslog.levelTrap['mustBeReported'] = False
 		else:
 			items = searchInXml('syslogLevelTrap')
@@ -3680,9 +3680,9 @@ def analyzorTcp(lines, tcp):
 
 def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 
-	if searchRegexString(lines,'^vtp domain .*$') != None:
-		if searchRegexString(lines,'^vtp password .*$') == None:
-			level2protocols.vtpsecure['mustBeReported'] = True
+	#if searchRegexString(lines,'^vtp domain .*$') != None:
+		#if searchRegexString(lines,'^vtp password .*$') == None and searchRegexString(lines,'^vtp mode transparent$') != None:
+			#level2protocols.vtpsecure['mustBeReported'] = True
 
 	if __builtin__.deviceType != 'router' and searchRegexString(lines,'^spanning-tree portfast bpduguard default$') == None:
 			level2protocols.bpduguard['mustBeReported'] = True
@@ -3777,6 +3777,7 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 		"howtofix": (items[3]),
 		"cvss": (cvssMetrics)}
 
+	"""
 	if level2protocols.vtpsecure['mustBeReported'] == True:
 		items = searchInXml('vtpsecure')
 		cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -3787,7 +3788,7 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 		"threatInfo": (items[2]),			
 		"howtofix": (items[3]),
 		"cvss": (cvssMetrics)}
-
+	"""
 	if level2protocols.bpduguard['mustBeReported'] == True:
 		items = searchInXml('bpduguard')
 		cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -3948,3 +3949,6 @@ def analyzorMulticast(lines, multicast):
 
 	return toBeReturned
 
+def analyzorQos(lines, qos, ifaceCfg):
+	toBeReturned = ''
+	return toBeReturned
