@@ -8,7 +8,7 @@
     <howtofix>Run the command "no cdp run" to globally disable CDP.
     Or, run the "no cdp enable" command on the following interfaces if they are not needed:
     [%CdpifsEnabled].
-    
+
     CDP protocol is already disabled on those interfaces:
     [%CdpifsDisabled].
     </howtofix>
@@ -21,10 +21,10 @@
     <definition>Leak network topology</definition>
     <threatInfo>Someone could leak information network topology</threatInfo>
     <howtofix>Run the command "no lldp run" to globally disable LLDP.
-    Or, 
+    Or,
     Run the "no lldp transmit" commands on the following interfaces if they are not needed:
     [%LldpEnabledTx].
-    
+
     Run the "no lldp receive" commands on the following interfaces if they are not needed:
     [%LldpEnabledRx].
 
@@ -56,7 +56,7 @@
     <name>udpSmallServers</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>UDP small servers</definition>
-    <threatInfo>Someone could have access to the device</threatInfo>    
+    <threatInfo>Someone could have access to the device</threatInfo>
     <howtofix>Run the command "no udp small servers"</howtofix>
     <upgrade>Current IOS version disable this feature by default</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:P/I:N/A:N</CVSSmetric>
@@ -65,7 +65,7 @@
     <name>serviceFinger</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Finger service</definition>
-    <threatInfo>Someone could have access to the device</threatInfo>    
+    <threatInfo>Someone could have access to the device</threatInfo>
     <howtofix>Run the command "no service finger"</howtofix>
     <upgrade>Current IOS version disable this feature by default</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:P/I:N/A:N</CVSSmetric>
@@ -74,16 +74,16 @@
     <name>serviceBootpServer</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>BOOTP server disabling</definition>
-    <threatInfo>Someone could find BOOTP flaws</threatInfo>    
+    <threatInfo>Someone could find BOOTP flaws</threatInfo>
     <howtofix>Run the command "no ip bootp server"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:A/AC:L/Au:N/C:N/I:P/A:P</CVSSmetric>
-  </unique_object>    
+  </unique_object>
   <unique_object>
     <name>serviceTcpKeepAliveIn</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Keepalives for TCP Sessions (In)</definition>
-    <threatInfo>This ensures that the device on the remote end of the connection is still accessible and that half-open or orphaned connections are removed from the local Cisco IOS device.</threatInfo>    
+    <threatInfo>This ensures that the device on the remote end of the connection is still accessible and that half-open or orphaned connections are removed from the local Cisco IOS device.</threatInfo>
     <howtofix>Run the command "service tcp-keepalive-in"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:N/I:C/A:C</CVSSmetric>
@@ -92,7 +92,7 @@
     <name>serviceTcpKeepAliveOut</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Keepalives for TCP Sessions (Out)</definition>
-    <threatInfo>This ensures that the device on the remote end of the connection is still accessible and that half-open or orphaned connections are removed from the local Cisco IOS device.</threatInfo>    
+    <threatInfo>This ensures that the device on the remote end of the connection is still accessible and that half-open or orphaned connections are removed from the local Cisco IOS device.</threatInfo>
     <howtofix>Run the command "service tcp-keepalive-out"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:N/I:C/A:C</CVSSmetric>
@@ -101,7 +101,7 @@
     <name>serviceIpDhcpBootIgnore</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>IP DHCP BOOT IGNORE</definition>
-    <threatInfo>If a bootp server and IOS dhcp server are on the same LAN, the IOS could deny the legit bootp service.</threatInfo>    
+    <threatInfo>If a bootp server and IOS dhcp server are on the same LAN, the IOS could deny the legit bootp service.</threatInfo>
     <howtofix>Run the command "ip dhcp bootp ignore"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:L/Au:N/C:N/I:N/A:C</CVSSmetric>
@@ -110,7 +110,7 @@
     <name>serviceDhcp</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Service DHCP</definition>
-    <threatInfo>If no DHCP server nor relay is needed then DHCP can be disabled.</threatInfo>    
+    <threatInfo>If no DHCP server nor relay is needed then DHCP can be disabled.</threatInfo>
     <howtofix>Run the command "no service dhcp"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:L/Au:N/C:N/I:P/A:C</CVSSmetric>
@@ -119,7 +119,7 @@
     <name>Mop</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Service MOP</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -128,7 +128,7 @@
     <name>ipDomainLookup</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Local DNS name resolution</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -137,7 +137,7 @@
     <name>servicePad</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Service PAD</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -146,7 +146,7 @@
     <name>serviceHttpServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>HTTP service</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -155,7 +155,7 @@
     <name>serviceHttpsServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>HTTPS service</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -164,7 +164,7 @@
     <name>serviceConfig</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Remote configuration auto-load</definition>
-    <threatInfo>Device configuration is passed in cleartext when remote configuration fetching is configured.</threatInfo>    
+    <threatInfo>Device configuration is passed in cleartext when remote configuration fetching is configured.</threatInfo>
     <howtofix>
     (config)# no service config
     (config)# no boot host
@@ -180,9 +180,9 @@
     <name>consoleExecTimeout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session timeout</definition>
-    <threatInfo>Someone could type commands when you aren't in front of the console</threatInfo>    
+    <threatInfo>Someone could type commands when you aren't in front of the console</threatInfo>
     <howtofix>
-	(config)# line con 0
+    (config)# line con 0
     (config-line)# exec-timeout 0 10</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -191,12 +191,12 @@
     <name>consoleprivilegezero</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Least privilege access</definition>
-    <threatInfo>Someone could type commands when you aren't in front of the console</threatInfo>    
+    <threatInfo>Someone could type commands when you aren't in front of the console</threatInfo>
     <howtofix>
     (config)# username pello privilege 0
-	(config)# line con 0
-	(config-line)# privilege level 0
-	(config-line)# login local
+    (config)# line con 0
+    (config-line)# privilege level 0
+    (config-line)# login local
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -207,34 +207,34 @@
     <name>auxExecTimeout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session timeout</definition>
-    <threatInfo>Someone could type commands when you aren't in front of the aux port</threatInfo>    
+    <threatInfo>Someone could type commands when you aren't in front of the aux port</threatInfo>
     <howtofix>
     (config)# line aux 0
     (config-line)# exec-timeout 0 10
-    
+
     The 0 is in minutes and 10 in seconds.
     The exec-timeout value must be between 0 1 and 2 59.
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object> 
+  </unique_object>
   <unique_object>
     <name>auxTransportInput</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Transport Input</definition>
-    <threatInfo>Someone could connect physically and acces device configuration through aux port</threatInfo>    
+    <threatInfo>Someone could connect physically and acces device configuration through aux port</threatInfo>
     <howtofix>
     (config)# line aux 0
     (config-line)# transport input none
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object> 
+  </unique_object>
   <unique_object>
     <name>auxTransportOutput</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Transport Output</definition>
-    <threatInfo>Someone could connect physically and acces others devices through aux port</threatInfo>    
+    <threatInfo>Someone could connect physically and acces others devices through aux port</threatInfo>
     <howtofix>
     (config)# line aux 0
     (config-line)# transport output none
@@ -246,57 +246,57 @@
     <name>auxNoExec</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Shell execution</definition>
-    <threatInfo>Someone could connect physically and runs a shell</threatInfo>    
+    <threatInfo>Someone could connect physically and runs a shell</threatInfo>
     <howtofix>
     (config)# line aux 0
     (config-line)# no exec
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object> 
+  </unique_object>
 </aux>
 <vty>
   <unique_object>
     <name>vtyExecTimeout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session timeout</definition>
-    <threatInfo>Someone could type commands when you aren't in front of the vty port</threatInfo>    
+    <threatInfo>Someone could type commands when you aren't in front of the vty port</threatInfo>
     <howtofix>
     (config)# line vty [%vtySessionNumbers]
     (config-line)# exec-timeout 0 10
-    
+
     In the above example, the 0 is in minutes and 10 in seconds.
     Exec-timeout value must be between 0 1 and 2 59.
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object> 
+  </unique_object>
   <unique_object>
     <name>vtyTransportInput</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session transport input</definition>
-    <threatInfo>Someone could connect physically and acces device configuration through vty port</threatInfo>    
+    <threatInfo>Someone could connect physically and acces device configuration through vty port</threatInfo>
     <howtofix>
     (config)# line vty [%vtySessionNumbers]
     (config-line)# transport input ssh
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object> 
+  </unique_object>
   <unique_object>
     <name>vtyTransportOutput</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session transport output</definition>
-    <threatInfo>Someone could connect physically and acces others devices through vty port</threatInfo>    
+    <threatInfo>Someone could connect physically and acces others devices through vty port</threatInfo>
     <howtofix>
     (config)# line vty [%vtySessionNumbers]
     (config-line)# transport output ssh
-    
+
     or
- 
+
     (config)# line vty [%vtySessionNumbers]
-    (config-line)# transport output none    
-    
+    (config-line)# transport output none
+
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -305,14 +305,14 @@
     <name>vtyIPv6AccessClass</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPv6 session</definition>
-    <threatInfo>Someone could connect physically and acces others devices through vty port</threatInfo>    
+    <threatInfo>Someone could connect physically and acces others devices through vty port</threatInfo>
     <howtofix>
-	(config)# ipv6 access-list remote-mgmt-acl
-	(config-ipv6-acl)# remark allow login only to loopback0
-	(config-ipv6-acl)# permit tcp 2001:db8:61::/64 host 2001:db8:6f::ee15:f00d log-input
-	(config-ipv6-acl)# permit tcp 2001:db8:60::/64 host 2001:db8:6f::ee15:f00d log-input
-	(config-ipv6-acl)# deny ipv6 any any log-input
-	(config-ipv6-acl)# exit
+    (config)# ipv6 access-list remote-mgmt-acl
+    (config-ipv6-acl)# remark allow login only to loopback0
+    (config-ipv6-acl)# permit tcp 2001:db8:61::/64 host 2001:db8:6f::ee15:f00d log-input
+    (config-ipv6-acl)# permit tcp 2001:db8:60::/64 host 2001:db8:6f::ee15:f00d log-input
+    (config-ipv6-acl)# deny ipv6 any any log-input
+    (config-ipv6-acl)# exit
 
     (config)# line vty [%vtySessionNumbers]
     (config-line)# transport output ssh
@@ -327,7 +327,7 @@
     <name>lowWatermarkProcessor</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Low Free CPU Threshold</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Run the command "memory free low-watermark processor 20000"</howtofix>
     <upgrade>Upgrade to 12.3(4)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -336,7 +336,7 @@
     <name>lowWatermarkIo</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Low Free IO Threshold</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Run the command "memory free low-watermark io 20000"</howtofix>
     <upgrade>Upgrade to 12.3(4)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -345,7 +345,7 @@
     <name>memReserveCritical</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Memory reservation for critical notifications</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Run the command "memory reserve critical 1000"</howtofix>
     <upgrade>Upgrade to 12.3(4)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -354,7 +354,7 @@
     <name>memReserveConsole</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Reserve Memory for Console Access</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Run the command "memory reserve console 4096"</howtofix>
     <upgrade>Upgrade to 12.3(4)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -363,7 +363,7 @@
     <name>memOverflowIo</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Detection and Correction of Redzone Corruption (IO)</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Run the command "exception memory ignore overflow io"</howtofix>
     <upgrade>Upgrade to 12.3(8)T1 to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -372,7 +372,7 @@
     <name>memOverflowProcessor</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Detection and Correction of Redzone Corruption (Processor)</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>Run the command "exception memory ignore overflow processor"</howtofix>
     <upgrade>Upgrade to 12.3(8)T1 to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -381,7 +381,7 @@
     <name>cpuThresholdNotification</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>CPU Thresholding Notification via SNMP</definition>
-    <threatInfo>The less you run the more you are safe.</threatInfo>    
+    <threatInfo>The less you run the more you are safe.</threatInfo>
     <howtofix>
     Run the following commands to enable CPU threshols alerting:
     (config)# snmp-server enable traps cpu threshold
@@ -396,7 +396,7 @@
     <name>schedulerallocate</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Scheduler process allocate</definition>
-    <threatInfo>Under DoS attack, some processes of the device could be not responding.</threatInfo>    
+    <threatInfo>Under DoS attack, some processes of the device could be not responding.</threatInfo>
     <howtofix>
     (config)# scheduler allocate 4000 400
     </howtofix>
@@ -407,20 +407,20 @@
     <name>schedulerinterval</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Scheduler processinterval</definition>
-    <threatInfo>Under DoS attack, some processes of the device could be not responding.</threatInfo>    
+    <threatInfo>Under DoS attack, some processes of the device could be not responding.</threatInfo>
     <howtofix>
     (config)# scheduler interval 500
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
 </memCpu>
 <crash>
   <unique_object>
     <name>ExceptionMaximumFiles</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Automatic Deletion of Crashinfo Files</definition>
-    <threatInfo>Enable a Cisco IOS device to automatically delete old crashinfo files to help create space for writing new crashinfo files when a system crashes.</threatInfo>    
+    <threatInfo>Enable a Cisco IOS device to automatically delete old crashinfo files to help create space for writing new crashinfo files when a system crashes.</threatInfo>
     <howtofix>Run the command "exception crashinfo maximum files 22"</howtofix>
     <upgrade>Upgrade to 12.3(11)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -431,7 +431,7 @@
     <name>enableSecret</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Enable secret</definition>
-    <threatInfo>If no enable secret is set and a password is configured for the console tty line, the console password can be used in order to receive privileged access, even from a remote virtual tty (vty) session.</threatInfo>    
+    <threatInfo>If no enable secret is set and a password is configured for the console tty line, the console password can be used in order to receive privileged access, even from a remote virtual tty (vty) session.</threatInfo>
     <howtofix>Run the command "enable secret secureP4SSw0rd"</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -440,16 +440,16 @@
     <name>servicePasswordEncryption</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Keep the password unreadable from human eyes</definition>
-    <threatInfo>Someone reading the screen should read the passwords.</threatInfo>    
+    <threatInfo>Someone reading the screen should read the passwords.</threatInfo>
     <howtofix>Run the command "service password-encryption"</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>usernameSecret</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Secret username and password</definition>
-    <threatInfo>Prior to this feature, there were two types of passwords: Type 0, which is a cleartext password, and Type 7, which uses the algorithm from the Vigenere cipher.</threatInfo>    
+    <threatInfo>Prior to this feature, there were two types of passwords: Type 0, which is a cleartext password, and Type 7, which uses the algorithm from the Vigenere cipher.</threatInfo>
     <howtofix>Remove the command "username USER password" commands and run "username USER secret P4SSW0RD"</howtofix>
     <upgrade>Upgrade to 12.2(8)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -458,11 +458,11 @@
     <name>retryLockout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Anti bruteforce</definition>
-    <threatInfo>Prevent of  attempts.</threatInfo>    
+    <threatInfo>Prevent of  attempts.</threatInfo>
     <howtofix>Type the following commands:
     (config)# aaa new-model
     (config)# aaa local authentication attempts max-fail 4
-    (config)# aaa authentication login default local 
+    (config)# aaa authentication login default local
     </howtofix>
     <upgrade>Upgrade to 12.3(14)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -473,7 +473,7 @@
     <name>ManagementPlaneProtection</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Secure HTTPS and SSH services</definition>
-    <threatInfo>Management services should not be accessible from anywhere on the network.</threatInfo>    
+    <threatInfo>Management services should not be accessible from anywhere on the network.</threatInfo>
     <howtofix>Type the following commands:
     (config)# control-plane host
     (config)# management-interface GigabitEthernet 0/1 allow ssh https snmp
@@ -485,11 +485,11 @@
     <name>sshServerTimeout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>SSH timeout</definition>
-    <threatInfo>Secure Management or die.</threatInfo>    
+    <threatInfo>Secure Management or die.</threatInfo>
     <howtofix>Type the following commands:
-    
+
     (config)# ip ssh time-out 60
-    
+
     (config)# line vty 0 4
     (config-line)# transport input ssh
     </howtofix>
@@ -500,11 +500,11 @@
     <name>sshServerAuthretries</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>SSH authentication retries</definition>
-    <threatInfo>Secure Management or die.</threatInfo>    
+    <threatInfo>Secure Management or die.</threatInfo>
     <howtofix>Type the following commands:
-    
+
     (config)# ip ssh authentication-retries 3
-    
+
     (config)# line vty 0 4
     (config-line)# transport input ssh
     </howtofix>
@@ -515,22 +515,22 @@
     <name>sshServerSourceIf</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>SSH source-interface</definition>
-    <threatInfo>Secure Management or die.</threatInfo>    
+    <threatInfo>Secure Management or die.</threatInfo>
     <howtofix>Type the following commands:
 
     (config)# ip ssh source-interface GigabitEthernet 0/1
-    
+
     (config)# line vty 0 4
     (config-line)# transport input ssh
     </howtofix>
     <upgrade>Upgrade to a Crypto image.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>sshSCPServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>SSH secure copy</definition>
-    <threatInfo>Secure copy or die with (t)ftp.</threatInfo>    
+    <threatInfo>Secure copy or die with (t)ftp.</threatInfo>
     <howtofix>Type the following commands:
 
     (config)# ip scp server enable
@@ -556,7 +556,7 @@
     <name>loginBruteforce</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Login bruteforce attempts</definition>
-    <threatInfo>SSH/Telnet could be bruteforced to find a valid username and password</threatInfo>    
+    <threatInfo>SSH/Telnet could be bruteforced to find a valid username and password</threatInfo>
     <howtofix>Type the following commands:
 
     (config)# login block-for 120 attempts 5 within 60
@@ -565,10 +565,10 @@
     (config-nacl)# 10 deny tcp any 10.1.0.10 eq telnet log
     (config-nacl)# 20 deny tcp any 10.1.0.10 eq www log
     (config-nacl)# 30 deny tcp any 10.1.0.10 eq 22 log
-	(config-nacl)# 40 deny tcp any 10.1.0.10 eq 443 log
-	(config)# login quiet access-class 100
-	(config)# login on-failure log every 10
-	(config)# login on-success log every 15
+    (config-nacl)# 40 deny tcp any 10.1.0.10 eq 443 log
+    (config)# login quiet access-class 100
+    (config)# login on-failure log every 10
+    (config)# login on-success log every 15
     </howtofix>
     <upgrade>Upgrade to IOS > 12.3(4) to be able to stop bruteforce attemps</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -579,7 +579,7 @@
     <name>bannerMOTDconfigured</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Please define a MOTD</definition>
-    <threatInfo>Blarg!</threatInfo>    
+    <threatInfo>Blarg!</threatInfo>
     <howtofix>Type the following commands:
 
     (config)# banner motd ^C
@@ -592,7 +592,7 @@
     <name>bannerMOTDhostnameIncluded</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>The device hostname should not be included in the MOTD banner</definition>
-    <threatInfo>Information disclosure about the device hostname</threatInfo>    
+    <threatInfo>Information disclosure about the device hostname</threatInfo>
     <howtofix>Remove hostname from the banner.</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -601,7 +601,7 @@
     <name>bannerLOGINconfigured</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Please define a login banner</definition>
-    <threatInfo>Blarg!</threatInfo>    
+    <threatInfo>Blarg!</threatInfo>
     <howtofix>Type the following commands:
 
     (config)# banner login ^C
@@ -614,7 +614,7 @@
     <name>bannerLOGINhostnameIncluded</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>The device hostname should not be included in the LOGIN banner</definition>
-    <threatInfo>Information disclosure about the device hostname</threatInfo>    
+    <threatInfo>Information disclosure about the device hostname</threatInfo>
     <howtofix>Remove hostname from the banner.</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -623,7 +623,7 @@
     <name>bannerEXECconfigured</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Please define a EXEC banner</definition>
-    <threatInfo>Blarg!</threatInfo>    
+    <threatInfo>Blarg!</threatInfo>
     <howtofix>Type the following commands:
 
     (config)# banner exec ^C
@@ -636,7 +636,7 @@
     <name>bannerEXEChostnameIncluded</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>The device hostname should not be included in the EXEC banner</definition>
-    <threatInfo>Information disclosure about the device hostname</threatInfo>    
+    <threatInfo>Information disclosure about the device hostname</threatInfo>
     <howtofix>Remove hostname from the banner.</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -647,7 +647,7 @@
     <name>aaaNewModel</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Running AAA in the infrastructure</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa new-model
     </howtofix>
@@ -658,36 +658,36 @@
     <name>aaaAuthTacacs</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>More secure than RADIUS</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa authentication login default group tacacs+ enable
-    
+
     Or
     (config)# aaa authentication login default group tacacs+ local
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object> 
+  </unique_object>
   <unique_object>
     <name>aaaAuthTacacsFallback</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Authentication fallback</definition>
-    <threatInfo>If AAA servers are under attack, devices administrators could not remotely logon on network devices.</threatInfo>    
+    <threatInfo>If AAA servers are under attack, devices administrators could not remotely logon on network devices.</threatInfo>
     <howtofix>
     (config)# aaa authentication login default group tacacs+ enable
-    
+
     Or
-    
+
     (config)# aaa authentication login default group tacacs+ local
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>aaaAuthTacacsExec</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Authorization</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa authorization exec default group tacacs none
     </howtofix>
@@ -698,7 +698,7 @@
     <name>aaaAuthTacacsLevel0</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 0 commands authorization</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa authorization commands 0 default group tacacs none
     </howtofix>
@@ -709,7 +709,7 @@
     <name>aaaAuthTacacsLevel1</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 1 commands authorization</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa authorization commands 1 default group tacacs none
     </howtofix>
@@ -720,18 +720,18 @@
     <name>aaaAuthTacacsLevel15</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 15 commands authorization</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa authorization commands 15 default group tacacs none
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>aaaAccountingTacacsExec</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Accounting</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa accounting exec default group tacacs none
     </howtofix>
@@ -742,7 +742,7 @@
     <name>aaaAccountingTacacsLevel0</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 0 commands accounting</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa authorization commands 0 default group tacacs none
     </howtofix>
@@ -753,7 +753,7 @@
     <name>aaaAccountingTacacsLevel1</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 1 commands accounting</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa accounting commands 1 default group tacacs none
     </howtofix>
@@ -764,7 +764,7 @@
     <name>aaaAccountingTacacsLevel15</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 15 commands accounting</definition>
-    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>    
+    <threatInfo>The Authentication, Authorization, and Accounting (AAA) framework is critical to securing interactive access to network devices. The AAA framework provides a highly configurable environment that can be tailored depending on the needs of the network.</threatInfo>
     <howtofix>
     (config)# aaa accounting commands 15 default group tacacs none
     </howtofix>
@@ -775,25 +775,25 @@
     <name>aaaTacacsRedundant</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Servers redundancy</definition>
-    <threatInfo>This helps ensure that interactive management access, such as SSH, is possible if an AAA server is unavailable.</threatInfo>    
+    <threatInfo>This helps ensure that interactive management access, such as SSH, is possible if an AAA server is unavailable.</threatInfo>
     <howtofix>
     (config)# tacacs-server host 'ip-address-of-tacacs-server'
     (config)# tacacs-server host 'ip-address-of-tacacs-server'
-	(config)# tacacs-server key 'password'
+    (config)# tacacs-server key 'password'
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
 </aaa>
 <snmp>
   <unique_object>
     <name>snmpROcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Too basic read-only community name</definition>
-    <threatInfo>Someone could easily find the read-only community name and access some device information.</threatInfo>    
+    <threatInfo>Someone could easily find the read-only community name and access some device information.</threatInfo>
     <howtofix>
     You need at least one character from these characters families: digits, lowercase, uppercase, punctuation.
-    
+
     (config)# snmp-server STRONG@commun1tY%Str1NG ro'
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -803,10 +803,10 @@
     <name>snmpROcommunityHardenedACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>ACL required for the read-only community</definition>
-    <threatInfo>Someone could easily find the read-only community name and access some device information.</threatInfo>    
+    <threatInfo>Someone could easily find the read-only community name and access some device information.</threatInfo>
     <howtofix>
     You need to create a standard access-list which is composed of a snmp-server or a LAN contained into the management network.
-    
+
     (config)# access-list 98 permit [%ManagementSubnet] [%ManagementWildcardMask]
     (config)# snmp-server STRONG@commun1tY%Str1NG ro 98'
     </howtofix>
@@ -817,10 +817,10 @@
     <name>snmpRWcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Too basic read-write community name</definition>
-    <threatInfo>Someone could easily find the read-write community name and modify a device configuration.</threatInfo>    
+    <threatInfo>Someone could easily find the read-write community name and modify a device configuration.</threatInfo>
     <howtofix>
     You need at least one character from these characters families: digits, lowercase, uppercase, punctuation.
-    
+
     (config)# snmp-server STRONG@commun1tY%Str1NG rw'
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -830,10 +830,10 @@
     <name>snmpRWcommunityHardenedACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>ACL required for the read-write community</definition>
-    <threatInfo>Someone could easily find the read-write community name and access device information.</threatInfo>    
+    <threatInfo>Someone could easily find the read-write community name and access device information.</threatInfo>
     <howtofix>
     You need to create a standard access-list which is composed of a snmp-server or a LAN contained into the management network.
-    
+
     (config)# access-list 99 permit [%ManagementSubnet] [%ManagementWildcardMask]
     (config)# snmp-server STRONG@commun1tY%Str1NG rw 99'
     </howtofix>
@@ -844,10 +844,10 @@
     <name>ViewsnmpROcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Too basic read-only community name</definition>
-    <threatInfo>Someone could easily find the read-only community name and access device information.</threatInfo>    
+    <threatInfo>Someone could easily find the read-only community name and access device information.</threatInfo>
     <howtofix>
     You need at least one character from these characters families: digits, lowercase, uppercase, punctuation.
-    
+
     (config)# snmp-server STRONG@commun1tY%Str1NG view VIEW-NAME ro'
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -857,10 +857,10 @@
     <name>ViewsnmpROcommunityHardenedACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>ACL required for the read-only community</definition>
-    <threatInfo>Someone could easily find the read-only community name and access device information.</threatInfo>    
+    <threatInfo>Someone could easily find the read-only community name and access device information.</threatInfo>
     <howtofix>
     You need to create a standard access-list which is composed of a snmp-server or a LAN contained into the management network.
-    
+
     (config)# access-list 98 permit [%ManagementSubnet] [%ManagementWildcardMask]
     (config)# snmp-server STRONG@commun1tY%Str1NG view VIEW-NAME ro 98'
     </howtofix>
@@ -871,10 +871,10 @@
     <name>ViewsnmpRWcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Too basic read-only community name</definition>
-    <threatInfo>Someone could easily find the read-write community name and modify device configuration.</threatInfo>    
+    <threatInfo>Someone could easily find the read-write community name and modify device configuration.</threatInfo>
     <howtofix>
     You need at least one character from these characters families: digits, lowercase, uppercase, punctuation.
-    
+
     (config)# snmp-server STRONG@commun1tY%Str1NG view VIEW-NAME rw'
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -884,46 +884,46 @@
     <name>ViewsnmpRWcommunityHardenedACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>ACL required for the read-write community</definition>
-    <threatInfo>Someone could easily find the read-write community name and access device information.</threatInfo>    
+    <threatInfo>Someone could easily find the read-write community name and access device information.</threatInfo>
     <howtofix>
     You need to create a standard access-list which is composed of a snmp-server or a LAN contained into the management network.
-    
+
     (config)# access-list 99 permit [%ManagementSubnet] [%ManagementWildcardMask]
     (config)# snmp-server STRONG@commun1tY%Str1NG view VIEW-NAME rw 99'
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>snmpVersion3</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Authentication and/or crypto on SNMP packets</definition>
-    <threatInfo>Someone could intercept and read SNMP packets if version 3 is not enabled.</threatInfo>    
+    <threatInfo>Someone could intercept and read SNMP packets if version 3 is not enabled.</threatInfo>
     <howtofix>
     You need to create a SNMPv3 group and a user/password credential.
-    
-    Authentication and privacy: 
+
+    Authentication and privacy:
     (config)# snmp-server group AUTHGROUP v3 priv
     (config)# snmp-server user snmpv3user PRIVGROUP v3 auth md5 authpassword priv 3des
-    
+
     Or, only authentication:
-    
+
     (config)# snmp-server group AUTHGROUP v3 auth
     (config)# snmp-server user snmpv3user PRIVGROUP v3 auth md5 authpassword
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
 </snmp>
 <syslog>
   <unique_object>
     <name>syslogServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Export logs to a remote server</definition>
-    <threatInfo>You must have logs backup. The period length of retention can vary from country to country.</threatInfo>    
+    <threatInfo>You must have logs backup. The period length of retention can vary from country to country.</threatInfo>
     <howtofix>
     You need to add an external host address. Port 514 must be open on the corporate firewall.
-    
+
     (config)# logging host [%ManagementSyslog]
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -933,10 +933,10 @@
     <name>syslogLevelTrap</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Export trap messages to a remote server</definition>
-    <threatInfo>You must have logs backup. The period length of retention can vary from country to country.</threatInfo>    
+    <threatInfo>You must have logs backup. The period length of retention can vary from country to country.</threatInfo>
     <howtofix>
     Logging from 0 to level 6 should be added.
-    
+
     (config)# logging trap 6
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -946,10 +946,10 @@
     <name>syslogLevelBuffered</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Export buffer logs to a remote server</definition>
-    <threatInfo>You must have logs backup. The period length of retention can vary from country to country.</threatInfo>    
+    <threatInfo>You must have logs backup. The period length of retention can vary from country to country.</threatInfo>
     <howtofix>
     Logging from 0 to level 6 should be added.
-    
+
     (config)# logging buffered 6
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -959,11 +959,11 @@
     <name>syslogConsole</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Never display logs on the console</definition>
-    <threatInfo>CPU spikes could occurs if logging output to the console.</threatInfo>    
+    <threatInfo>CPU spikes could occurs if logging output to the console.</threatInfo>
     <howtofix>
     Logging to console should not be configured.
     Use the show logging command instead.
-    
+
     (config)# no logging console
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -973,11 +973,11 @@
     <name>syslogMonitor</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Never display logs on vty sessions</definition>
-    <threatInfo>CPU spikes could occurs if logging output to the exec.</threatInfo>    
+    <threatInfo>CPU spikes could occurs if logging output to the exec.</threatInfo>
     <howtofix>
     Logging to exec should not be configured.
     Use the show logging command instead.
-    
+
     (config)# no logging monitor
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -987,10 +987,10 @@
     <name>syslogBuffered</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Enlarge the size of logs buffer</definition>
-    <threatInfo>This method of logging is highly recommanded and must be used in the place of console and monitor.</threatInfo>    
+    <threatInfo>This method of logging is highly recommanded and must be used in the place of console and monitor.</threatInfo>
     <howtofix>
     Use the show logging to view logs.
-    
+
     (config)# logging buffered 16384 6
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -1000,9 +1000,9 @@
     <name>syslogInterface</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Specify sending source interface</definition>
-    <threatInfo>In order to see the same ip address each time. Please configure it with a loopback interface.</threatInfo>    
+    <threatInfo>In order to see the same ip address each time. Please configure it with a loopback interface.</threatInfo>
     <howtofix>
-    
+
     (config)# logging source-interface Loopback 0
     </howtofix>
     <upgrade>Nothing.</upgrade>
@@ -1012,25 +1012,25 @@
     <name>syslogTimestamp</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Timestamp configuration</definition>
-    <threatInfo>All the logs must be synchronized</threatInfo>    
+    <threatInfo>All the logs must be synchronized</threatInfo>
     <howtofix>
     (config)# service timestamps log datetime msec show-timezone
-    
+
     Note: Some SIEM could require other command format.
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>    
+  </unique_object>
   <unique_object>
     <name>syslogServerArp</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Check syslog server availability via ARP resolution</definition>
-    <threatInfo>One syslog message could be lost when the router boots</threatInfo>    
+    <threatInfo>One syslog message could be lost when the router boots</threatInfo>
     <howtofix>(config)# logging server-arp
     </howtofix>
     <upgrade>Upgrade to IOS > 12.3 to be able to check if an ARP entry exist for the logging servers.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>    
+  </unique_object>
 
 </syslog>
 <archive>
@@ -1038,7 +1038,7 @@
     <name>archiveConfiguration</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Keep the configurations history</definition>
-    <threatInfo>If some mistake are present in the configuration then a rollback can be applied to the configuration.</threatInfo>    
+    <threatInfo>If some mistake are present in the configuration then a rollback can be applied to the configuration.</threatInfo>
     <howtofix>
     (config)# archive
     (config-archive)# path disk0:archived-config
@@ -1054,7 +1054,7 @@
     <name>archiveExclusive</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Only one admin change at a time</definition>
-    <threatInfo>This feature helps eliminate the undesirable impact of simultaneous changes made to related configuration components.</threatInfo>    
+    <threatInfo>This feature helps eliminate the undesirable impact of simultaneous changes made to related configuration components.</threatInfo>
     <howtofix>
     (config)# configuration mode exclusive auto
     </howtofix>
@@ -1065,7 +1065,7 @@
     <name>archiveSecureImage</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Prevent IOS deletion by hiding it in the Flash</definition>
-    <threatInfo>When this feature is enabled, it is not possible to alter or remove these backup files. It is advised to enable this feature to prevent both inadvertent and malicious attempts to delete these files.</threatInfo>    
+    <threatInfo>When this feature is enabled, it is not possible to alter or remove these backup files. It is advised to enable this feature to prevent both inadvertent and malicious attempts to delete these files.</threatInfo>
     <howtofix>
     (config)# secure boot-image
     </howtofix>
@@ -1076,7 +1076,7 @@
     <name>archiveSecureConfig</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Prevent configuration deletion</definition>
-    <threatInfo>When this feature is enabled, it is not possible to alter or remove these backup files. It is advised to enable this feature to prevent both inadvertent and malicious attempts to delete these files.</threatInfo>    
+    <threatInfo>When this feature is enabled, it is not possible to alter or remove these backup files. It is advised to enable this feature to prevent both inadvertent and malicious attempts to delete these files.</threatInfo>
     <howtofix>
     (config)# secure boot-config
     </howtofix>
@@ -1087,7 +1087,7 @@
     <name>archiveLogs</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Archive configuration changes</definition>
-    <threatInfo>The log is maintained on the Cisco IOS device and contains the user information of the individual who made the change, the configuration command entered, and the time that the change was made.</threatInfo>    
+    <threatInfo>The log is maintained on the Cisco IOS device and contains the user information of the individual who made the change, the configuration command entered, and the time that the change was made.</threatInfo>
     <howtofix>
     (config)# archive
     (config-archive)# log config
@@ -1098,21 +1098,21 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(4)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>     
+  </unique_object>
 </archive>
 <controlPlane>
   <unique_object>
     <name>ipICMPunreachable</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Prevent CPU spikes</definition>
-    <threatInfo>It can increase CPU utilization.</threatInfo>    
+    <threatInfo>It can increase CPU utilization.</threatInfo>
     <howtofix>
-	IP ICMP unreachable should be removed on those interfaces by typing "no ip unreachables":
+    IP ICMP unreachable should be removed on those interfaces by typing "no ip unreachables":
     [%UnreachableifsEnabled].
-    
+
     IP ICMP unreachable are already disabled on those interfaces:
     [%UnreachableifsDisabled].
-    
+
     Or, rate-limit ICMP unreachable messages from the global configuration:
     (config)# ip icmp rate-limit unreachable 250
     </howtofix>
@@ -1123,12 +1123,12 @@
     <name>proxyArp</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>No reply to packets that are intended for another device</definition>
-    <threatInfo>Utilizing proxy ARP can result in an increase in the amount of ARP traffic on the network segment and resource exhaustion and man-in-the-middle attacks.</threatInfo>    
+    <threatInfo>Utilizing proxy ARP can result in an increase in the amount of ARP traffic on the network segment and resource exhaustion and man-in-the-middle attacks.</threatInfo>
     <howtofix>
-    
-	ARP proxy should be removed on those interfaces by typing "no ip proxy-arp":
+
+    ARP proxy should be removed on those interfaces by typing "no ip proxy-arp":
     [%ArpifsEnabled].
-    
+
     ARP proxy are already disabled on those interfaces:
     [%ArpifsDisabled].
     </howtofix>
@@ -1139,15 +1139,15 @@
     <name>ntpAuthentication</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>MD5 authentication</definition>
-    <threatInfo>Some evil hacker could easily craft NTP packets without this option.</threatInfo>    
+    <threatInfo>Some evil hacker could easily craft NTP packets without this option.</threatInfo>
     <howtofix>
-	Enable NTP authentication:
-	(config)# ntp authenticate
-	
-	Configure the MD5 key (8 characters max.):
-	
-	(config)# ntp authentication-key 10 md5 S3CUr1Ty
-    
+    Enable NTP authentication:
+    (config)# ntp authenticate
+
+    Configure the MD5 key (8 characters max.):
+
+    (config)# ntp authentication-key 10 md5 S3CUr1Ty
+
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1156,28 +1156,40 @@
     <name>bgpTTLsecurity</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>TTL hops number</definition>
-    <threatInfo>Man in the middle could occurs if the TTL does not expires.</threatInfo>    
+    <threatInfo>Man in the middle could occurs if the TTL does not expires.</threatInfo>
     <howtofix>
     It must be done for all the neighbors.
-    
-	(config)# router bgp 12345
-	(config-router)# neighbor 1.2.3.4 remote-as 1234
-	(config-router)# neighbor 1.2.3.4 ttl-security hops 2
+
+    (config)# router bgp 12345
+    (config-router)# neighbor 1.2.3.4 remote-as 1234
+    (config-router)# neighbor 1.2.3.4 ttl-security hops 2
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>         
+  </unique_object>
+  <unique_object>
+    <name>bgpMaxASlimit</name>
+    <fixImpact>Non-disruptive</fixImpact>
+    <definition>AS Path Length limit</definition>
+    <threatInfo>Abnormal lengthy AS Path to a specific route could lead to BGP incident.</threatInfo>
+    <howtofix>
+    (config)# router bgp 12345
+    (config-router)# bgp maxas-limit 5
+    </howtofix>
+    <upgrade>Nothing.</upgrade>
+    <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
+  </unique_object>
   <unique_object>
     <name>bgpSessionPassword</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Peer MD5 authentication</definition>
-    <threatInfo>Someone could send malicious BGP packets easily if M5 authentication is not configured.</threatInfo>    
+    <threatInfo>Someone could send malicious BGP packets easily if M5 authentication is not configured.</threatInfo>
     <howtofix>
     It must be done for all the neighbors.
-    
-	(config)# router bgp 12345
-	(config-router)# neighbor 1.2.3.4 remote-as 1234
-	(config-router)# neighbor 1.2.3.4 password S3CUr1Ty
+
+    (config)# router bgp 12345
+    (config-router)# neighbor 1.2.3.4 remote-as 1234
+    (config-router)# neighbor 1.2.3.4 password S3CUr1Ty
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1186,32 +1198,47 @@
     <name>bgpMaxPrefixes</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Maximum prefixes threshold</definition>
-    <threatInfo>Someone could overflow the configuration with prefixes incidentally or not.</threatInfo>    
+    <threatInfo>Someone could overflow the configuration with prefixes incidentally or not.</threatInfo>
     <howtofix>
     It must be done for all the neighbors.
-    
-	(config)# router bgp 12345
-	(config-router)# neighbor 1.2.3.4 remote-as 1234
-	(config-router)# neighbor 1.2.3.4 maximum-prefix 1000 30 
+
+    (config)# router bgp 12345
+    (config-router)# neighbor 1.2.3.4 remote-as 1234
+    (config-router)# neighbor 1.2.3.4 maximum-prefix 1000 30
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>bgpPrefixList</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Prefixes list IN/OUT</definition>
-    <threatInfo>Someone could inject unneeded BGP prefixes.</threatInfo>    
+    <threatInfo>Someone could inject unneeded BGP prefixes.</threatInfo>
     <howtofix>
     It must be done on all the neighbors and in both direction: In and Out.
     If there are too many prefixes to list then only filter the RFC3330 prefixes.
-    
+
     (config)# ip prefix-list PREFIXLISTIN seq 5 permit 0.0.0.0/0
     (config)# ip prefix-list PREFIXLISTOUT seq 5 permit 192.168.2.0/24
-	(config)# router bgp 12345
-	(config-router)# neighbor 1.2.3.4 remote-as 1234
-	(config-router)# neighbor 1.2.3.4 prefix-list PREFIXLISTIN in
-	(config-router)# neighbor 1.2.3.4 prefix-list PREFIXLISTOUT out 
+    (config)# router bgp 12345
+    (config-router)# neighbor 1.2.3.4 remote-as 1234
+    (config-router)# neighbor 1.2.3.4 prefix-list PREFIXLISTIN in
+    (config-router)# neighbor 1.2.3.4 prefix-list PREFIXLISTOUT out
+    </howtofix>
+    <upgrade>Nothing.</upgrade>
+    <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
+  </unique_object>
+  <unique_object>
+    <name>bgpiACL</name>
+    <fixImpact>Non-disruptive</fixImpact>
+    <definition>BGP infrastructure ACL</definition>
+    <threatInfo>Someone could inject undesired BGP packets in the routers.</threatInfo>
+    <howtofix>
+    (config)# ip access-list extended Infrastructure-ACL-Policy
+    (config-acl)# permit tcp host 192.0.2.2 host 192.0.2.1 eq bgp
+    (config-acl)# permit tcp host 192.0.2.2 eq bgp host 192.0.2.1
+    (config-acl)# deny tcp any any eq bgp
+    (config-acl)# deny tcp any eq bgp any
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1220,16 +1247,16 @@
     <name>bgpaspathList</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>AS-PATH list IN/OUT</definition>
-    <threatInfo>Someone could inject unneeded BGP prefixes.</threatInfo>    
+    <threatInfo>Someone could inject unneeded BGP prefixes.</threatInfo>
     <howtofix>
     It must be done for all the neighbors and in both direction: In and Out.
-    
+
     (config)# ip as-path access-list 1 permit ^65501$
     (config)# ip as-path access-list 2 permit ^$
-	(config)# router bgp 12345
-	(config-router)# neighbor 1.2.3.4 remote-as 1234
-	(config-router)# neighbor 1.2.3.4 filter-list 1 in
-	(config-router)# neighbor 1.2.3.4 filter-list 2 out 
+    (config)# router bgp 12345
+    (config-router)# neighbor 1.2.3.4 remote-as 1234
+    (config-router)# neighbor 1.2.3.4 filter-list 1 in
+    (config-router)# neighbor 1.2.3.4 filter-list 2 out
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1238,7 +1265,7 @@
     <name>eigrpPassiveDefault</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Passive interface default</definition>
-    <threatInfo>Someone could inject unwanted EIGRP packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted EIGRP packets in the LAN.</threatInfo>
     <howtofix>
     (config)# router eigrp [%eigrpAs]
     (config-router)# passive-interface default
@@ -1250,7 +1277,7 @@
     <name>eigrpAuthModeMD5</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MD5 authentication</definition>
-    <threatInfo>Someone could inject unwanted EIGRP packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted EIGRP packets in the LAN.</threatInfo>
     <howtofix>
     (config)# interface [%eigrpInterface]
     (config-if)# ip authentication mode eigrp [%eigrpAs] md5
@@ -1262,19 +1289,19 @@
     <name>eigrpRouteFilteringIn</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Route filtering inbound</definition>
-    <threatInfo>Someone could inject unwanted EIGRP packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted EIGRP packets in the LAN.</threatInfo>
     <howtofix>
     (config)# router eigrp [%eigrpAs]
     (config-router)# distribute-list prefix 'list-name' in 'interface'
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>           
+  </unique_object>
   <unique_object>
     <name>eigrpRouteFilteringOut</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Route filtering outbound</definition>
-    <threatInfo>Someone could inject unwanted EIGRP packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted EIGRP packets in the LAN.</threatInfo>
     <howtofix>
     (config)# router eigrp [%eigrpAs]
     (config-router)# distribute-list prefix 'list-name' out 'interface'
@@ -1286,7 +1313,7 @@
     <name>ripAuthModeMD5</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MD5 authentication</definition>
-    <threatInfo>Someone could inject unwanted RIP packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted RIP packets in the LAN.</threatInfo>
     <howtofix>
     (config)# interface [%ripInterface]
     (config-if)# ip rip authentication mode md5
@@ -1298,19 +1325,19 @@
     <name>ospfPassiveDefault</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Passive interface default</definition>
-    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>
     <howtofix>
     (config)# router ospf [%ospfInstance]
     (config-router)# passive-interface default
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>ospfAuthModeMD5</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MD5 authentication</definition>
-    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>
     <howtofix>
     (config)# router ospf [%ospfPID]
     (config-router)# area [%ospfArea] authentication message-digest
@@ -1324,26 +1351,26 @@
     <name>ospfRouteFilteringIn</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Route filtering in</definition>
-    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>
     <howtofix>
     (config)# router ospf X
     (config-router)# area 'area-id' filter-list prefix 'list-name' in
-    
+
     Where X = [%ospfPID] and area-id = [%ospfArea]
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>ospfRouteFilteringOut</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Route filtering out</definition>
-    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>
     <howtofix>
     (config)# router ospf X
     (config-router)# area 'area-id' filter-list prefix 'list-name' out
-    
-    Where X = [%ospfPID] and area-id = [%ospfArea] 
+
+    Where X = [%ospfPID] and area-id = [%ospfArea]
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1352,10 +1379,10 @@
     <name>ospfMaxLSA</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Maximum amount of LSAs</definition>
-    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted OSPF packets in the LAN.</threatInfo>
     <howtofix>
     (config)# router ospf [%ospfInstance]
-    (config-router)# max-lsa 12000 
+    (config-router)# max-lsa 12000
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1364,10 +1391,10 @@
     <name>glbpMD5</name>
     <fixImpact>Not disruptive</fixImpact>
     <definition>MD5 authentication</definition>
-    <threatInfo>Someone could inject unwanted GLBP packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted GLBP packets in the LAN.</threatInfo>
     <howtofix>
     (config)# interface [%Interface]
-    (config-if)# glbp 1 authentication md5 key-string 'glbp-secret' 
+    (config-if)# glbp 1 authentication md5 key-string 'glbp-secret'
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1376,10 +1403,10 @@
     <name>hsrpMD5</name>
     <fixImpact>Not disruptive</fixImpact>
     <definition>MD5 authentication</definition>
-    <threatInfo>Someone could inject unwanted HSRP packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted HSRP packets in the LAN.</threatInfo>
     <howtofix>
     (config)# interface [%Interface]
-    (config-if)# hsrp 1 authentication md5 key-string 'hsrp-secret' 
+    (config-if)# hsrp 1 authentication md5 key-string 'hsrp-secret'
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1388,10 +1415,10 @@
     <name>vrrpMD5</name>
     <fixImpact>Not disruptive</fixImpact>
     <definition>MD5 authentication</definition>
-    <threatInfo>Someone could inject unwanted VRRP packets in the LAN.</threatInfo>    
+    <threatInfo>Someone could inject unwanted VRRP packets in the LAN.</threatInfo>
     <howtofix>
     (config)# interface [%Interface]
-    (config-if)# vrrp 1 authentication md5 key-string 'vrrp-secret' 
+    (config-if)# vrrp 1 authentication md5 key-string 'vrrp-secret'
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1400,12 +1427,12 @@
     <name>tclsh</name>
     <fixImpact>Not disruptive</fixImpact>
     <definition>Shell abuse</definition>
-    <threatInfo>Someone could take control over your network with TCL shell scripting.</threatInfo>    
+    <threatInfo>Someone could take control over your network with TCL shell scripting.</threatInfo>
     <howtofix>
-	(config)# event manager applet EEM-APPLET-BLOCK-TCLSH 
- 	 event cli pattern "tclsh" sync yes
- 	 action 1.0 syslog msg "Attempted tclsh command by user at $_event_pub_time"
- 	 set 2.0 _exit_status 0
+    (config)# event manager applet EEM-APPLET-BLOCK-TCLSH
+     event cli pattern "tclsh" sync yes
+     action 1.0 syslog msg "Attempted tclsh command by user at $_event_pub_time"
+     set 2.0 _exit_status 0
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1414,9 +1441,9 @@
     <name>tcpsynwait</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>SYN wait time</definition>
-    <threatInfo>Letting empty TCP connections consumes resources and could be used for a denial of services.</threatInfo>    
+    <threatInfo>Letting empty TCP connections consumes resources and could be used for a denial of services.</threatInfo>
     <howtofix>
-	(config)# ip tcp synwait-time 10 
+    (config)# ip tcp synwait-time 10
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1425,14 +1452,14 @@
     <name>mcastmsdp</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MSDP SA Filter</definition>
-    <threatInfo>Excessive (S,G) information could leak outside your network scope.</threatInfo>    
+    <threatInfo>Excessive (S,G) information could leak outside your network scope.</threatInfo>
     <howtofix>
-	(config)# ip msdp sa-filter in 'peer_address' list 111
-	(config)# ip msdp sa-filter out 'peer_address' list 111
-	(config)# ip msdp redistribute list 111
-	(config)# access-list 111 deny ip any host 224.0.2.2 
+    (config)# ip msdp sa-filter in 'peer_address' list 111
+    (config)# ip msdp sa-filter out 'peer_address' list 111
+    (config)# ip msdp redistribute list 111
+    (config)# access-list 111 deny ip any host 224.0.2.2
     (config)# access-list 111 deny ip any host 224.0.1.3     ! Rwhod
-    (config)# access-list 111 deny ip any host 224.0.1.24    ! Microsoft-ds 
+    (config)# access-list 111 deny ip any host 224.0.1.24    ! Microsoft-ds
     (config)# access-list 111 deny ip any host 224.0.1.22    ! SVRLOC
     (config)# access-list 111 deny ip any host 224.0.1.2     ! SGI-Dogfight
     (config)# access-list 111 deny ip any host 224.0.1.35    ! SVRLOC-DA
@@ -1449,14 +1476,14 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>    
+  </unique_object>
 </controlPlane>
 <dataPlane>
   <unique_object>
     <name>IPoptions</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Drop behavior</definition>
-    <threatInfo>IP options are managed by CPU and could subvert traffic path.</threatInfo>    
+    <threatInfo>IP options are managed by CPU and could subvert traffic path.</threatInfo>
     <howtofix>
     (config)# ip options drop
     </howtofix>
@@ -1467,38 +1494,38 @@
     <name>IPsourceroute</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Source routing</definition>
-    <threatInfo>This functionality can be used in attempts to route traffic around security controls in the network.</threatInfo>    
+    <threatInfo>This functionality can be used in attempts to route traffic around security controls in the network.</threatInfo>
     <howtofix>
     (config)# no ip source-route
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>ipICMPredirects</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Redirect packets</definition>
-    <threatInfo>This behavior allows the sender to bypass the router and forward future packets directly to the destination (or to a router closer to the destination).</threatInfo>    
+    <threatInfo>This behavior allows the sender to bypass the router and forward future packets directly to the destination (or to a router closer to the destination).</threatInfo>
     <howtofix>
-    
-	IP ICMP redirects should be removed on those interfaces by typing "no ip redirects":
+
+    IP ICMP redirects should be removed on those interfaces by typing "no ip redirects":
     [%RedirectifsEnabled].
-    
+
     IP ICMP redirects are already disabled on those interfaces:
     [%RedirectifsDisabled].
     </howtofix>
     <upgrade>Upgrade to 12.3(4)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>     
+  </unique_object>
   <unique_object>
     <name>ICMPdeny</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Deny any any</definition>
-    <threatInfo>Some ICMP messages are useful but external ICMP connectivity is rarely needed.</threatInfo>    
+    <threatInfo>Some ICMP messages are useful but external ICMP connectivity is rarely needed.</threatInfo>
     <howtofix>
     (config)# ip access-list extended ACL-TRANSIT-IN
     (config-ext-nacl)# permit icmp host 'trusted-networks' any
-    (config-ext-nacl)# deny icmp any any 
+    (config-ext-nacl)# deny icmp any any
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1507,13 +1534,13 @@
     <name>IPfrags</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Anti IDS evasion</definition>
-    <threatInfo>Fragmentation is also often used in attempts to evade detection by intrusion detection systems.</threatInfo>    
+    <threatInfo>Fragmentation is also often used in attempts to evade detection by intrusion detection systems.</threatInfo>
     <howtofix>
     (config)# ip access-list extended ACL-TRANSIT-IN
     (config-ext-nacl)# deny tcp any any fragments
     (config-ext-nacl)# deny udp any any fragments
     (config-ext-nacl)# deny icmp any any fragments
-    (config-ext-nacl)# deny ip any any fragments 
+    (config-ext-nacl)# deny ip any any fragments
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1522,40 +1549,40 @@
     <name>urpf</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPv4 anti-spoofing</definition>
-    <threatInfo>IP address spoofing.</threatInfo>    
+    <threatInfo>IP address spoofing.</threatInfo>
     <howtofix>
     (config)# ip cef
     (config)# interface 'interface'
     (config-if)# ip verify unicast source reachable-via any
-    
+
     Interfaces needed to be fixed are the following:
     [%URPFCandidates].
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>   
+  </unique_object>
   <unique_object>
     <name>urpfv6</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPv6 anti-spoofing</definition>
-    <threatInfo>IP address spoofing.</threatInfo>    
+    <threatInfo>IP address spoofing.</threatInfo>
     <howtofix>
     (config)# ip cef
     (config)# interface 'interface'
     (config-if)# ipv6 enable
     (config-if)# ipv6 verify unicast source reachable-via [rx|any]
-    
+
     Interfaces needed to be fixed are the following:
     [%URPFv6Candidates].
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>   
+  </unique_object>
   <unique_object>
     <name>portsecurityViolation</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Port violation</definition>
-    <threatInfo>blarg.</threatInfo>    
+    <threatInfo>blarg.</threatInfo>
     <howtofix>
     (config)# interface [%interface]
     (config-if)# switchport port-security violation 'violation-mode' where violation-mode is shutdown, restrict or protect
@@ -1567,7 +1594,7 @@
     <name>portsecuritySticky</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MAC address sticky</definition>
-    <threatInfo>blarg.</threatInfo>    
+    <threatInfo>blarg.</threatInfo>
     <howtofix>
     (config)# interface [%interface]
     (config-if)# switchport port-security mac-address sticky
@@ -1579,7 +1606,7 @@
     <name>portsecurityMaximumTotal</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Total maximum MAC addresses</definition>
-    <threatInfo>blarg.</threatInfo>    
+    <threatInfo>blarg.</threatInfo>
     <howtofix>
     (config)# interface [%interface]
     (config-if)# switchport port-security maximum 3
@@ -1591,19 +1618,19 @@
     <name>portsecurityMaximumAccess</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Access vlan maximum MAC addresses</definition>
-    <threatInfo>blarg.</threatInfo>    
+    <threatInfo>blarg.</threatInfo>
     <howtofix>
     (config)# interface [%interface]
     (config-if)# switchport port-security maximum 1 vlan access
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>portsecurityMaximumVoice</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Voice vlan maximum MAC addresses</definition>
-    <threatInfo>blarg.</threatInfo>    
+    <threatInfo>blarg.</threatInfo>
     <howtofix>
     (config)# interface [%interface]
     (config-if)# switchport port-security maximum 2 vlan voice
@@ -1615,16 +1642,16 @@
     <name>IPv6rh0</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Source routing prevention</definition>
-    <threatInfo>This functionality can be used in attempts to route traffic around security controls in the network.</threatInfo>    
+    <threatInfo>This functionality can be used in attempts to route traffic around security controls in the network.</threatInfo>
     <howtofix>
     (config)# no ipv6 source-route
-    
+
     Or
     ipv6 access-list DENY-IPv6-TYPE0-RH
-		deny ipv6 any any routing-type 0
-  	interface GigabitEthernet0/0 // on every interface with IPv6 enabled.
-		ipv6 enable
- 		ipv6 traffic-filter DENY-IPv6-TYPE0-RH in
+        deny ipv6 any any routing-type 0
+    interface GigabitEthernet0/0 // on every interface with IPv6 enabled.
+        ipv6 enable
+        ipv6 traffic-filter DENY-IPv6-TYPE0-RH in
     </howtofix>
     <upgrade>Upgrade to 12.2(15)T or later.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
@@ -1633,18 +1660,18 @@
     <name>IPSECcacIKE</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPSEC IKE SA call admission control</definition>
-    <threatInfo>IPSEC resources exhaustion.</threatInfo>    
+    <threatInfo>IPSEC resources exhaustion.</threatInfo>
     <howtofix>
     (config)# crypto call admission limit ike sa 25
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
+  </unique_object>
   <unique_object>
     <name>IPSECcacRSC</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPSEC IKE system resources usage</definition>
-    <threatInfo>IPSEC resources exhaustion.</threatInfo>    
+    <threatInfo>IPSEC resources exhaustion.</threatInfo>
     <howtofix>
     (config)# call admission limit 9000
     </howtofix>
@@ -1655,7 +1682,7 @@
     <name>nonegotiate</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>DTP negotiation</definition>
-    <threatInfo>A port could be converted to a trunk port glad to DTP protocol default behavior.</threatInfo>    
+    <threatInfo>A port could be converted to a trunk port glad to DTP protocol default behavior.</threatInfo>
     <howtofix>
     (config)# interface [%interface]
     (config-if)# switchport nonegotiate
@@ -1667,7 +1694,7 @@
     <name>flowcontrol</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Flow Control 802.3x</definition>
-    <threatInfo>802.3x quanta packets can lead to a denial of service attack if transmitted permanently.</threatInfo>    
+    <threatInfo>802.3x quanta packets can lead to a denial of service attack if transmitted permanently.</threatInfo>
     <howtofix>
     (config)# interface [%interface]
     (config-if)# flowcontrol receive off
@@ -1679,26 +1706,26 @@
     <name>udld</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>UDLD</definition>
-    <threatInfo>UDLD consumes bandwidth and CPU so must be disabled globally and enabled per interface onyl when needed.</threatInfo>    
+    <threatInfo>UDLD consumes bandwidth and CPU so must be disabled globally and enabled per interface onyl when needed.</threatInfo>
     <howtofix>
     (config)# no udld enable
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>   
+  </unique_object>
   <unique_object>
     <name>vlan1</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Default Vlan 1</definition>
-    <threatInfo>A specific VLAN must be used for out-of-band management. VLAN 1 could be span all over the network if not pruned correctly.</threatInfo>    
+    <threatInfo>A specific VLAN must be used for out-of-band management. VLAN 1 could be span all over the network if not pruned correctly.</threatInfo>
     <howtofix>
     (config)# vlan 6
-	(config-vlan)# name ADMINISTRATION-VLAN
-	(config)# interface [%interface]
-	(config-if)# description Out-Of-Band Admin
-	(config-if)# switchport mode access
-	(config-if)# switchport access vlan 6
-	(config-if)# no shutdown
+    (config-vlan)# name ADMINISTRATION-VLAN
+    (config)# interface [%interface]
+    (config-if)# description Out-Of-Band Admin
+    (config-if)# switchport mode access
+    (config-if)# switchport access vlan 6
+    (config-if)# no shutdown
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
@@ -1707,16 +1734,16 @@
     <name>unusedports</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Unused ports</definition>
-    <threatInfo>If an unused port is enable by an attacker it could lead to non-authorized access on the network.</threatInfo>    
+    <threatInfo>If an unused port is enable by an attacker it could lead to non-authorized access on the network.</threatInfo>
     <howtofix>
-	# vlan 999
-	(vlan)# name *** BIT BUCKET for unused ports ***
-	(vlan)# shutdown
-	(vlan)# exit
-	(config)# interface [%interface]
-	(config-if)# switchport mode access
-	(config-if)# switchport access vlan 999
-	(config-if)# shutdown
+    # vlan 999
+    (vlan)# name *** BIT BUCKET for unused ports ***
+    (vlan)# shutdown
+    (vlan)# exit
+    (config)# interface [%interface]
+    (config-if)# switchport mode access
+    (config-if)# switchport access vlan 999
+    (config-if)# shutdown
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
@@ -1725,11 +1752,11 @@
     <name>vtpsecure</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Password definition</definition>
-    <threatInfo>It prevents unauthorized switches to add themselves to the VTP domain.</threatInfo>    
+    <threatInfo>It prevents unauthorized switches to add themselves to the VTP domain.</threatInfo>
     <howtofix>
     (config)# vtp domain test.lab
-	(config)# vtp password g00d-P5WD
-	(config)# vtp pruning
+    (config)# vtp password g00d-P5WD
+    (config)# vtp pruning
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
@@ -1738,12 +1765,12 @@
     <name>bpduguard</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>BPDU guard</definition>
-    <threatInfo>It prevents a malicious user to connect a switch on a switch port.</threatInfo>    
+    <threatInfo>It prevents a malicious user to connect a switch on a switch port.</threatInfo>
     <howtofix>
     (config)# spanning-tree portfast bpduguard default
-	(config)# errdisable recovery cause bpduguard
-	(config)# errdisable recovery interval 400
-	</howtofix>
+    (config)# errdisable recovery cause bpduguard
+    (config)# errdisable recovery interval 400
+    </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
   </unique_object>
@@ -1751,10 +1778,10 @@
     <name>stproot</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Root guard</definition>
-    <threatInfo>It prevents an unauthorized to become STP root and leak the traffic.</threatInfo>    
+    <threatInfo>It prevents an unauthorized to become STP root and leak the traffic.</threatInfo>
     <howtofix>Configuration that must be applied for relevant interfaces which must not becomes STP root:
-	(config-if)# spanning-tree guard root
-	</howtofix>
+    (config-if)# spanning-tree guard root
+    </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
   </unique_object>
@@ -1762,14 +1789,14 @@
     <name>dot1x</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>802.1x</definition>
-    <threatInfo>It prevents an unauthorized and uncontrolled user to connect to the network.</threatInfo>    
+    <threatInfo>It prevents an unauthorized and uncontrolled user to connect to the network.</threatInfo>
     <howtofix>
-	(config)# aaa authentication dot1x default group radius
-	(config)# dot1x system-auth-control
-	(config)# interface 'interface'
-	(config-if)# dot1x port-control auto
-	(config-if)# ...
-	</howtofix>
+    (config)# aaa authentication dot1x default group radius
+    (config)# dot1x system-auth-control
+    (config)# interface 'interface'
+    (config-if)# dot1x port-control auto
+    (config-if)# ...
+    </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
   </unique_object>
@@ -1777,20 +1804,20 @@
     <name>netflowV9</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Exporting network flows for security monitoring</definition>
-    <threatInfo>Network attacks could not be detected appropriately if security monitoring is not used.</threatInfo>    
+    <threatInfo>Network attacks could not be detected appropriately if security monitoring is not used.</threatInfo>
     <howtofix>
-	(config)# ip flow-capture fragment-offset
-	(config)# ip flow-capture icmp
-	(config)# ip flow-capture ip-id
-	(config)# ip flow-capture mac-addresses
-	(config)# ip flow-capture packet-length
-	(config)# ip flow-capture ttl
-	(config)# ip flow-capture vlan-id
-	(config)# interface 'interface' (on every interface that must be monitored)
-	(config-if)# ip flow ingress (or/and ip flow egress)
-	</howtofix>
+    (config)# ip flow-capture fragment-offset
+    (config)# ip flow-capture icmp
+    (config)# ip flow-capture ip-id
+    (config)# ip flow-capture mac-addresses
+    (config)# ip flow-capture packet-length
+    (config)# ip flow-capture ttl
+    (config)# ip flow-capture vlan-id
+    (config)# interface 'interface' (on every interface that must be monitored)
+    (config-if)# ip flow ingress (or/and ip flow egress)
+    </howtofix>
     <upgrade>Upgrade to 12.4(2)T or later.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>     
+  </unique_object>
 </dataPlane>
 </configuration>
