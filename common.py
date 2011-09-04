@@ -18,6 +18,22 @@ def readCfg(File):
         print "The configuration file does not exists."
         exit(1)
     return lines
+    
+def checkCfg(lines):
+	validatedConfig = 1
+	for line in lines:
+		if line.startswith('nameif') == True : # PIX/ASA
+			validatedConfig = 0
+			break
+		if line.startswith('feature') == True : # NX-OS
+			validatedConfig = 0
+			break
+	if validatedConfig == 0:
+		print "This is not an IOS configuration file."
+		exit(1)
+	return
+		
+		
 
 def readTemplate(File):
     try:

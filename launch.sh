@@ -1,1 +1,1 @@
-python main.py -c /home/pello/show_run.txt -t /home/pello/workspace/secureConfig/template.conf
+python main.py -c show_run.txt -t template.conf
