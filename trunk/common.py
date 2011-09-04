@@ -33,73 +33,6 @@ def checkCfg(lines):
         exit(1)
     return
 
-
-
-def readTemplate(File):
-    try:
-        config = open(File, 'r')
-    except IOError:
-        print "The template file does not exists."
-        exit(1)
-    templateLines = []
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-    templateLines.append('')
-
-    lines = config.readlines()
-    for i in range(0,len(lines)):
-        if ( (lines[i].startswith('#') == False) and (len(lines[i]) >=3) ):
-            if lines[i].strip().split('=',1)[0] == 'iosversion':
-                templateLines[0] = lines[i].strip().split('=',1)[1]
-            if lines[i].strip().split('=',1)[0] == 'outputFormat':
-                if re.search('(^stdout$|^csv$|^html$|^pdf$)',lines[i].strip().split('=',1)[1].lower()) != None:
-                    templateLines[1] = lines[i].strip().split('=',1)[1].lower()
-                else:
-                    printTmplError(lines[i], i)
-                    exit(1)
-            if lines[i].strip().split('=',1)[0] == 'outputFile':
-                odir = os.path.dirname(lines[i].strip().split('=',1)[1])
-                if odir == '':
-                    odir = os.getcwd()
-                if os.access(odir,os.W_OK):
-                    templateLines[2] = lines[i].strip().split('=',1)[1]
-                else:
-                    printTmplError(lines[i], i)
-                    exit(1)
-            if lines[i].strip().split('=',1)[0] == 'deviceType':
-                if re.search('(^router$|^switch$|^both$)',lines[i].strip().split('=',1)[1].lower()) != None:
-                    templateLines[3] = lines[i].strip().split('=',1)[1].lower()
-                else:
-                    printTmplError(lines[i], i)
-                    exit(1)
-
-            if lines[i].strip().split('=',1)[0] == 'IPv4trustedNetManagementServers':
-                templateLines[7] = lines[i].strip().split('=',1)[1]
-
-            if lines[i].strip().split('=',1)[0] == 'IPv4trustedNetManagementStations':
-                templateLines[8] = lines[i].strip().split('=',1)[1]
-
-    config.close()
-    if templateLines[-1] == '# NOTCONFIGURED -- Remove me to run the tool':
-        exit('Please configure the template.conf file before running the tool.')
-
-    return templateLines
-
-def printTmplError(line, number):
-    print "Error while reading template file line number "+ str((number+1))+ ": "
-    print line
-    print "Please fix the template file before running RouterDefense."
-    return
-
 class unique_object:
 
     name = None
@@ -516,6 +449,8 @@ def networkReverseAddress(address, inversedmask):
     return "%d.%d.%d.%d" % (int(Addressbytes[0]) & int(Maskbytes[0]), int(Addressbytes[1]) & int(Maskbytes[1]), int(Addressbytes[2]) & int(Maskbytes[2]), int(Addressbytes[3]) & int(Maskbytes[3]))
 
 def checkStdACL(lines, accessListNumber):
+    if __builtin__.IPv4trustedNetManagementServers == None:
+        return False
     accessList = 'access-list ' + accessListNumber.strip()  + ' permit'
     matchACL = searchString(lines, accessList)
     if matchACL != None:
@@ -531,6 +466,8 @@ def checkStdACL(lines, accessListNumber):
     return False
 
 def checkExtACL(lines, accessListNumber):
+    if __builtin__.IPv4trustedNetManagementStations == None:
+        return False
     accessList = 'ip access-list extended ' + accessListNumber.strip()
     specificExtACLS = parseExtACL(accessList)
     matchACL = searchMultiString(specificExtACLS[0], 'permit')
