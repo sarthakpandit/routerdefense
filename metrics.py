@@ -351,6 +351,17 @@ class lineVty:
         "upgrade": (None),
         "cvss": (None)
         }
+        self.IPv4accessClass = {
+        "cmdInCfg": (None),
+        "mustBeReported": False,
+        "fixImpact": (None),
+        "definition": (None),
+        "desc": (None),
+        "threatInfo": (None),
+        "howtofix": (None),
+        "upgrade": (None),
+        "cvss": (None)
+        }
         self.IPv6accessClass = {
         "cmdInCfg": (None),
         "mustBeReported": False,
@@ -1460,16 +1471,6 @@ class Bgp:
         "cvss": (None)
         }
         self.maxpathlimit = {
-        "mustBeReported": False,
-        "fixImpact": (None),
-        "definition": (None),
-        "desc": (None),
-        "threatInfo": (None),
-        "howtofix": (None),
-        "upgrade": (None),
-        "cvss": (None)
-        }
-        self.iacl = {
         "mustBeReported": False,
         "fixImpact": (None),
         "definition": (None),

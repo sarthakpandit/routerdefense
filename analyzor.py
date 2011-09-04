@@ -373,6 +373,11 @@ def analyzorVty(vtyCfg,vty):
     except AttributeError:
         vty.transportOutput['cmdInCfg'] = None
 
+    try:
+        vty.IPv4accessClass['cmdInCfg'] = searchRegexString(vtyCfg, 'access-class .* in$')
+    except AttributeError:
+        vty.IPv4accessClass['cmdInCfg'] = None
+
     if __builtin__.genericCfg.ipv6 == "Enabled":
         try:
             vty.IPv6accessClass['cmdInCfg'] = searchRegexString(vtyCfg, '^ipv6 access-class .* in$')
@@ -430,6 +435,39 @@ def analyzorVty(vtyCfg,vty):
         "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
         "cvss": (cvssMetrics)}
 
+    if vty.IPv4accessClass['cmdInCfg'] == None:
+        items = searchInXml('vtyIPv4AccessClass')
+        cvssMetrics = str(calculateCVSS2Score(items[5]))
+        vty.IPv4accessClass = {
+        "mustBeReported": True,
+        "fixImpact": (items[0]),
+        "definition": (items[1]),
+        "threatInfo": (items[2]),
+        "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
+        "cvss": (cvssMetrics)}
+    else:
+        accessListNumber = vty.IPv4accessClass['cmdInCfg'].split(' ')[1]
+        verifStdACL = False
+        verifExtACL = False
+
+        verifStdACL = checkStdACL(vtyCfg, accessListNumber)
+        if verifStdACL == False:
+            verifExtACL = checkExtACL(vtyCfg, accessListNumber)
+
+        if verifStdACL == True or verifStdACL == True :
+            vty.IPv4accessClass['mustBeReported'] = False
+        else:
+            items = searchInXml('vtyIPv4AccessClass')
+            cvssMetrics = str(calculateCVSS2Score(items[5]))
+            vty.IPv4accessClass = {
+            "mustBeReported": True,
+            "fixImpact": (items[0]),
+            "definition": (items[1]),
+            "threatInfo": (items[2]),
+            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
+            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "cvss": (cvssMetrics)}
+
     if vty.IPv6accessClass['cmdInCfg'] == None:
         vty.IPv6accessClass['mustBeReported'] = False
     else:
@@ -455,6 +493,8 @@ def analyzorVty(vtyCfg,vty):
         toBeReturned = toBeReturned + vty.transportInput['definition'] + '\n' + vty.transportInput['threatInfo'] + '\n\n' + vty.transportInput['howtofix'] + '\n'
     if vty.transportOutput['mustBeReported'] == True:
         toBeReturned = toBeReturned + vty.transportOutput['definition'] + '\n' + vty.transportOutput['threatInfo'] + '\n\n' + vty.transportOutput['howtofix'] + '\n'
+    if vty.IPv4accessClass['mustBeReported'] == True:
+        toBeReturned = toBeReturned + vty.IPv4accessClass['definition'] + '\n' + vty.IPv4accessClass['threatInfo'] + '\n\n' + vty.IPv4accessClass['howtofix'] + '\n'
     if vty.IPv6accessClass['mustBeReported'] == True:
         toBeReturned = toBeReturned + vty.IPv6accessClass['definition'] + '\n' + vty.IPv6accessClass['threatInfo'] + '\n\n' + vty.IPv6accessClass['howtofix'] + '\n'
 
@@ -2696,22 +2736,6 @@ def analyzorBgp(lines, bgp, aclIPv4):
     if searchString(lines, 'router bgp') == None:
         return
 
-    if len(__builtin__.IPv4trustedBGPpeers) <= 0 or len(__builtin__.IPv4localEBGPaddress) <= 0:
-        iACL = None
-    else:
-        trashOtherBgpIn = searchRegexStringCount(aclIPv4, 'deny tcp any any eq bgp')
-        trashOtherBgpOut = searchRegexStringCount(aclIPv4, 'deny tcp any eq bgp any')
-        peersCount = searchRegexStringCount(aclIPv4, 'permit tcp host .* host .* eq bgp')
-        localCount = searchRegexStringCount(aclIPv4, 'permit tcp host .* eq bgp host .*')
-        if trashOtherBgpIn <= 0:
-            iACL = 1
-        if trashOtherBgpOut <= 0:
-            iACL = 1
-        if peersCount <= 0:
-            iACL = 1
-        if localCount <= 0:
-            iACL = 1
-
     remoteAsCount = 0
     ttlSecurityCount = 0
     sessionPasswordCount = 0
@@ -2755,10 +2779,6 @@ def analyzorBgp(lines, bgp, aclIPv4):
 
     if maxaspathLimit <= 0:
         bgp.maxpathlimit['mustBeReported'] = True
-
-    if iACL != None:
-        bgp.iacl['mustBeReported'] = True
-
 
     if bgp.ttlSecurity['mustBeReported'] == True:
         items = searchInXml('bgpTTLsecurity')
@@ -2826,17 +2846,6 @@ def analyzorBgp(lines, bgp, aclIPv4):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if bgp.iacl['mustBeReported'] == True:
-        items = searchInXml('bgpiACL')
-        cvssMetrics = str(calculateCVSS2Score(items[5]))
-        bgp.iacl = {
-        "mustBeReported": True,
-        "fixImpact": (items[0]),
-        "definition": (items[1]),
-        "threatInfo": (items[2]),
-        "howtofix": (items[3]),
-        "cvss": (cvssMetrics)}
-
     toBeReturned = ''
     if bgp.ttlSecurity['mustBeReported'] == True:
         toBeReturned = bgp.ttlSecurity['definition'] + '\n'+ bgp.ttlSecurity['threatInfo'] + '\n\n' + bgp.ttlSecurity['howtofix'] + '\n'
@@ -2850,10 +2859,6 @@ def analyzorBgp(lines, bgp, aclIPv4):
         toBeReturned = toBeReturned + bgp.aspathList['definition'] + '\n' + bgp.aspathList['threatInfo'] + '\n\n' + bgp.aspathList['howtofix'] + '\n'
     if bgp.maxpathlimit['mustBeReported'] == True:
         toBeReturned = toBeReturned + bgp.maxpathlimit['definition'] + '\n' + bgp.maxpathlimit['threatInfo'] + '\n\n' + bgp.maxpathlimit['howtofix'] + '\n'
-
-    if bgp.iacl['mustBeReported'] == True:
-        toBeReturned = toBeReturned + bgp.iacl['definition'] + '\n' + bgp.iacl['threatInfo'] + '\n\n' + bgp.iacl['howtofix'] + '\n'
-
 
     return toBeReturned
 
