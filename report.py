@@ -25,7 +25,7 @@ ______            _             ______      __
 \_| \_\___/ \__,_|\__\___|_|    |___/ \___|_| \___|_| |_|___/\___|
 
 =[ Cisco IOS security assessment tool
-=[ http://www.packetfault.org
+=[ http://code.google.com/p/routerdefense
 =[ version 2011.9
 """
     return header;

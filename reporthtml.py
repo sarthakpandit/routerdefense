@@ -55,7 +55,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
 	htmlHeader.append('<header role="banner">')
 	htmlHeader.append('\n')
 	
-	htmlHeader.append('<h1><a href="http://www.packetfault.org">Router <span>Defense</span></a></h1>')
+	htmlHeader.append('<h1><a href="http://code.google.com/p/routerdefense">Router <span>Defense</span></a></h1>')
 	htmlHeader.append('\n')
 	htmlHeader.append('<nav role="navigation"><a href=#MPlane>Management Plane</a>  <a href=#CPlane>Control Plane</a>  <a href=#DPlane>Data Plane</a></nav>')
 	htmlHeader.append('\n')
@@ -449,7 +449,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
 	htmlFooter.append('\n')
 	htmlFooter.append('RouterDefense is created and maintained by Francois Ropert.')
 	htmlFooter.append('\n')
-	htmlFooter.append('<a href="http://www.packetfault.org">http://www.packetfault.org</a>')
+	htmlFooter.append('<a href="http://code.google.com/p/routerdefense">http://code.google.com/p/routerdefense</a>')
 	htmlFooter.append('\n')
 	htmlFooter.append('</p>')
 	htmlFooter.append('\n')
