@@ -1,0 +1,3 @@
+#! /bin/sh
+DIR=$(dirname $0)
+PYTHONPATH=$DIR exec python -B main.py -c show_run.txt -t template.conf
