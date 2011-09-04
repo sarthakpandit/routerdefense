@@ -67,11 +67,14 @@ def readTemplate(File):
                     printTmplError(lines[i], i)
                     exit(1)
             if lines[i].strip().split('=',1)[0] == 'outputFile':
-                if os.path.exists(os.path.dirname(lines[i].strip().split('=',1)[1])):
-                    templateLines[2] = lines[i].strip().split('=',1)[1]
-                else:
-                    printTmplError(lines[i], i)
-                    exit(1)
+				odir = os.path.dirname(lines[i].strip().split('=',1)[1])
+				if odir == '':
+					odir = os.getcwd()
+				if os.access(odir,os.W_OK):
+					templateLines[2] = lines[i].strip().split('=',1)[1]
+				else:
+					printTmplError(lines[i], i)
+					exit(1)
             if lines[i].strip().split('=',1)[0] == 'deviceType':
                 if re.search('(^router$|^switch$|^both$)',lines[i].strip().split('=',1)[1].lower()) != None:
                     templateLines[3] = lines[i].strip().split('=',1)[1].lower()
