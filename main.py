@@ -5,6 +5,7 @@ from optparse import OptionParser
 import sys
 import __builtin__
 import inspect
+import ConfigParser
 from common import *
 from report import *
 from metrics import *
@@ -12,49 +13,61 @@ from analyzor import *
 
 # arguments parsing
 parser = OptionParser()
-parser.add_option("-c", "--config", dest="configurationFile", help ="Configuration file.")
-parser.add_option("-t", "--template", dest="templateFile", help ="Template file.")
+parser.add_option("-c", "--config"  , dest = "configurationFile", help = "Configuration file.")
+parser.add_option("-t", "--template", dest = "templateFile"     , help = "Template file.")
 (options, args) = parser.parse_args()
+
 if ( (len(sys.argv) <= 3) or (options.configurationFile == None) ):
-    parser.error("no show run nor template file attached.")
+    parser.error("Arguments: no configuration nor template file.")
 
-preConf = readTemplate(options.templateFile)
+# template parsing
+try:
+    config = ConfigParser.ConfigParser()
+    config.read(options.templateFile)
+    __builtin__.iosVersion = config.get('engine'   , 'iosversion')
+    __builtin__.deviceType = config.get('engine'   , 'platform')
+    IP4outbound            = config.get('engine'   , 'IP4outbound')
+    IP4inbound             = config.get('engine'   , 'IP4inbound')
+    __builtin__.outputType = config.get('reporting', 'format')
+    __builtin__.outputFile = config.get('reporting', 'filename')
 
-__builtin__.iosVersion = float(removeString(preConf[0]))
-configurationFile = options.configurationFile
+    if len(IP4inbound) > 0:
+        netManagement = IP4outbound.split(',')
+        __builtin__.IPv4trustedNetManagementServers = list()
+        for entry in netManagement:
+            entry = entry.split('/')
+            if len(entry) == 1:
+                entry.append('32')
+            entry.append(dotted2Netmask(entry[1]))
+            entry.append(netmask2wildcard(entry[2]))
+            entry.append(networkAddress(entry[0], entry[2]))
+            __builtin__.IPv4trustedNetManagementServers.append(entry)
+    else:
+        __builtin__.IPv4trustedNetManagementServers = None
 
-__builtin__.outputType = preConf[1]
-outputFile = preConf[2]
-__builtin__.deviceType = preConf[3].lower()
+    if len(IP4inbound) > 0:
+        netStations = IP4inbound.split(',')
+        __builtin__.IPv4trustedNetManagementStations = list()
+        for entry in netStations:
+            entry = entry.split('/')
+            if len(entry) == 1:
+                entry.append('32')
+            entry.append(dotted2Netmask(entry[1]))
+            entry.append(netmask2wildcard(entry[2]))
+            entry.append(networkAddress(entry[0], entry[2]))
+            __builtin__.IPv4trustedNetManagementStations.append(entry)
+    else:
+        __builtin__.IPv4trustedNetManagementStations = None
 
-netManagement = preConf[7].split(',')
-__builtin__.IPv4trustedNetManagementServers = list()
-for entry in netManagement:
-    entry = entry.split('/')
-    if len(entry) == 1:
-        entry.append('32')
-    entry.append(dotted2Netmask(entry[1]))
-    entry.append(netmask2wildcard(entry[2]))
-    entry.append(networkAddress(entry[0], entry[2]))
-    __builtin__.IPv4trustedNetManagementServers.append(entry)
-
-netStations = preConf[8].split(',')
-__builtin__.IPv4trustedNetManagementStations = list()
-for entry in netStations:
-    entry = entry.split('/')
-    if len(entry) == 1:
-        entry.append('32')
-    entry.append(dotted2Netmask(entry[1]))
-    entry.append(netmask2wildcard(entry[2]))
-    entry.append(networkAddress(entry[0], entry[2]))
-    __builtin__.IPv4trustedNetManagementStations.append(entry)
-
+except:
+    print "Template arguments: parameters errors."
+    print sys.exc_info()
+    exit(1)
 
 print writeHeader()
 
 # configuration file reading
-
-lines = readCfg(configurationFile)
+lines = readCfg(options.configurationFile)
 __builtin__.wholeconfig = lines
 
 # Cisco IOS configuration file type checking
@@ -247,9 +260,9 @@ if __builtin__.deviceType == 'switch' or __builtin__.deviceType == 'both':
 
 output = {
     'stdout': lambda : stdoutReport(genericCfg, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList),
-    'csv': lambda : csvReport(outputFile, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList),
-    'html': lambda : htmlReport(outputFile, genericCfg, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList),
-    'pdf': lambda : pdfReport(outputFile, genericCfg, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList)
+    'csv': lambda : csvReport(__builtin__.outputFile, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList),
+    'html': lambda : htmlReport(__builtin__.outputFile, genericCfg, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList),
+    'pdf': lambda : pdfReport(__builtin__.outputFile, genericCfg, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList)
     }[outputType]()
 
 print writeFooter()

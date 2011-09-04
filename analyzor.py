@@ -457,6 +457,17 @@ def analyzorVty(vtyCfg,vty):
         if verifStdACL == True or verifStdACL == True :
             vty.IPv4accessClass['mustBeReported'] = False
         else:
+            try:
+                mgmtSubnet = __builtin__.IPv4trustedNetManagementServers[0][0]
+            except:
+                mgmtSubnet = ""
+                pass
+            try:
+                mgmtWildcardMask = __builtin__.IPv4trustedNetManagementServers[0][3]
+            except:
+                mgmtWildcardMask = ""
+                pass
+
             items = searchInXml('vtyIPv4AccessClass')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             vty.IPv4accessClass = {
@@ -464,8 +475,9 @@ def analyzorVty(vtyCfg,vty):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', mgmtSubnet, 1)),
+            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
+            "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
             "cvss": (cvssMetrics)}
 
     if vty.IPv6accessClass['cmdInCfg'] == None:
@@ -1865,6 +1877,38 @@ def analyzorSNMP(lines, snmp):
         snmp.ROcommunity['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* (RO|ro)')
     except AttributeError:
         pass
+
+    try:
+        snmp.RWcommunity['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* (RW|rw)')
+    except AttributeError:
+        pass
+
+    try:
+        snmp.ViewROcommunity['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* view .* (RO|ro)')
+    except AttributeError:
+        pass
+
+    try:
+        snmp.ViewRWcommunity['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* view .* (RW|rw)')
+    except AttributeError:
+        pass
+
+    try:
+        snmp.snmpV3['cmdInCfg'] = searchRegexString(lines, 'snmp-server group .* v3 (auth|priv)')
+    except AttributeError:
+        pass
+
+    try:
+        mgmtSubnet = __builtin__.IPv4trustedNetManagementServers[0][0]
+    except:
+        mgmtSubnet = ""
+        pass
+    try:
+        mgmtWildcardMask = __builtin__.IPv4trustedNetManagementServers[0][3]
+    except:
+        mgmtWildcardMask = ""
+        pass
+
     if snmp.ROcommunity['cmdInCfg'] == None:
         # feature not configured
         snmp.ROcommunity['mustBeReported'] = False
@@ -1880,8 +1924,9 @@ def analyzorSNMP(lines, snmp):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         try:
             snmp.ROcommunityACL['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* (RO|ro) \d')
@@ -1896,8 +1941,9 @@ def analyzorSNMP(lines, snmp):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         else:
             accessListNumber = snmp.ROcommunityACL['cmdInCfg'].split(' ')[4]
@@ -1911,14 +1957,11 @@ def analyzorSNMP(lines, snmp):
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
                 "threatInfo": (items[2]),
-                "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-                "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+                "howtofix": (items[3].strip() \
+                    .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                    .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    try:
-        snmp.RWcommunity['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* (RW|rw)')
-    except AttributeError:
-        pass
     if snmp.RWcommunity['cmdInCfg'] == None:
         # feature not configured
         snmp.RWcommunity['mustBeReported'] = False
@@ -1934,8 +1977,9 @@ def analyzorSNMP(lines, snmp):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         try:
             snmp.RWcommunityACL['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* (RW|rw) \d')
@@ -1950,8 +1994,9 @@ def analyzorSNMP(lines, snmp):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         else:
             accessListNumber = snmp.RWcommunityACL['cmdInCfg'].split(' ')[4]
@@ -1965,14 +2010,11 @@ def analyzorSNMP(lines, snmp):
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
                 "threatInfo": (items[2]),
-                "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-                "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+                "howtofix": (items[3].strip() \
+                    .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                    .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    try:
-        snmp.ViewROcommunity['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* view .* (RO|ro)')
-    except AttributeError:
-        pass
     if snmp.ViewROcommunity['cmdInCfg'] == None:
         # feature not configured
         snmp.ViewROcommunity['mustBeReported'] = False
@@ -1988,8 +2030,9 @@ def analyzorSNMP(lines, snmp):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         try:
             snmp.ViewROcommunityACL['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* view .* (RO|ro) \d')
@@ -2004,8 +2047,9 @@ def analyzorSNMP(lines, snmp):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         else:
             accessListNumber = snmp.ViewROcommunityACL['cmdInCfg'].split(' ')[4]
@@ -2019,14 +2063,11 @@ def analyzorSNMP(lines, snmp):
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
                 "threatInfo": (items[2]),
-                "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-                "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+                "howtofix": (items[3].strip() \
+                    .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                    .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    try:
-        snmp.ViewRWcommunity['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* view .* (RW|rw)')
-    except AttributeError:
-        pass
     if snmp.ViewRWcommunity['cmdInCfg'] == None:
         # feature not configured
         snmp.ViewRWcommunity['mustBeReported'] = False
@@ -2042,8 +2083,9 @@ def analyzorSNMP(lines, snmp):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         try:
             snmp.ViewRWcommunityACL['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* view .* (RW|rw) \d')
@@ -2058,8 +2100,9 @@ def analyzorSNMP(lines, snmp):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-            "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+            "howtofix": (items[3].strip() \
+            .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+            .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         else:
             accessListNumber = snmp.ViewRWcommunityACL['cmdInCfg'].split(' ')[4]
@@ -2073,14 +2116,11 @@ def analyzorSNMP(lines, snmp):
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
                 "threatInfo": (items[2]),
-                "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-                "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+                "howtofix": (items[3].strip() \
+                    .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+                    .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    try:
-        snmp.snmpV3['cmdInCfg'] = searchRegexString(lines, 'snmp-server group .* v3 (auth|priv)')
-    except AttributeError:
-        pass
     if snmp.snmpV3['cmdInCfg'] == None:
         # feature not configured
         items = searchInXml('snmpVersion3')
@@ -2090,8 +2130,9 @@ def analyzorSNMP(lines, snmp):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3].strip().replace('[%ManagementSubnet]', __builtin__.IPv4trustedNetManagementServers[0][0], 1)),
-        "howtofix": (items[3].strip().replace('[%ManagementWildcardMask]', __builtin__.IPv4trustedNetManagementServers[0][3], 1)),
+        "howtofix": (items[3].strip() \
+            .replace('[%ManagementSubnet]', mgmtSubnet, 1) \
+            .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
         "cvss": (cvssMetrics)}
 
     else:
@@ -2124,22 +2165,32 @@ def analyzorSyslog(lines, syslog):
         syslog.Server['cmdInCfg'] = searchString(lines, 'logging host')
     except AttributeError:
         pass
+
     if syslog.Server['cmdInCfg'] == None:
         # feature not configured
+        try:
+            mgmtSubnet = __builtin__.IPv4trustedNetManagementServers[0][0]
+        except:
+            mgmtSubnet = ""
+            pass
+        try:
+            mgmtWildcardMask = __builtin__.IPv4trustedNetManagementServers[0][3]
+        except:
+            mgmtWildcardMask = ""
+            pass
+
+
         items = searchInXml('syslogServer')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
 
-        syslogHost = ''
-        for entry in __builtin__.IPv4trustedNetManagementServers:
-            if entry[1] == '32':
-                syslogHost = entry[0]
-        if len(syslogHost) > 0:
+        if len(mgmtSubnet) > 0:
             syslog.Server = {
             "mustBeReported": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSyslog]', syslogHost, 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSyslog]', mgmtSubnet, 1)),
             "cvss": (cvssMetrics)}
         else:
             syslog.Server = {
@@ -2147,7 +2198,8 @@ def analyzorSyslog(lines, syslog):
             "fixImpact": (items[0]),
             "definition": (items[1]),
             "threatInfo": (items[2]),
-            "howtofix": (items[3].strip().replace('[%ManagementSyslog]', 'syslog-IPv4-address', 1)),
+            "howtofix": (items[3].strip() \
+                .replace('[%ManagementSyslog]', 'new-syslog-server', 1)),
             "cvss": (cvssMetrics)}
 
     else:
@@ -2594,19 +2646,34 @@ def analyzorICMPRedirects(icmpRedirects, fullConfig, ifaceCfg):
         icmpRedirects.redirects['cvss'] = cvssMetrics
 
         if icmpRedirects.redirects['enabledIfsFeature']:
-            icmpRedirects.redirects['howtofix'] = icmpRedirects.redirects['howtofix'].strip().replace('[%RedirectifsDisabled]', ", ".join(icmpRedirects.redirects['enabledIfsFeature']), 1)
+            icmpRedirects.redirects['howtofix'] = \
+                icmpRedirects.redirects['howtofix'].strip() \
+                .replace('[%RedirectifsDisabled]', ", " \
+                .join(icmpRedirects.redirects['enabledIfsFeature']), 1)
         else:
-            icmpRedirects.redirects['howtofix'] = icmpRedirects.redirects['howtofix'].strip().replace('[%RedirectifsDisabled]', "None", 1)
+            icmpRedirects.redirects['howtofix'] = \
+                icmpRedirects.redirects['howtofix'].strip() \
+                .replace('[%RedirectifsDisabled]', "None", 1)
         if icmpRedirects.redirects['disabledIfsFeature']:
-            icmpRedirects.redirects['howtofix'] = icmpRedirects.redirects['howtofix'].strip().replace('[%RedirectifsEnabled]', ", ".join(icmpRedirects.redirects['disabledIfsFeature']), 1)
+            icmpRedirects.redirects['howtofix'] = \
+                icmpRedirects.redirects['howtofix'].strip() \
+                .replace('[%RedirectifsEnabled]', ", " \
+                .join(icmpRedirects.redirects['disabledIfsFeature']), 1)
         else:
-            icmpRedirects.redirects['howtofix'] = icmpRedirects.redirects['howtofix'].strip().replace('[%RedirectifsEnabled]', "None", 1)
+            icmpRedirects.redirects['howtofix'] = \
+                icmpRedirects.redirects['howtofix'].strip() \
+                .replace('[%RedirectifsEnabled]', "None", 1)
 
-        return icmpRedirects.redirects['definition'] + icmpRedirects.redirects['threatInfo'] + icmpRedirects.redirects['howtofix']
+        return icmpRedirects.redirects['definition'] \
+             + icmpRedirects.redirects['threatInfo'] \
+             + icmpRedirects.redirects['howtofix']
 
     toBeReturned = ''
     if icmpRedirects.redirects['mustBeReported'] == True:
-        toBeReturned = icmpRedirects.redirects['definition'] + '\n' + icmpRedirects.redirects['threatInfo'] + '\n\n' + icmpRedirects.redirects['howtofix'] + '\n'
+        toBeReturned = \
+            icmpRedirects.redirects['definition'] \
+            + '\n' + icmpRedirects.redirects['threatInfo'] \
+            + '\n\n' + icmpRedirects.redirects['howtofix'] + '\n'
 
     return toBeReturned
 
@@ -3160,7 +3227,10 @@ def analyzorOspf(lines, ospf, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip() \
+            .replace('[%ospfPID]', "".join(ospf.authModeMD5['pid']), 1) \
+            .replace('[%ospfArea]', "".join(ospf.authModeMD5['area']), 1) \
+            .replace('[%ospfInterface]', ", ".join(ospf.authModeMD5['interfaces']), 1)),
         "cvss": (cvssMetrics)}
 
     if ospf.routeFilteringIn['mustBeReported'] == True:
@@ -3173,7 +3243,9 @@ def analyzorOspf(lines, ospf, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip() \
+            .replace('[%ospfPID]', "".join(ospf.routeFilteringIn['pid']), 1) \
+            .replace('[%ospfArea]', "".join(ospf.routeFilteringIn['area']), 1)),
         "cvss": (cvssMetrics)}
 
     if ospf.routeFilteringOut['mustBeReported'] == True:
@@ -3186,7 +3258,9 @@ def analyzorOspf(lines, ospf, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip() \
+            .replace('[%ospfPID]', "".join(ospf.routeFilteringOut['pid']), 1) \
+            .replace('[%ospfArea]', "".join(ospf.routeFilteringOut['area']), 1)),
         "cvss": (cvssMetrics)}
 
     if ospf.maxLSA['mustBeReported'] == True:
@@ -3198,7 +3272,8 @@ def analyzorOspf(lines, ospf, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip() \
+            .replace('[%ospfInstance]', "".join(ospf.maxLSA['pid']), 1)),
         "cvss": (cvssMetrics)}
 
     toBeReturned = ''
@@ -3524,7 +3599,7 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip().replace('[%interface]', ", ".join(portsecurity.violation['candidates']), 1)),
         "cvss": (cvssMetrics)}
 
     if portsecurity.sticky['mustBeReported'] == True:
@@ -3536,7 +3611,7 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip().replace('[%interface]', ", ".join(portsecurity.violation['candidates']), 1)),
         "cvss": (cvssMetrics)}
 
     if portsecurity.maximumTotal['mustBeReported'] == True:
@@ -3548,7 +3623,7 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip().replace('[%interface]', ", ".join(portsecurity.violation['candidates']), 1)),
         "cvss": (cvssMetrics)}
 
     if portsecurity.maximumAccess['mustBeReported'] == True:
@@ -3560,7 +3635,7 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip().replace('[%interface]', ", ".join(portsecurity.violation['candidates']), 1)),
         "cvss": (cvssMetrics)}
 
     if portsecurity.maximumVoice['mustBeReported'] == True:
@@ -3572,7 +3647,7 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         "fixImpact": (items[0]),
         "definition": (items[1]),
         "threatInfo": (items[2]),
-        "howtofix": (items[3]),
+        "howtofix": (items[3].strip().replace('[%interface]', ", ".join(portsecurity.violation['candidates']), 1)),
         "cvss": (cvssMetrics)}
 
     toBeReturned = ''
