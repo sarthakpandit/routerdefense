@@ -1,10 +1,35 @@
 #summary Documentation Home.
+#labels Python,Cisco,Documentation,RouterDefense
 
 = Introduction =
 
-Welcome on the documentation page.
+Routerdefense validates the security configuration of IOS devices.
+
+The user must provides a "show run" to the tool.
+
+Reporting supported formats are stdout, html5, csv and pdf.
+
+Python >= 2.7 is required to use RouterDefense.
+
+= Run the tool =
+
+There are 2 ways to launch routerdefense.
+
+The simplest method is to use the launch.sh script. 
+
+$ more launch.sh
+python -B main.py -c show_run.txt -t template.conf
+
+show_run.txt is the Cisco IOS device configuration file.
+template.conf is a configuration file to tune the routerdefense tool.
+
+$ *./launch.sh*
+
+The other method is to use the only*.py scripts with the Cisco IOS device configuration file as argument.
+
+$ *python -B onlyCONSOLE.sh show_run.txt*
 
 
-= Details =
+[template.conf template.conf directives] 
 
-TBD.
+= RouterDefense internals =
