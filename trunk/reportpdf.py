@@ -21,7 +21,7 @@ def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
 	"""
 	
 	outro = """RouterDefense is created and maintained by Francois Ropert.<br />
-	<a href='http://www.packetfault.org'>http://www.packetfault.org</a> 
+	<a href='http://code.google.com/p/routerdefense'>http://code.google.com/p/routerdefense</a> 
 	"""
 	report.append(im)
 	report.append(Spacer(1, 24))
