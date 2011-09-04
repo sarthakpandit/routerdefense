@@ -13,6 +13,13 @@ ToDo
 - QoS
 - Use of all template.conf variables
 
+Version 2011.9
+============================================
+
+PIX/ASA/NX-OS routine detection. (Issue 2)
+Versionning renamed to YEAR.Month
+launch.sh simplified
+
 Summary of changes from v0.1 to v0.2
 ============================================
 

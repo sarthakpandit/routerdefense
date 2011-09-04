@@ -26,7 +26,7 @@ ______            _             ______      __
 
 =[ Cisco IOS security assessment tool
 =[ http://www.packetfault.org
-=[ version 0.5.1
+=[ version 2011.9
 """
     return header;
 

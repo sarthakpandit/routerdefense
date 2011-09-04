@@ -61,6 +61,10 @@ print writeHeader()
 
 lines = readCfg(configurationFile)
 
+# Cisco IOS configuration file type checking
+
+checkCfg(lines)
+
 __builtin__.genericCfg = addBasicInfo(lines)
 
 # add metrics for the Management Plane
