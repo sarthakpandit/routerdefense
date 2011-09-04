@@ -15,15 +15,15 @@ Python >= 2.7 is required to use Routerdefense.
 
 There are 2 ways to launch routerdefense.
 
-The simplest method is to use the launch.sh script. 
+The simplest method is to use the run_routerdefense script. 
 
 $ more run_routerdefense
 #! /bin/sh
 DIR=$(dirname $0)
-PYTHONPATH=$DIR exec python -B main.py -c show_run.txt -t template.conf
+PYTHONPATH=$DIR exec python -B main.py -c show_run.txt -t routerdefense.conf
 
 show_run.txt is the Cisco IOS device configuration file.
-template.conf is a configuration file to tune the routerdefense tool.
+routerdefense.conf is a configuration file to tune the routerdefense tool.
 
 $ *./run_routerdefense*
 
@@ -32,6 +32,6 @@ The other method is to use the only*.py scripts with the Cisco IOS device config
 $ *python -B onlyCONSOLE.sh show_run.txt*
 
 
-[template.conf template.conf directives] 
+[routerdefense.conf routerdefense.conf directives] 
 
 = Routerdefense internals =
