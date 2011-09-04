@@ -41,7 +41,6 @@ for entry in IPv4localEBGPaddress:
     __builtin__.IPv4localEBGPaddress.append(entry)
 
 
-__builtin__.macro = preConf[10]
 __builtin__.ipv6TrustedPrefixes = preConf[11]
 
 netManagement = preConf[7].split(',')
