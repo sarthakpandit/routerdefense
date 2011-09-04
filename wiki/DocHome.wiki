@@ -17,13 +17,15 @@ There are 2 ways to launch routerdefense.
 
 The simplest method is to use the launch.sh script. 
 
-$ more launch.sh
-python -B main.py -c show_run.txt -t template.conf
+$ more run_routerdefense
+#! /bin/sh
+DIR=$(dirname $0)
+PYTHONPATH=$DIR exec python -B main.py -c show_run.txt -t template.conf
 
 show_run.txt is the Cisco IOS device configuration file.
 template.conf is a configuration file to tune the routerdefense tool.
 
-$ *./launch.sh*
+$ *./run_routerdefense*
 
 The other method is to use the only*.py scripts with the Cisco IOS device configuration file as argument.
 
