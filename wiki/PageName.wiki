@@ -12,4 +12,4 @@ Version 0.5 actually include 138 tests.
 
 Bugs and feature requests are welcome! :)
 
-Updates can be read at http://stack.packetfault.org
+Follow pello on twitter for updates.
