@@ -1,0 +1,13 @@
+ToDo
+===========
+
+- enhance ipv6 support
+- enhance pdf output
+- enhance cvss scoring
+- enhance xml entries descriptions
+- enhance ios versioning support
+- improve overall speed
+- ACL tcp flags
+- MPLS LDP: lossless MD5 session auth, MD5 global configuration, label filtering
+- IS-IS authenticaiton
+- QoS

@@ -27,22 +27,6 @@ __builtin__.outputType = preConf[1]
 outputFile = preConf[2]
 __builtin__.deviceType = preConf[3].lower()
 
-
-__builtin__.IPv4trustedBGPpeers = list()
-__builtin__.IPv4localEBGPaddress = list()
-
-IPv4trustedBGPpeers = preConf[4].split(',')
-IPv4localEBGPaddress = preConf[5].split(',')
-
-for entry in IPv4trustedBGPpeers:
-    __builtin__.IPv4trustedBGPpeers.append(entry)
-
-for entry in IPv4localEBGPaddress:
-    __builtin__.IPv4localEBGPaddress.append(entry)
-
-
-__builtin__.ipv6TrustedPrefixes = preConf[11]
-
 netManagement = preConf[7].split(',')
 __builtin__.IPv4trustedNetManagementServers = list()
 for entry in netManagement:
@@ -54,11 +38,24 @@ for entry in netManagement:
     entry.append(networkAddress(entry[0], entry[2]))
     __builtin__.IPv4trustedNetManagementServers.append(entry)
 
+netStations = preConf[8].split(',')
+__builtin__.IPv4trustedNetManagementStations = list()
+for entry in netStations:
+    entry = entry.split('/')
+    if len(entry) == 1:
+        entry.append('32')
+    entry.append(dotted2Netmask(entry[1]))
+    entry.append(netmask2wildcard(entry[2]))
+    entry.append(networkAddress(entry[0], entry[2]))
+    __builtin__.IPv4trustedNetManagementStations.append(entry)
+
+
 print writeHeader()
 
 # configuration file reading
 
 lines = readCfg(configurationFile)
+__builtin__.wholeconfig = lines
 
 # Cisco IOS configuration file type checking
 

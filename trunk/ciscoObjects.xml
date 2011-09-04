@@ -302,12 +302,32 @@
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
   </unique_object>
   <unique_object>
-    <name>vtyIPv6AccessClass</name>
+    <name>vtyIPv4AccessClass</name>
     <fixImpact>Could be disruptive</fixImpact>
-    <definition>IPv6 session</definition>
+    <definition>IPv4 SSH TELNET inbound session</definition>
     <threatInfo>Someone could connect physically and acces others devices through vty port</threatInfo>
     <howtofix>
-    (config)# ipv6 access-list remote-mgmt-acl
+    (config)# ip access-list extended remote-mgmt-aclv4
+    (config-ext-acl)# remark allow login only to loopback0
+    (config-ext-acl)# permit tcp [%ManagementSubnet] [%ManagementWildcardMask] any eq telnet log
+    (config-ext-acl)# permit tcp [%ManagementSubnet] [%ManagementWildcardMask] any eq 22 log
+    (config-ext-acl)# deny tcp any any log
+    (config-ext-acl)# exit
+
+    (config)# line vty [%vtySessionNumbers]
+    (config-line)# transport input ssh telnet
+    (config-line)# access-class remote-mgmt-aclv4 in
+    </howtofix>
+    <upgrade>Nothing</upgrade>
+    <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
+  </unique_object>  
+  <unique_object>
+    <name>vtyIPv6AccessClass</name>
+    <fixImpact>Could be disruptive</fixImpact>
+    <definition>IPv6 SSH TELNET inbound session</definition>
+    <threatInfo>Someone could connect physically and acces others devices through vty port</threatInfo>
+    <howtofix>
+    (config)# ipv6 access-list remote-mgmt-aclv6
     (config-ipv6-acl)# remark allow login only to loopback0
     (config-ipv6-acl)# permit tcp 2001:db8:61::/64 host 2001:db8:6f::ee15:f00d log-input
     (config-ipv6-acl)# permit tcp 2001:db8:60::/64 host 2001:db8:6f::ee15:f00d log-input
@@ -316,7 +336,7 @@
 
     (config)# line vty [%vtySessionNumbers]
     (config-line)# transport output ssh
-    (config-line)# ipv6 access-class remote-mgmt-acl in
+    (config-line)# ipv6 access-class remote-mgmt-aclv6 in
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>

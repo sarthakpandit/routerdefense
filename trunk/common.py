@@ -13,27 +13,27 @@ def readCfg(File):
     lines = []
     try:
         for line in open(File, 'r'):
-            lines.append(line.lstrip())
+            lines.append(line.rstrip())
     except IOError:
         print "The configuration file does not exists."
         exit(1)
     return lines
-    
+
 def checkCfg(lines):
-	validatedConfig = 1
-	for line in lines:
-		if line.startswith('nameif') == True : # PIX/ASA
-			validatedConfig = 0
-			break
-		if line.startswith('feature') == True : # NX-OS
-			validatedConfig = 0
-			break
-	if validatedConfig == 0:
-		print "This is not an IOS configuration file."
-		exit(1)
-	return
-		
-		
+    validatedConfig = 1
+    for line in lines:
+        if line.startswith('nameif') == True : # PIX/ASA
+            validatedConfig = 0
+            break
+        if line.startswith('feature') == True : # NX-OS
+            validatedConfig = 0
+            break
+    if validatedConfig == 0:
+        print "This is not an IOS configuration file."
+        exit(1)
+    return
+
+
 
 def readTemplate(File):
     try:
@@ -67,14 +67,14 @@ def readTemplate(File):
                     printTmplError(lines[i], i)
                     exit(1)
             if lines[i].strip().split('=',1)[0] == 'outputFile':
-				odir = os.path.dirname(lines[i].strip().split('=',1)[1])
-				if odir == '':
-					odir = os.getcwd()
-				if os.access(odir,os.W_OK):
-					templateLines[2] = lines[i].strip().split('=',1)[1]
-				else:
-					printTmplError(lines[i], i)
-					exit(1)
+                odir = os.path.dirname(lines[i].strip().split('=',1)[1])
+                if odir == '':
+                    odir = os.getcwd()
+                if os.access(odir,os.W_OK):
+                    templateLines[2] = lines[i].strip().split('=',1)[1]
+                else:
+                    printTmplError(lines[i], i)
+                    exit(1)
             if lines[i].strip().split('=',1)[0] == 'deviceType':
                 if re.search('(^router$|^switch$|^both$)',lines[i].strip().split('=',1)[1].lower()) != None:
                     templateLines[3] = lines[i].strip().split('=',1)[1].lower()
@@ -82,44 +82,15 @@ def readTemplate(File):
                     printTmplError(lines[i], i)
                     exit(1)
 
-            if lines[i].strip().split('=',1)[0] == 'IPv4trustedBGPpeers':
-                if re.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}',lines[i].strip().split('=',1)[1]) != None:
-                    templateLines[4] = lines[i].strip().split('=',1)[1]
-                elif not lines[i].strip().split('=',1)[1]:
-                    templateLines[4] = ''
-                else:
-                    printTmplError(lines[i], i)
-                    exit(1)
-            if lines[i].strip().split('=',1)[0] == 'IPv4localEBGPaddress':
-                if re.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}',lines[i].strip().split('=',1)[1]) != None:
-                    templateLines[5] = lines[i].strip().split('=',1)[1]
-                elif not lines[i].strip().split('=',1)[1]:
-                    templateLines[5] = ''
-                else:
-                    printTmplError(lines[i], i)
-                    exit(1)
-            if lines[i].strip().split('=',1)[0] == 'IPv4trustedManagementStations':
-                templateLines[6] = lines[i].strip().split('=',1)[1]
             if lines[i].strip().split('=',1)[0] == 'IPv4trustedNetManagementServers':
                 templateLines[7] = lines[i].strip().split('=',1)[1]
-            if lines[i].strip().split('=',1)[0] == 'IPv4trustedNetworks':
+
+            if lines[i].strip().split('=',1)[0] == 'IPv4trustedNetManagementStations':
                 templateLines[8] = lines[i].strip().split('=',1)[1]
-            if lines[i].strip().split('=',1)[0] == 'IPv4infrastructureAddressSpace':
-                templateLines[9] = lines[i].strip().split('=',1)[1]
-
-            if lines[i].strip().split('=',1)[0] == 'macro':
-                if re.search('(^(?i)Yes$|^No$)',lines[i].strip().split('=',1)[1].lower()) != None:
-                    templateLines[10] = lines[i].strip().split('=',1)[1].lower()
-                else:
-                    printTmplError(lines[i], i)
-                    exit(1)
-
-            if lines[i].strip().split('=',1)[0] == 'IPv6TrustedPrefixes':
-                    templateLines[11] = lines[i].strip().split('=',1)[1].lower()
 
     config.close()
     if templateLines[-1] == '# NOTCONFIGURED -- Remove me to run the tool':
-        exit('Please configure the configuration file before running the tool.')
+        exit('Please configure the template.conf file before running the tool.')
 
     return templateLines
 
@@ -220,6 +191,14 @@ def searchString(iosConfig, searchString):
             raise "FAIL during the searchString() function."
         return stringLookup
 
+def searchMultiString(iosConfig, searchString):
+    stringLookup = None
+    stringTable = []
+    for line in iosConfig:
+        if line.lower().rfind(searchString) != -1:
+            stringTable.append(line)
+    return stringTable
+
 def searchRegexString(iosConfig, searchString):
     stringLookup = None
     if sys.version_info < (2, 5):
@@ -243,7 +222,7 @@ def searchRegexMultiString(iosConfig, searchString):
             if stringLookup != None:
                 stringTable.append(stringLookup.string)
     except:
-        print "ECHEC"
+        print "ECHEC search regexmultistring."
     return stringTable
 
 def searchStringCount(iosConfig, searchString):
@@ -267,11 +246,10 @@ def parseConsole(lines):
             lineConLocation = i
             break
     for i in range(lineConLocation + 1, len(lines)):
-        if lines[i].startswith(" "):
+        if not lines[i].startswith("!") and not lines[i].startswith("line"):
             consoleTable.append(stripping(lines[i]))
         else:
             break
-
     return consoleTable
 
 def parseAux(lines):
@@ -283,7 +261,7 @@ def parseAux(lines):
             break
     if lineAuxLocation != 0:
         for i in range(lineAuxLocation + 1, len(lines)):
-            if lines[i].startswith(" "):
+            if not lines[i].startswith("!") and not lines[i].startswith("line"):
                 auxTable.append(stripping(lines[i]))
             else:
                 break
@@ -299,11 +277,27 @@ def parseVty(lines):
             vtyTable.append([stripping(lines[i])])
     for j in range( 0, len(lineVtyLocation) ):
         for k in range(lineVtyLocation[j] + 1, len(lines)):
-            if lines[k].startswith(" "):
+            if lines[k].startswith(" ") or not lines[k].startswith("!") and not lines[k].startswith("line"):
                 vtyTable[j].append(stripping(lines[k]))
             else:
                 break
     return vtyTable
+
+def parseExtACL(aclname):
+    extACLTable = []
+    extACLLocation = []
+    for i,v in enumerate(__builtin__.wholeconfig):
+        if v.rfind(aclname) != -1:
+            extACLLocation.append(i)
+            extACLTable.append([stripping(__builtin__.wholeconfig[i])])
+    for j in range( 0, len(extACLLocation) ):
+        for k in range(extACLLocation[j] + 1, len(__builtin__.wholeconfig)):
+            if not __builtin__.wholeconfig[k].startswith("!"):
+                extACLTable[j].append(stripping(__builtin__.wholeconfig[k]))
+            else:
+                break
+    return extACLTable
+
 
 def parseBannerMOTD(lines):
     bannerTable = []
@@ -535,6 +529,32 @@ def checkStdACL(lines, accessListNumber):
             if net == entry[4]:
                 return True
     return False
+
+def checkExtACL(lines, accessListNumber):
+    accessList = 'ip access-list extended ' + accessListNumber.strip()
+    specificExtACLS = parseExtACL(accessList)
+    matchACL = searchMultiString(specificExtACLS[0], 'permit')
+    validated= False
+
+    if matchACL != None:
+        for ace in matchACL:
+            network = ace.split(' ')[2]
+            if network == 'host':
+                mask = "0.0.0.0"
+                net = ace.split(' ')[3]
+            elif network == 'any':
+                pass
+            else:
+                mask = ace.split(' ')[3]
+                net = networkReverseAddress(network, mask)
+
+        for entry in __builtin__.IPv4trustedNetManagementStations:
+            if net == entry[4]:
+                validated = True
+            else:
+                validated = False
+
+    return validated
 
 def populateInterfaces(lines, Interfaces):
     ifaceCfg = []
