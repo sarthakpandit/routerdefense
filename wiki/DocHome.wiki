@@ -32,6 +32,6 @@ The other method is to use the only*.py scripts with the Cisco IOS device config
 $ *python -B onlyCONSOLE.sh show_run.txt*
 
 
-[routerdefense.conf routerdefense.conf directives] 
+[routerdefenseconf routerdefense.conf directives] 
 
 = Routerdefense internals =
