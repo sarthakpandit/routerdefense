@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-15 -*-
+# -*- coding: iso-8859-1 -*-
 
 import __builtin__
 import re
