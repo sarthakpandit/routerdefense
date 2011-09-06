@@ -27,7 +27,7 @@ class metrics:
             metricAdded = tacacsAuth()
         if metricName == 'tacacsAutho':
             metricAdded = tacacsAuthorization()
-        if metricName == 'tacacsAccounting':
+        if metricName == 'tacacsAccou':
             metricAdded = tacacsAccounting()
         if metricName == 'BannerMotd':
             metricAdded = motdBanner()
