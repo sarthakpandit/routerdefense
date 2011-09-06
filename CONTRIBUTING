@@ -1,0 +1,33 @@
+This file contains some brief instructions on contributing to Routerdefense.
+
+Coding style:
+
+* 4 spaces per indentation level, not tabs
+* 72 max. chars per line
+* Don't use the backslash '\' for multi-lines
+* Comment the code with """ for docstring
+* Use blank lines in functions sparingly, to indicate logical sections
+* Encoding is ISO-8859-1
+* One import per line
+* Imports grouped in the following order:
+  1. Standard library imports
+  2. Related 3rd party imports
+  3. Local Routerdefense specific imports
+* More than one space around an assignement is permited to align it with another
+* Use spaces around arithmetic operators
+* Use block comments. No inline comments.
+* Modules names must be all-lowercase.
+* Class names use the CapWords convention. Internal use: leading underscore "_"
+* Function names must be lowercase with words separated by underscores
+
+Submit your code:
+
+1. svn diff > something-descriptive.patch
+2. Create a new issue / Email it at fropert@packetfault.org
+3. Reproduce the steps from step 1 until you reach the core developer status ;)
+
+Licensing:
+
+By submitting code contributions to Routerdefense, it is assumed
+that you are offering your code under an Apache 2.0 or similar license.
+ 
