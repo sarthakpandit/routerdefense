@@ -1,0 +1,14 @@
+#summary Python version and modules requirements
+
+= Python Version =
+
+Python 2.7 is great.
+
+= Modules requirements =
+
+ * optparse
+ * inspect
+ * ConfigParser
+ * xml
+ * csv
+ * reportlab
