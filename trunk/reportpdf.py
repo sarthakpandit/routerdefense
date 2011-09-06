@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-15 -*-
+# -*- coding: iso-8859-1 -*-
 
 def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetrics, DataPlaneMetrics):
 	from reportlab.pdfgen import canvas
