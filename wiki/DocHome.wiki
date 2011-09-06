@@ -188,6 +188,10 @@ $ *python -B onlyCONSOLE.sh show_run.txt*
 || IPSEC IKE system resources usage || Data plane (IPSEC) ||
 || Exporting network flows for security monitoring || Data plane (Monitoring) ||
 
+= CVSS scoring =
+
+[cvssScores Associated CVSS scores to each Routerdefense test]
+
 = Routerdefense code internals =
 
 Please refers to the doc/ directory.
