@@ -23,9 +23,9 @@ class metrics:
             metricAdded = Snmp()
         if metricName == 'tacacsRedundant':
             metricAdded = tacacsRedun()
-        if metricName == 'tacacsAuthentication':
+        if metricName == 'tacacsAuthe':
             metricAdded = tacacsAuth()
-        if metricName == 'tacacsAuthorization':
+        if metricName == 'tacacsAutho':
             metricAdded = tacacsAuthorization()
         if metricName == 'tacacsAccounting':
             metricAdded = tacacsAccounting()
