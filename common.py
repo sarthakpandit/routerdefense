@@ -54,12 +54,12 @@ class xformXML2Data:
     def __init__(self):
         self.readXml()
     def getRootElement(self):
-        if self.__currentNode__ == None:
+        if self.__currentNode__ is None:
             self.__currentNode__ = self.xmldoc.documentElement
         return self.__currentNode__
 
     def getUniqueObjects(self):
-        if self.__uniqueObjectsList__ != None:
+        if self.__uniqueObjectsList__ is not None:
             return
         self.__uniqueObjectsList__ = []
         for lines in self.getRootElement().getElementsByTagName("unique_object"):
@@ -136,12 +136,12 @@ def searchRegexString(iosConfig, searchString):
     stringLookup = None
     if sys.version_info < (2, 5):
         for line in iosConfig:
-            if re.search(searchString, line) != None:
+            if re.search(searchString, line) is not None:
                 stringLookup = line
                 return stringLookup
     else:
         try:
-            stringLookup = next((line for line in iosConfig if re.search(searchString, line) != None), None)
+            stringLookup = next((line for line in iosConfig if re.search(searchString, line) is not None), None)
         except:
             raise "FAIL during the searchRegexString() function."
     return stringLookup
@@ -152,7 +152,7 @@ def searchRegexMultiString(iosConfig, searchString):
     try:
         for line in iosConfig:
             stringLookup = re.search(searchString, line)
-            if stringLookup != None:
+            if stringLookup is not None:
                 stringTable.append(stringLookup.string)
     except:
         print "ECHEC search regexmultistring."
@@ -168,7 +168,7 @@ def searchStringCount(iosConfig, searchString):
 def searchRegexStringCount(iosConfig, searchString):
     stringCount = 0
     for line in iosConfig:
-        if re.search(searchString, line) != None:
+        if re.search(searchString, line) is not None:
             stringCount = stringCount + 1
     return stringCount
 
@@ -449,11 +449,11 @@ def networkReverseAddress(address, inversedmask):
     return "%d.%d.%d.%d" % (int(Addressbytes[0]) & int(Maskbytes[0]), int(Addressbytes[1]) & int(Maskbytes[1]), int(Addressbytes[2]) & int(Maskbytes[2]), int(Addressbytes[3]) & int(Maskbytes[3]))
 
 def checkStdACL(lines, accessListNumber):
-    if __builtin__.IPv4trustedNetManagementServers == None:
+    if __builtin__.IPv4trustedNetManagementServers is None:
         return False
     accessList = 'access-list ' + accessListNumber.strip()  + ' permit'
     matchACL = searchString(lines, accessList)
-    if matchACL != None:
+    if matchACL is not None:
         network = matchACL.split(' ')[3]
         try:
             mask = matchACL.split(' ')[4]
@@ -466,14 +466,14 @@ def checkStdACL(lines, accessListNumber):
     return False
 
 def checkExtACL(lines, accessListNumber):
-    if __builtin__.IPv4trustedNetManagementStations == None:
+    if __builtin__.IPv4trustedNetManagementStations is None:
         return False
     accessList = 'ip access-list extended ' + accessListNumber.strip()
     specificExtACLS = parseExtACL(accessList)
     matchACL = searchMultiString(specificExtACLS[0], 'permit')
     validated= False
 
-    if matchACL != None:
+    if matchACL is not None:
         for ace in matchACL:
             network = ace.split(' ')[2]
             if network == 'host':
