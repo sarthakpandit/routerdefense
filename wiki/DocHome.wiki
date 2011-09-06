@@ -13,25 +13,34 @@ Reporting supported formats are stdout, html5, csv and pdf.
 
 = Run the tool =
 
-There are 2 ways to launch routerdefense.
-
 The simplest method is to use the run_routerdefense script. 
 
+{{{
 $ more run_routerdefense
 #! /bin/sh
 DIR=$(dirname $0)
 PYTHONPATH=$DIR exec python -B main.py -c show_run.txt -t routerdefense.conf
+}}}
 
-show_run.txt is the Cisco IOS device configuration file.
-routerdefense.conf is a configuration file to tune the routerdefense tool.
+_show_run.txt_ is the Cisco IOS device configuration file.<br />
+[routerdefenseconf routerdefense.conf] is a configuration file to tune the routerdefense tool.
 
 $ *./run_routerdefense*
 
-The other method is to use the only*.py scripts with the Cisco IOS device configuration file as argument.
+= Specific checks =
+
+The other method is to use the only{{{*}}}.py scripts with the Cisco IOS device configuration file as argument.
 
 $ *python -B onlyCONSOLE.sh show_run.txt*
 
-
-[routerdefenseconf routerdefense.conf directives] 
+|| *Script name* || *Description* ||
+|| _onlyAUX.py_ || Check AUX lines security ||
+|| _onlyCDP.py_ || Check CDP security ||
+|| _onlyCONSOLE.py_ || Check CON lines security ||
+|| _onlyLLDP.py_ || Check LLDP security ||
+|| _onlyMSDP.py_ || Check Multicast Source Discovery Protocol (MSDP) security ||
+|| _onlyURPF.py_ || Check Unicast Reverse Path Forwarding (URPF) security ||
 
 = Routerdefense internals =
+
+Please refers to the doc/ directory.
