@@ -21,13 +21,13 @@ class metrics:
             metricAdded = Syslog()
         if metricName == 'snmp':
             metricAdded = Snmp()
-        if metricName == 'tacacsRedun':
+        if metricName == 'tacacsRed':
             metricAdded = tacacsRedun()
-        if metricName == 'tacacsAuthe':
+        if metricName == 'tacacsThe':
             metricAdded = tacacsAuth()
-        if metricName == 'tacacsAutho':
+        if metricName == 'tacacsTho':
             metricAdded = tacacsAuthorization()
-        if metricName == 'tacacsAccou':
+        if metricName == 'tacacsAcc':
             metricAdded = tacacsAccounting()
         if metricName == 'BannerMotd':
             metricAdded = motdBanner()
@@ -43,7 +43,7 @@ class metrics:
             metricAdded = exceptionCrash()
         if metricName == 'memCpu':
             metricAdded = memCpu()
-        if metricName == 'genericSvcs':
+        if metricName == 'genSvcs':
             metricAdded = globalServices()
         if metricName == 'consolePort':
             metricAdded = lineConsole()
