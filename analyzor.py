@@ -1,8 +1,10 @@
 # -*- coding: iso-8859-1 -*-
 
-from common import *
-from xml import *
 import __builtin__
+from common import *
+
+from xml import *
+
 
 class genericInfo:
     def __init__(self):
@@ -23,25 +25,25 @@ def addBasicInfo(lines):
     except:
         raise "No hostname nor version detected in the configuration file."
 
-    if searchString(lines, 'ip cef') != None:
+    if searchString(lines, 'ip cef') is not None:
         genericCfg.switchingMethod = "CEF"
-    if searchString(lines, 'no ip route-cache') != None:
+    if searchString(lines, 'no ip route-cache') is not None:
         genericCfg.switchingMethod = "Process switching (CPU)"
-    if searchString(lines, 'ip route-cache') != None:
+    if searchString(lines, 'ip route-cache') is not None:
         genericCfg.switchingMethod = "Fast switching"
-    if searchString(lines, 'ip multicast-routing') != None:
+    if searchString(lines, 'ip multicast-routing') is not None:
         genericCfg.multicast = "Enabled"
     else:
         genericCfg.multicast = "Disabled"
-    if ( (searchString(lines, 'mls qos') != None) or (searchRegexString(lines, '^ip rsvp bandwith .*$') != None) ):
+    if ( (searchString(lines, 'mls qos') is not None) or (searchRegexString(lines, '^ip rsvp bandwith .*$') is not None) ):
         genericCfg.qos = "Enabled"
     else:
         genericCfg.qos = "Disabled"
-    if searchString(lines, 'ipv6 unicast-routing') != None:
+    if searchString(lines, 'ipv6 unicast-routing') is not None:
         genericCfg.ipv6 = "Enabled"
     else:
         genericCfg.ipv6 = "Disabled"
-    if searchRegexString(lines, '^crypto map \w+$') != None:
+    if searchRegexString(lines, '^crypto map \w+$') is not None:
         genericCfg.ipsec = "Enabled"
     else:
         genericCfg.ipsec = "Disabled"
@@ -144,7 +146,7 @@ def analyzorLldp(lldpConfiguration, fullConfig, ifaceCfg):
 
             ToBeReturned = lldpConfiguration.lldp['definition'] + '\n' + lldpConfiguration.lldp['threatInfo'] + '\n\n' + lldpConfiguration.lldp['howtofix'] + '\n'
             return ToBeReturned
-        elif __builtin__.iosVersion == None:
+        elif __builtin__.iosVersion is None:
             items = searchInXml('serviceLLDP')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             lldpConfiguration.lldp['mustBeReported'] = True
@@ -185,8 +187,8 @@ def analyzorConsole(consoleCfg,con0,lines):
     except AttributeError:
         con0.privilegezero['cmdInCfg'] = None
 
-    if con0.privilegezero['cmdInCfg'] == None:
-        if con0.privilegezero['loginlocal'] == None:
+    if con0.privilegezero['cmdInCfg'] is None:
+        if con0.privilegezero['loginlocal'] is None:
             items = searchInXml('consoleprivilegezero')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             con0.privilegezero = {
@@ -202,7 +204,7 @@ def analyzorConsole(consoleCfg,con0,lines):
                 con0.privilegezero['globalusername'] = searchRegexString(lines, '^username .* privilege 0$')
             except AttributeError:
                 pass
-            if con0.privilegezero['globalusername'] == None:
+            if con0.privilegezero['globalusername'] is None:
                 items = searchInXml('consoleprivilegezero')
                 cvssMetrics = str(calculateCVSS2Score(items[5]))
                 con0.privilegezero = {
@@ -218,7 +220,7 @@ def analyzorConsole(consoleCfg,con0,lines):
     else:
         con0.privilegezero['mustBeReported'] = False
 
-    if con0.execTimeout['cmdInCfg'] != None:
+    if con0.execTimeout['cmdInCfg'] is not None:
         CheckExecTimeout(con0.execTimeout)
         items = searchInXml('consoleExecTimeout')
         if CheckExecTimeout(con0.execTimeout['cmdInCfg']) == False:
@@ -278,7 +280,7 @@ def analyzorAux(auxCfg,aux0):
         aux0.noExec['cmdInCfg'] = None
 
     items = searchInXml('auxExecTimeout')
-    if aux0.execTimeout['cmdInCfg'] != None:
+    if aux0.execTimeout['cmdInCfg'] is not None:
         if CheckExecTimeout(aux0.execTimeout) == False:
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             aux0.execTimeout = {
@@ -301,7 +303,7 @@ def analyzorAux(auxCfg,aux0):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if aux0.transportInput['cmdInCfg'] != None:
+    if aux0.transportInput['cmdInCfg'] is not None:
         aux0.transportInput['mustBeReported'] = False
     else:
         items = searchInXml('auxTransportInput')
@@ -314,7 +316,7 @@ def analyzorAux(auxCfg,aux0):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
 
-    if aux0.transportOutput['cmdInCfg'] != None:
+    if aux0.transportOutput['cmdInCfg'] is not None:
         aux0.transportOutput['mustBeReported'] = False
     else:
         items = searchInXml('auxTransportOutput')
@@ -327,7 +329,7 @@ def analyzorAux(auxCfg,aux0):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if aux0.noExec['cmdInCfg'] != None:
+    if aux0.noExec['cmdInCfg'] is not None:
         aux0.noExec['mustBeReported'] = False
     else:
         items = searchInXml('auxNoExec')
@@ -384,7 +386,7 @@ def analyzorVty(vtyCfg,vty):
         except AttributeError:
             vty.IPv6accessClass['cmdInCfg'] = None
 
-    if vty.execTimeout['cmdInCfg'] != None:
+    if vty.execTimeout['cmdInCfg'] is not None:
         items = searchInXml('vtyExecTimeout')
         if CheckExecTimeout(vty.execTimeout) == False:
             cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -409,7 +411,7 @@ def analyzorVty(vtyCfg,vty):
         "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
         "cvss": (cvssMetrics)}
 
-    if vty.transportInput['cmdInCfg'] != None:
+    if vty.transportInput['cmdInCfg'] is not None:
         vty.transportInput['mustBeReported'] = False
     else:
         items = searchInXml('vtyTransportInput')
@@ -422,7 +424,7 @@ def analyzorVty(vtyCfg,vty):
         "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
         "cvss": (cvssMetrics)}
 
-    if vty.transportOutput['cmdInCfg'] != None:
+    if vty.transportOutput['cmdInCfg'] is not None:
         vty.transportOutput['mustBeReported'] = False
     else:
         items = searchInXml('vtyTransportOutput')
@@ -435,7 +437,7 @@ def analyzorVty(vtyCfg,vty):
         "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
         "cvss": (cvssMetrics)}
 
-    if vty.IPv4accessClass['cmdInCfg'] == None:
+    if vty.IPv4accessClass['cmdInCfg'] is None:
         items = searchInXml('vtyIPv4AccessClass')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
         vty.IPv4accessClass = {
@@ -480,7 +482,7 @@ def analyzorVty(vtyCfg,vty):
             "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
             "cvss": (cvssMetrics)}
 
-    if vty.IPv6accessClass['cmdInCfg'] == None:
+    if vty.IPv6accessClass['cmdInCfg'] is None:
         vty.IPv6accessClass['mustBeReported'] = False
     else:
         items = searchInXml('vtyIPv6AccessClass')
@@ -526,7 +528,7 @@ def analyzorBanner(bannerMotd, motd, bannerType):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            if searchString(bannerMotd, __builtin__.genericCfg.hostName) != None :
+            if searchString(bannerMotd, __builtin__.genericCfg.hostName) is not None :
                 items = searchInXml('bannerMOTDhostnameIncluded')
                 cvssMetrics = str(calculateCVSS2Score(items[5]))
                 motd.routerName = {
@@ -553,7 +555,7 @@ def analyzorBanner(bannerMotd, motd, bannerType):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            if searchString(bannerMotd, __builtin__.genericCfg.hostName) != None :
+            if searchString(bannerMotd, __builtin__.genericCfg.hostName) is not None :
                 items = searchInXml('bannerLOGINhostnameIncluded')
                 cvssMetrics = str(calculateCVSS2Score(items[5]))
                 banLogin.routerName = {
@@ -580,7 +582,7 @@ def analyzorBanner(bannerMotd, motd, bannerType):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            if searchString(bannerMotd, __builtin__.genericCfg.hostName) != None :
+            if searchString(bannerMotd, __builtin__.genericCfg.hostName) is not None :
                 items = searchInXml('bannerEXEChostnameIncluded')
                 cvssMetrics = str(calculateCVSS2Score(items[5]))
                 banExec.routerName = {
@@ -604,7 +606,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.pwdRecovery['cmdInCfg'] != None:
+    if services.pwdRecovery['cmdInCfg'] is not None:
         # feature already configured
         services.pwdRecovery['mustBeReported'] = False
     else:
@@ -634,7 +636,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.tcpSmallServers['cmdInCfg'] != None:
+    if services.tcpSmallServers['cmdInCfg'] is not None:
         services.tcpSmallServers['mustBeReported'] = False
     else:
         items = searchInXml('tcpSmallServers')
@@ -662,7 +664,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.udpSmallServers['cmdInCfg'] != None:
+    if services.udpSmallServers['cmdInCfg'] is not None:
         services.udpSmallServers['mustBeReported'] = False
     else:
         items = searchInXml('udpSmallServers')
@@ -690,7 +692,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.serviceFinger['cmdInCfg'] != None:
+    if services.serviceFinger['cmdInCfg'] is not None:
         services.serviceFinger['mustBeReported'] = False
     else:
         items = searchInXml('serviceFinger')
@@ -718,7 +720,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.serviceBootpServer['cmdInCfg'] != None:
+    if services.serviceBootpServer['cmdInCfg'] is not None:
         services.serviceBootpServer['mustBeReported'] = False
     else:
         items = searchInXml('serviceBootpServer')
@@ -736,7 +738,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.serviceTcpKeepAliveIn['cmdInCfg'] != None:
+    if services.serviceTcpKeepAliveIn['cmdInCfg'] is not None:
         services.serviceTcpKeepAliveIn['mustBeReported'] = False
     else:
         items = searchInXml('serviceTcpKeepAliveIn')
@@ -754,7 +756,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.serviceTcpKeepAliveOut['cmdInCfg'] != None:
+    if services.serviceTcpKeepAliveOut['cmdInCfg'] is not None:
         services.serviceTcpKeepAliveOut['mustBeReported'] = False
     else:
         items = searchInXml('serviceTcpKeepAliveOut')
@@ -772,7 +774,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.serviceIpDhcpBootIgnore['cmdInCfg'] != None:
+    if services.serviceIpDhcpBootIgnore['cmdInCfg'] is not None:
         services.serviceIpDhcpBootIgnore['mustBeReported'] = False
     else:
         items = searchInXml('serviceIpDhcpBootIgnore')
@@ -800,7 +802,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.serviceDhcp['cmdInCfg'] != None:
+    if services.serviceDhcp['cmdInCfg'] is not None:
         services.serviceDhcp['mustBeReported'] = False
     else:
         items = searchInXml('serviceDhcp')
@@ -818,7 +820,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.Mop['cmdInCfg'] != None:
+    if services.Mop['cmdInCfg'] is not None:
         services.Mop['mustBeReported'] = False
     else:
         items = searchInXml('Mop')
@@ -836,7 +838,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.ipDomainLookup['cmdInCfg'] != None:
+    if services.ipDomainLookup['cmdInCfg'] is not None:
         services.ipDomainLookup['mustBeReported'] = False
     else:
         items = searchInXml('ipDomainLookup')
@@ -854,7 +856,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.servicePad['cmdInCfg'] != None:
+    if services.servicePad['cmdInCfg'] is not None:
         services.servicePad['mustBeReported'] = False
     else:
         items = searchInXml('servicePad')
@@ -872,7 +874,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.serviceHttpServer['cmdInCfg'] != None:
+    if services.serviceHttpServer['cmdInCfg'] is not None:
         services.serviceHttpServer['mustBeReported'] = False
     else:
         items = searchInXml('serviceHttpServer')
@@ -890,7 +892,7 @@ def analyzorServices(lines, services):
     except AttributeError:
         pass
 
-    if services.serviceHttpsServer['cmdInCfg'] != None:
+    if services.serviceHttpsServer['cmdInCfg'] is not None:
         services.serviceHttpsServer['mustBeReported'] = False
     else:
         items = searchInXml('serviceHttpsServer')
@@ -909,7 +911,7 @@ def analyzorServices(lines, services):
         pass
 
     items = searchInXml('serviceConfig')
-    if services.serviceConfig['cmdInCfg'] != None:
+    if services.serviceConfig['cmdInCfg'] is not None:
         services.serviceConfig['mustBeReported'] = False
     else:
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -962,7 +964,7 @@ def analyzorMemCpu(lines, memCpu):
     except AttributeError:
         pass
 
-    if memCpu.schedulerallocate['cmdInCfg'] == None:
+    if memCpu.schedulerallocate['cmdInCfg'] is None:
         memCpu.schedulerallocate['mustBeReported'] = True
 
     try:
@@ -970,7 +972,7 @@ def analyzorMemCpu(lines, memCpu):
     except AttributeError:
         pass
 
-    if memCpu.schedulerinterval['cmdInCfg'] == None:
+    if memCpu.schedulerinterval['cmdInCfg'] is None:
         memCpu.schedulerinterval['mustBeReported'] = True
 
     if memCpu.schedulerallocate['mustBeReported'] == True:
@@ -1001,7 +1003,7 @@ def analyzorMemCpu(lines, memCpu):
     except AttributeError:
         pass
 
-    if memCpu.lowWatermarkProcessor['cmdInCfg'] != None:
+    if memCpu.lowWatermarkProcessor['cmdInCfg'] is not None:
         # feature already configured
         memCpu.lowWatermarkProcessor['mustBeReported'] = False
     else:
@@ -1030,7 +1032,7 @@ def analyzorMemCpu(lines, memCpu):
         memCpu.lowWatermarkIo['cmdInCfg'] = searchString(lines, 'memory free low-watermark io')
     except AttributeError:
         pass
-    if memCpu.lowWatermarkIo['cmdInCfg'] != None:
+    if memCpu.lowWatermarkIo['cmdInCfg'] is not None:
         # feature already configured
         memCpu.lowWatermarkIo['mustBeReported'] = False
     else:
@@ -1059,7 +1061,7 @@ def analyzorMemCpu(lines, memCpu):
         memCpu.memReserveCritical['cmdInCfg'] = searchString(lines, 'memory reserve critical')
     except AttributeError:
         pass
-    if memCpu.memReserveCritical['cmdInCfg'] != None:
+    if memCpu.memReserveCritical['cmdInCfg'] is not None:
         # feature already configured
         memCpu.memReserveCritical['mustBeReported'] = False
     else:
@@ -1088,7 +1090,7 @@ def analyzorMemCpu(lines, memCpu):
         memCpu.memReserveConsole['cmdInCfg'] = searchString(lines, 'memory reserve console')
     except AttributeError:
         pass
-    if memCpu.memReserveConsole['cmdInCfg'] != None:
+    if memCpu.memReserveConsole['cmdInCfg'] is not None:
         # feature already configured
         memCpu.memReserveConsole['mustBeReported'] = False
     else:
@@ -1118,7 +1120,7 @@ def analyzorMemCpu(lines, memCpu):
         memCpu.memIgnoreOverflowIo['cmdInCfg'] = searchString(lines, 'exception memory ignore overflow io')
     except AttributeError:
         pass
-    if memCpu.memIgnoreOverflowIo['cmdInCfg'] != None:
+    if memCpu.memIgnoreOverflowIo['cmdInCfg'] is not None:
         # feature already configured
         memCpu.memIgnoreOverflowIo['mustBeReported'] = False
     else:
@@ -1147,7 +1149,7 @@ def analyzorMemCpu(lines, memCpu):
         memCpu.memIgnoreOverflowCpu['cmdInCfg'] = searchString(lines, 'exception memory ignore overflow processor')
     except AttributeError:
         pass
-    if memCpu.memIgnoreOverflowCpu['cmdInCfg'] != None:
+    if memCpu.memIgnoreOverflowCpu['cmdInCfg'] is not None:
         # feature already configured
         memCpu.memIgnoreOverflowCpu['mustBeReported'] = False
     else:
@@ -1190,7 +1192,7 @@ def analyzorMemCpu(lines, memCpu):
     except AttributeError:
         pass
 
-    if ((memCpu.cpuThresholdNotice['cmdSnmpServerTraps'] != None) and (memCpu.cpuThresholdNotice['cmdSnmpServerHost'] != None) and (memCpu.cpuThresholdNotice['cmdCpuThreshold'] != None) and (memCpu.cpuThresholdNotice['cmdCpuStats'] != None) ):
+    if ((memCpu.cpuThresholdNotice['cmdSnmpServerTraps'] is not None) and (memCpu.cpuThresholdNotice['cmdSnmpServerHost'] is not None) and (memCpu.cpuThresholdNotice['cmdCpuThreshold'] is not None) and (memCpu.cpuThresholdNotice['cmdCpuStats'] is not None) ):
         memCpu.cpuThresholdNotice['mustBeReported'] = False
     else:
         items = searchInXml('cpuThresholdNotification')
@@ -1241,7 +1243,7 @@ def analyzorCrashinfo(lines, crashinfo):
         crashinfo.crashinfoMaxFiles['cmdInCfg'] = searchString(lines, 'exception crashinfo maximum files')
     except AttributeError:
         pass
-    if crashinfo.crashinfoMaxFiles['cmdInCfg'] != None:
+    if crashinfo.crashinfoMaxFiles['cmdInCfg'] is not None:
         # feature already configured
         crashinfo.crashinfoMaxFiles['mustBeReported'] = False
     else:
@@ -1271,7 +1273,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
 
     for i in range(0, len(vtyCfg)):
         for k in range (0, len(vtyCfg[i])):
-            if searchString(vtyCfg[i][k], 'transport input none') != None:
+            if searchString(vtyCfg[i][k], 'transport input none') is not None:
                 mpp.managementInterface['mustBeReported'] = False
                 mpp.sshServer['mustBeReported'] = False
                 mpp.scpServer['mustBeReported'] = False
@@ -1286,8 +1288,8 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
         except AttributeError:
             pass
 
-        if mpp.managementInterface['cpHostCfg'] != None:
-            if mpp.managementInterface['mgmtIfaceCfg'] != None:
+        if mpp.managementInterface['cpHostCfg'] is not None:
+            if mpp.managementInterface['mgmtIfaceCfg'] is not None:
                 mpp.managementInterface['mustBeReported'] = False
             else:
                 if __builtin__.iosVersion >= 12.46:
@@ -1345,7 +1347,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
     except AttributeError:
         pass
 
-    if mpp.sshServerTimeout['timeout'] == None:
+    if mpp.sshServerTimeout['timeout'] is None:
         items = searchInXml('sshServerTimeout')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
         mpp.sshServerTimeout = {
@@ -1358,7 +1360,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
     else:
         mpp.sshServerTimeout['mustBeReported'] = False
 
-    if mpp.sshServerAuthRetries['authRetries'] == None:
+    if mpp.sshServerAuthRetries['authRetries'] is None:
         items = searchInXml('sshServerAuthretries')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
         mpp.sshServerAuthRetries = {
@@ -1371,7 +1373,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
     else:
         mpp.sshServerAuthRetries['mustBeReported'] = False
 
-    if mpp.sshServerSourceInterface['sourceInterface'] == None:
+    if mpp.sshServerSourceInterface['sourceInterface'] is None:
         items = searchInXml('sshServerSourceIf')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
         mpp.sshServerSourceInterface = {
@@ -1389,7 +1391,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
     except AttributeError:
         pass
 
-    if mpp.scpServer['cmdIncfg'] == None:
+    if mpp.scpServer['cmdIncfg'] is None:
         items = searchInXml('sshSCPServer')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
         mpp.scpServer = {
@@ -1407,7 +1409,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
     except AttributeError:
         pass
 
-    if mpp.httpSecureServer['cmdIncfg'] != None:
+    if mpp.httpSecureServer['cmdIncfg'] is not None:
         items = searchInXml('HTTPServer')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
         mpp.httpSecureServer = {
@@ -1441,15 +1443,15 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
     except AttributeError:
         pass
     loginbruteforceCount = 0
-    if mpp.loginbruteforce['blockfor'] != None:
+    if mpp.loginbruteforce['blockfor'] is not None:
         loginbruteforceCount = loginbruteforceCount + 1
-    if mpp.loginbruteforce['delay'] != None:
+    if mpp.loginbruteforce['delay'] is not None:
         loginbruteforceCount = loginbruteforceCount + 1
-    if mpp.loginbruteforce['quietacl'] != None:
+    if mpp.loginbruteforce['quietacl'] is not None:
         loginbruteforceCount = loginbruteforceCount + 1
-    if mpp.loginbruteforce['faillog'] != None:
+    if mpp.loginbruteforce['faillog'] is not None:
         loginbruteforceCount = loginbruteforceCount + 1
-    if mpp.loginbruteforce['successlog'] != None:
+    if mpp.loginbruteforce['successlog'] is not None:
         loginbruteforceCount = loginbruteforceCount + 1
 
     if loginbruteforceCount < 5:
@@ -1500,7 +1502,7 @@ def analyzorPasswordManagement(lines, pwdManagement):
         pwdManagement.enableSecret['cmdInCfg'] = searchString(lines, 'enable secret')
     except AttributeError:
         pass
-    if pwdManagement.enableSecret['cmdInCfg'] != None:
+    if pwdManagement.enableSecret['cmdInCfg'] is not None:
         # feature already configured
         pwdManagement.enableSecret['mustBeReported'] = False
     else:
@@ -1518,7 +1520,7 @@ def analyzorPasswordManagement(lines, pwdManagement):
         pwdManagement.svcPwdEncryption['cmdInCfg'] = searchRegexString(lines, '^service password-encryption')
     except AttributeError:
         pass
-    if pwdManagement.svcPwdEncryption['cmdInCfg'] != None:
+    if pwdManagement.svcPwdEncryption['cmdInCfg'] is not None:
         # feature already configured
         pwdManagement.svcPwdEncryption['mustBeReported'] = False
     else:
@@ -1536,7 +1538,7 @@ def analyzorPasswordManagement(lines, pwdManagement):
         pwdManagement.usernameSecret['cmdInCfg'] = searchRegexString(lines, '^username .* password .*')
     except AttributeError:
         pass
-    if pwdManagement.usernameSecret['cmdInCfg'] == None:
+    if pwdManagement.usernameSecret['cmdInCfg'] is None:
         # feature already configured or not used
         pwdManagement.usernameSecret['mustBeReported'] = False
     else:
@@ -1577,9 +1579,9 @@ def analyzorPasswordManagement(lines, pwdManagement):
     except AttributeError:
         pass
 
-    if ((pwdManagement.retryLockout['aaaNewModel'] != None) and (pwdManagement.retryLockout['maxFail'] != None) and (pwdManagement.retryLockout['aaaAuthLoginLocal'] != None) ):
+    if ((pwdManagement.retryLockout['aaaNewModel'] is not None) and (pwdManagement.retryLockout['maxFail'] is not None) and (pwdManagement.retryLockout['aaaAuthLoginLocal'] is not None) ):
         pwdManagement.retryLockout['mustBeReported'] = False
-    elif pwdManagement.retryLockout['usernames'] == None:
+    elif pwdManagement.retryLockout['usernames'] is None:
         pwdManagement.retryLockout['mustBeReported'] = False
     else:
         items = searchInXml('retryLockout')
@@ -1634,7 +1636,7 @@ def analyzorTacacs(lines, tacacs, mode):
         except AttributeError:
             pass
 
-        if tacacs.aaaNewModel['cmdInCfg'] == None:
+        if tacacs.aaaNewModel['cmdInCfg'] is None:
             items = searchInXml('aaaNewModel')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.aaaNewmodel = {
@@ -1647,7 +1649,7 @@ def analyzorTacacs(lines, tacacs, mode):
         else:
             tacacs.aaaNewModel['mustBeReported'] = False
 
-        if tacacs.authTacacs['cmdInCfg'] == None:
+        if tacacs.authTacacs['cmdInCfg'] is None:
             items = searchInXml('aaaAuthTacacs')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.authTacacs = {
@@ -1660,7 +1662,7 @@ def analyzorTacacs(lines, tacacs, mode):
         else:
             tacacs.authTacacs['mustBeReported'] = False
 
-        if tacacs.authFallback['cmdInCfg'] == None:
+        if tacacs.authFallback['cmdInCfg'] is None:
             items = searchInXml('aaaAuthTacacsFallback')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.authFallback = {
@@ -1695,7 +1697,7 @@ def analyzorTacacs(lines, tacacs, mode):
         except AttributeError:
             pass
 
-        if tacacs.authExec['cmdInCfg'] == None:
+        if tacacs.authExec['cmdInCfg'] is None:
             items = searchInXml('aaaAuthTacacsExec')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.authExec = {
@@ -1708,7 +1710,7 @@ def analyzorTacacs(lines, tacacs, mode):
         else:
             tacacs.authExec['mustBeReported'] = False
 
-        if tacacs.level0['cmdInCfg'] == None:
+        if tacacs.level0['cmdInCfg'] is None:
             items = searchInXml('aaaAuthTacacsLevel0')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.level0 = {
@@ -1721,7 +1723,7 @@ def analyzorTacacs(lines, tacacs, mode):
         else:
             tacacs.level0['mustBeReported'] = False
 
-        if tacacs.level1['cmdInCfg'] == None:
+        if tacacs.level1['cmdInCfg'] is None:
             items = searchInXml('aaaAuthTacacsLevel1')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.level1 = {
@@ -1734,7 +1736,7 @@ def analyzorTacacs(lines, tacacs, mode):
         else:
             tacacs.level1['mustBeReported'] = False
 
-        if tacacs.level15['cmdInCfg'] == None:
+        if tacacs.level15['cmdInCfg'] is None:
             items = searchInXml('aaaAuthTacacsLevel15')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.level15 = {
@@ -1769,7 +1771,7 @@ def analyzorTacacs(lines, tacacs, mode):
         except AttributeError:
             pass
 
-        if tacacs.authAccounting['cmdInCfg'] == None:
+        if tacacs.authAccounting['cmdInCfg'] is None:
             items = searchInXml('aaaAccountingTacacsExec')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.authAccounting = {
@@ -1782,7 +1784,7 @@ def analyzorTacacs(lines, tacacs, mode):
         else:
             tacacs.authAccounting['mustBeReported'] = False
 
-        if tacacs.level0['cmdInCfg'] == None:
+        if tacacs.level0['cmdInCfg'] is None:
             items = searchInXml('aaaAccountingTacacsLevel0')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.level0 = {
@@ -1795,7 +1797,7 @@ def analyzorTacacs(lines, tacacs, mode):
         else:
             tacacs.level0['mustBeReported'] = False
 
-        if tacacs.level1['cmdInCfg'] == None:
+        if tacacs.level1['cmdInCfg'] is None:
             items = searchInXml('aaaAccountingTacacsLevel1')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.level1 = {
@@ -1808,7 +1810,7 @@ def analyzorTacacs(lines, tacacs, mode):
         else:
             tacacs.level1['mustBeReported'] = False
 
-        if tacacs.level15['cmdInCfg'] == None:
+        if tacacs.level15['cmdInCfg'] is None:
             items = searchInXml('aaaAccountingTacacsLevel15')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             tacacs.level15 = {
@@ -1825,7 +1827,7 @@ def analyzorTacacs(lines, tacacs, mode):
 
         countServers = 0
         for line in lines:
-            if searchString(lines, 'tacacs-server host') != None:
+            if searchString(lines, 'tacacs-server host') is not None:
                 countServers = countServers +1
 
         if countServers >= 2:
@@ -1909,7 +1911,7 @@ def analyzorSNMP(lines, snmp):
         mgmtWildcardMask = ""
         pass
 
-    if snmp.ROcommunity['cmdInCfg'] == None:
+    if snmp.ROcommunity['cmdInCfg'] is None:
         # feature not configured
         snmp.ROcommunity['mustBeReported'] = False
         snmp.ROcommunityACL['mustBeReported'] = False
@@ -1933,7 +1935,7 @@ def analyzorSNMP(lines, snmp):
         except AttributeError:
             pass
 
-        if snmp.ROcommunityACL['cmdInCfg'] == None:
+        if snmp.ROcommunityACL['cmdInCfg'] is None:
             items = searchInXml('snmpROcommunityHardenedACL')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             snmp.ROcommunityACL = {
@@ -1962,7 +1964,7 @@ def analyzorSNMP(lines, snmp):
                     .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    if snmp.RWcommunity['cmdInCfg'] == None:
+    if snmp.RWcommunity['cmdInCfg'] is None:
         # feature not configured
         snmp.RWcommunity['mustBeReported'] = False
         snmp.RWcommunityACL['mustBeReported'] = False
@@ -1986,7 +1988,7 @@ def analyzorSNMP(lines, snmp):
         except AttributeError:
             pass
 
-        if snmp.RWcommunityACL['cmdInCfg'] == None:
+        if snmp.RWcommunityACL['cmdInCfg'] is None:
             items = searchInXml('snmpRWcommunityHardenedACL')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             snmp.RWcommunityACL = {
@@ -2015,7 +2017,7 @@ def analyzorSNMP(lines, snmp):
                     .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    if snmp.ViewROcommunity['cmdInCfg'] == None:
+    if snmp.ViewROcommunity['cmdInCfg'] is None:
         # feature not configured
         snmp.ViewROcommunity['mustBeReported'] = False
         snmp.ViewROcommunityACL['mustBeReported'] = False
@@ -2039,7 +2041,7 @@ def analyzorSNMP(lines, snmp):
         except AttributeError:
             pass
 
-        if snmp.ViewROcommunityACL['cmdInCfg'] == None:
+        if snmp.ViewROcommunityACL['cmdInCfg'] is None:
             items = searchInXml('ViewsnmpROcommunityHardenedACL')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             snmp.ViewROcommunityACL = {
@@ -2068,7 +2070,7 @@ def analyzorSNMP(lines, snmp):
                     .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    if snmp.ViewRWcommunity['cmdInCfg'] == None:
+    if snmp.ViewRWcommunity['cmdInCfg'] is None:
         # feature not configured
         snmp.ViewRWcommunity['mustBeReported'] = False
         snmp.ViewRWcommunityACL['mustBeReported'] = False
@@ -2092,7 +2094,7 @@ def analyzorSNMP(lines, snmp):
         except AttributeError:
             pass
 
-        if snmp.ViewRWcommunityACL['cmdInCfg'] == None:
+        if snmp.ViewRWcommunityACL['cmdInCfg'] is None:
             items = searchInXml('snmpRWcommunityHardenedACL')
             cvssMetrics = str(calculateCVSS2Score(items[5]))
             snmp.ViewRWcommunityACL = {
@@ -2121,7 +2123,7 @@ def analyzorSNMP(lines, snmp):
                     .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    if snmp.snmpV3['cmdInCfg'] == None:
+    if snmp.snmpV3['cmdInCfg'] is None:
         # feature not configured
         items = searchInXml('snmpVersion3')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -2166,7 +2168,7 @@ def analyzorSyslog(lines, syslog):
     except AttributeError:
         pass
 
-    if syslog.Server['cmdInCfg'] == None:
+    if syslog.Server['cmdInCfg'] is None:
         # feature not configured
         try:
             mgmtSubnet = __builtin__.IPv4trustedNetManagementServers[0][0]
@@ -2209,7 +2211,7 @@ def analyzorSyslog(lines, syslog):
         syslog.levelTrap['cmdInCfg'] = searchString(lines, 'logging trap')
     except AttributeError:
         pass
-    if syslog.levelTrap['cmdInCfg'] == None:
+    if syslog.levelTrap['cmdInCfg'] is None:
         # feature not configured
         items = searchInXml('syslogLevelTrap')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -2257,7 +2259,7 @@ def analyzorSyslog(lines, syslog):
         syslog.levelBuffered['cmdInCfg'] = searchRegexString(lines, 'logging buffered \d')
     except AttributeError:
         pass
-    if syslog.levelBuffered['cmdInCfg'] == None:
+    if syslog.levelBuffered['cmdInCfg'] is None:
         # feature not configured
         items = searchInXml('syslogLevelBuffered')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -2287,7 +2289,7 @@ def analyzorSyslog(lines, syslog):
         syslog.loggingConsole['cmdInCfg'] = searchString(lines, 'no logging console')
     except AttributeError:
         pass
-    if syslog.loggingConsole['cmdInCfg'] == None:
+    if syslog.loggingConsole['cmdInCfg'] is None:
         # feature not configured
         items = searchInXml('syslogConsole')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -2305,7 +2307,7 @@ def analyzorSyslog(lines, syslog):
         syslog.loggingMonitor['cmdInCfg'] = searchString(lines, 'no logging monitor')
     except AttributeError:
         pass
-    if syslog.loggingMonitor['cmdInCfg'] == None:
+    if syslog.loggingMonitor['cmdInCfg'] is None:
         # feature not configured
         items = searchInXml('syslogMonitor')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -2323,7 +2325,7 @@ def analyzorSyslog(lines, syslog):
         syslog.loggingBuffered['cmdInCfg'] = searchRegexString(lines, 'logging buffered .* .*')
     except AttributeError:
         pass
-    if syslog.loggingBuffered['cmdInCfg'] == None:
+    if syslog.loggingBuffered['cmdInCfg'] is None:
         # feature not configured
         items = searchInXml('syslogBuffered')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -2371,7 +2373,7 @@ def analyzorSyslog(lines, syslog):
         syslog.Interface['cmdInCfg'] = searchString(lines, 'logging source-interface loopback')
     except AttributeError:
         pass
-    if syslog.Interface['cmdInCfg'] == None:
+    if syslog.Interface['cmdInCfg'] is None:
         # feature not configured
         items = searchInXml('syslogInterface')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -2389,7 +2391,7 @@ def analyzorSyslog(lines, syslog):
         syslog.timestamp['cmdInCfg'] = searchString(lines, 'service timestamps log datetime msec show-timezone')
     except AttributeError:
         pass
-    if syslog.timestamp['cmdInCfg'] == None:
+    if syslog.timestamp['cmdInCfg'] is None:
         # feature not configured
         items = searchInXml('syslogTimestamp')
         cvssMetrics = str(calculateCVSS2Score(items[5]))
@@ -2408,7 +2410,7 @@ def analyzorSyslog(lines, syslog):
             syslog.serverarp['cmdInCfg'] = searchString(lines, 'logging server-arp')
         except AttributeError:
             pass
-        if syslog.serverarp['cmdInCfg'] == None:
+        if syslog.serverarp['cmdInCfg'] is None:
             # feature not configured
             if __builtin__.iosVersion >= 12.3:
                 items = searchInXml('syslogServerArp')
@@ -2462,9 +2464,9 @@ def analyzorArchive(lines, archive):
         archive.configuration['cmdInCfg'] = searchRegexString(lines, '^archive$')
     except AttributeError:
         pass
-    if archive.configuration['cmdInCfg'] != None:
+    if archive.configuration['cmdInCfg'] is not None:
         # feature already configured
-        if searchRegexString(lines, 'time-period') != None:
+        if searchRegexString(lines, 'time-period') is not None:
             archive.configuration['mustBeReported'] = False
         else:
             items = searchInXml('archiveConfiguration')
@@ -2492,7 +2494,7 @@ def analyzorArchive(lines, archive):
         archive.exclusive['cmdInCfg'] = searchString(lines, 'configuration mode exclusive auto')
     except AttributeError:
         pass
-    if archive.exclusive['cmdInCfg'] != None:
+    if archive.exclusive['cmdInCfg'] is not None:
         # feature already configured
         archive.exclusive['mustBeReported'] = False
     else:
@@ -2521,7 +2523,7 @@ def analyzorArchive(lines, archive):
         archive.secureBoot['cmdInCfg'] = searchString(lines, 'secure boot-image')
     except AttributeError:
         pass
-    if archive.secureBoot['cmdInCfg'] != None:
+    if archive.secureBoot['cmdInCfg'] is not None:
         # feature already configured
         archive.secureBoot['mustBeReported'] = False
     else:
@@ -2550,7 +2552,7 @@ def analyzorArchive(lines, archive):
         archive.secureConfig['cmdInCfg'] = searchString(lines, 'secure boot-config')
     except AttributeError:
         pass
-    if archive.secureConfig['cmdInCfg'] != None:
+    if archive.secureConfig['cmdInCfg'] is not None:
         # feature already configured
         archive.secureConfig['mustBeReported'] = False
     else:
@@ -2579,9 +2581,9 @@ def analyzorArchive(lines, archive):
         archive.logs['cmdInCfg'] = searchRegexString(lines, '^archive$')
     except AttributeError:
         pass
-    if archive.logs['cmdInCfg'] != None:
+    if archive.logs['cmdInCfg'] is not None:
         # feature already configured
-        if ( (searchString(lines, 'hidekeys') != None) and (searchString(lines, 'logging enable') != None )):
+        if ( (searchString(lines, 'hidekeys') is not None) and (searchString(lines, 'logging enable') is not None )):
             archive.logs['mustBeReported'] = False
         else:
             items = searchInXml('archiveLogs')
@@ -2699,7 +2701,7 @@ def analyzorICMPUnreachable(icmpUnreachable, fullConfig, ifaceCfg):
         icmpUnreachable.unreachable['unreachableRate'] = searchString(fullConfig, 'ip icmp rate-limit unreachable')
     except AttributeError:
         pass
-    if icmpUnreachable.unreachable['unreachableRate'] == None:
+    if icmpUnreachable.unreachable['unreachableRate'] is None:
         icmpUnreachable.unreachable['mustBeReported'] = True
 
     if icmpUnreachable.unreachable['mustBeReported'] == True:
@@ -2778,7 +2780,7 @@ def analyzorNtp(lines, ntp):
     except AttributeError:
         pass
 
-    if ( (ntp.authentication['authenticate'] == None) or (ntp.authentication['key'] == None) ):
+    if ( (ntp.authentication['authenticate'] is None) or (ntp.authentication['key'] is None) ):
         ntp.authentication['mustBeReported'] = True
 
     if ntp.authentication['mustBeReported'] == True:
@@ -2800,7 +2802,7 @@ def analyzorNtp(lines, ntp):
 
 def analyzorBgp(lines, bgp, aclIPv4):
 
-    if searchString(lines, 'router bgp') == None:
+    if searchString(lines, 'router bgp') is None:
         return
 
     remoteAsCount = 0
@@ -2930,7 +2932,7 @@ def analyzorBgp(lines, bgp, aclIPv4):
     return toBeReturned
 
 def analyzorEigrp(lines, eigrp, ifaceCfg):
-    if searchString(lines, 'router eigrp') == None:
+    if searchString(lines, 'router eigrp') is None:
         return
     authModeMD5 = None
     eigrpInstances = 0
@@ -2964,15 +2966,15 @@ def analyzorEigrp(lines, eigrp, ifaceCfg):
                     if line.find('no passive-interface') != -1:
                         eigrp.activeIfaces.append(line.split(' ')[2])
 
-                if ( (eigrp.passiveDefault['cmdInCfg'] == None) ):
+                if ( (eigrp.passiveDefault['cmdInCfg'] is None) ):
                         eigrp.passiveDefault['asn'].append(v.split(' ')[2].strip())
                         eigrp.passiveDefault['mustBeReported'] = True
 
-                if ( (eigrp.routeFilteringIn['cmdInCfg'] == None) ):
+                if ( (eigrp.routeFilteringIn['cmdInCfg'] is None) ):
                     eigrp.routeFilteringIn['asn'].append(v.split(' ')[2].strip())
                     eigrp.routeFilteringIn['mustBeReported'] = True
 
-                if ( (eigrp.routeFilteringOut['cmdInCfg'] == None) ):
+                if ( (eigrp.routeFilteringOut['cmdInCfg'] is None) ):
                     eigrp.routeFilteringOut['asn'].append(v.split(' ')[2].strip())
                     eigrp.routeFilteringOut['mustBeReported'] = True
 
@@ -2980,7 +2982,7 @@ def analyzorEigrp(lines, eigrp, ifaceCfg):
                     for index in range(0, len(ifaceCfg)):
                         if ifaceCfg[index].name.strip() == ifaceName.strip():
                             authModeMD5 = searchRegexString(ifaceCfg[index].configuration, 'ip authentication mode eigrp .* md5')
-                            if authModeMD5 == None:
+                            if authModeMD5 is None:
                                 eigrp.authModeMD5['interfaces'].append(ifaceName.strip())
                                 eigrp.authModeMD5['asn'].append(v.split(' ')[2].strip())
                                 eigrp.authModeMD5['mustBeReported'] = True
@@ -3047,7 +3049,7 @@ def analyzorEigrp(lines, eigrp, ifaceCfg):
     return toBeReturned
 
 def analyzorRip(lines, rip, ifaceCfg):
-    if searchString(lines, 'router rip') == None:
+    if searchString(lines, 'router rip') is None:
         return
     rip.version = 1
     for i,v in enumerate(lines):
@@ -3067,7 +3069,7 @@ def analyzorRip(lines, rip, ifaceCfg):
 
     ripMask = None
     ripMask = searchRegexString(ripLines, 'network .* .*')
-    if ripMask != None:
+    if ripMask is not None:
         rip.version = 2
 
     if rip.version == 1:
@@ -3082,13 +3084,13 @@ def analyzorRip(lines, rip, ifaceCfg):
                     ifIPmask = None
                     for index in range(0, len(ifaceCfg)):
                         ifIPmask = searchRegexString(ifaceCfg[index].configuration, 'ip address .* .*')
-                        if ifIPmask != None:
+                        if ifIPmask is not None:
                             ipTuple = ifIPmask.split(' ')
                             ipAddress = ipTuple[2]
                             Mask = ipTuple[3]
                             if ripNet == networkAddress(ipAddress, Mask):
                                 ripMD5 = searchString(ifaceCfg[index].configuration, 'ip rip authentication mode md5')
-                                if ripMD5 == None:
+                                if ripMD5 is None:
                                     MD5notFound = True
                                     rip.authModeMD5['interfaces'].append(ifaceCfg[index].name.strip())
                                     rip.authModeMD5['mustBeReported'] = True
@@ -3113,7 +3115,7 @@ def analyzorRip(lines, rip, ifaceCfg):
 
 
 def analyzorOspf(lines, ospf, ifaceCfg):
-    if searchString(lines, 'router ospf') == None:
+    if searchString(lines, 'router ospf') is None:
         return
     authModeMD5 = None
     ospfInstances = 0
@@ -3139,19 +3141,19 @@ def analyzorOspf(lines, ospf, ifaceCfg):
                     except AttributeError:
                         pass
 
-                if ( (ospf.passiveDefault['cmdInCfg'] == None) ):
+                if ( (ospf.passiveDefault['cmdInCfg'] is None) ):
                     ospf.passiveDefault['pid'].append(currentPid)
                     ospf.passiveDefault['mustBeReported'] = True
 
-                if ( (ospf.routeFilteringIn['cmdInCfg'] == None) ):
+                if ( (ospf.routeFilteringIn['cmdInCfg'] is None) ):
                     ospf.routeFilteringIn['pid'].append(currentPid)
                     ospf.routeFilteringIn['mustBeReported'] = True
 
-                if ( (ospf.routeFilteringOut['cmdInCfg'] == None) ):
+                if ( (ospf.routeFilteringOut['cmdInCfg'] is None) ):
                     ospf.routeFilteringOut['pid'].append(currentPid)
                     ospf.routeFilteringOut['mustBeReported'] = True
 
-                if ( (ospf.maxLSA['cmdInCfg'] == None) ):
+                if ( (ospf.maxLSA['cmdInCfg'] is None) ):
                     ospf.maxLSA['pid'].append(currentPid)
                     ospf.maxLSA['mustBeReported'] = True
 
@@ -3165,7 +3167,7 @@ def analyzorOspf(lines, ospf, ifaceCfg):
                     areaDigest = False
                     searchArea = None
                     searchArea = searchRegexString(ospfLines,'area .* authentication message-digest')
-                    if searchArea != None:
+                    if searchArea is not None:
                         matchArea = searchArea.split(' ')[1]
                         if matchArea == areaNumber:
                             areaDigest = True
@@ -3184,22 +3186,22 @@ def analyzorOspf(lines, ospf, ifaceCfg):
                             ifIPmask = None
                             for index in range(0, len(ifaceCfg)):
                                 ifIPmask = searchRegexString(ifaceCfg[index].configuration, 'ip address .* .*')
-                                if ifIPmask != None:
+                                if ifIPmask is not None:
                                     ipTuple = ifIPmask.split(' ')
                                     ipAddress = ipTuple[2]
                                     Mask = ipTuple[3]
                                     if ospfNet == networkAddress(ipAddress, Mask):
                                         ospfMD5 = searchRegexString(ifaceCfg[index].configuration, 'ip ospf message-digest-key .* md5 .*')
-                                        if ospfMD5 == None:
+                                        if ospfMD5 is None:
                                             ospf.authModeMD5['interfaces'].append(ifaceCfg[index].name.strip())
 
                     searchFilterAreaIn = 'area ' + str(areaNumber) + ' filter-list prefix .* in'
-                    if searchRegexString(ospfLines, searchFilterAreaIn) == None:
+                    if searchRegexString(ospfLines, searchFilterAreaIn) is None:
                         if not areaNumber in ospf.routeFilteringIn['area']:
                             ospf.routeFilteringIn['area'].append(areaNumber)
 
                     searchFilterAreaOut = 'area ' + str(areaNumber) + ' filter-list prefix .* out'
-                    if searchRegexString(ospfLines, searchFilterAreaOut) == None:
+                    if searchRegexString(ospfLines, searchFilterAreaOut) is None:
                         if not areaNumber in ospf.routeFilteringOut['area']:
                             ospf.routeFilteringOut['area'].append(areaNumber)
 
@@ -3298,7 +3300,7 @@ def analyzorGlbp(lines, glbp, ifaceCfg):
             for indexInstance in glbpConfigured:
                 glbpInstance = indexInstance.split(' ')[1]
                 authentication = 'glbp ' + glbpInstance + ' authentication md5 key-string .*'
-                if searchRegexString(index.configuration,authentication) == None:
+                if searchRegexString(index.configuration,authentication) is None:
                     glbp.authModeMD5['mustBeReported'] = True
 
     if glbp.authModeMD5['mustBeReported'] == True:
@@ -3327,7 +3329,7 @@ def analyzorHsrp(lines, hsrp, ifaceCfg):
             for indexInstance in hsrpConfigured:
                 hsrpInstance = indexInstance.split(' ')[1]
                 authentication = 'hsrp ' + hsrpInstance + ' authentication md5 key-string .*'
-                if searchRegexString(index.configuration,authentication) == None:
+                if searchRegexString(index.configuration,authentication) is None:
                     hsrp.authModeMD5['mustBeReported'] = True
 
     if hsrp.authModeMD5['mustBeReported'] == True:
@@ -3355,7 +3357,7 @@ def analyzorVrrp(lines, vrrp, ifaceCfg):
             for indexInstance in vrrpConfigured:
                 vrrpInstance = indexInstance.split(' ')[1]
                 authentication = 'vrrp ' + vrrpInstance + ' authentication md5 key-string .*'
-                if searchRegexString(index.configuration,authentication) == None:
+                if searchRegexString(index.configuration,authentication) is None:
                     vrrp.authModeMD5['mustBeReported'] = True
 
     if vrrp.authModeMD5['mustBeReported'] == True:
@@ -3381,7 +3383,7 @@ def analyzorIPoptions(lines, ipoptions):
         ipoptions.drop['cmdInCfg'] = searchString(lines, 'ip options drop')
     except AttributeError:
         pass
-    if ipoptions.drop['cmdInCfg'] == None:
+    if ipoptions.drop['cmdInCfg'] is None:
         ipoptions.drop['mustBeReported'] = True
 
     if ipoptions.drop['mustBeReported'] == True:
@@ -3407,7 +3409,7 @@ def analyzorIPsrcRoute(lines, ipsrcroute):
         ipsrcroute.drop['cmdInCfg'] = searchString(lines, 'no ip source-route')
     except AttributeError:
         pass
-    if ipsrcroute.drop['cmdInCfg'] == None:
+    if ipsrcroute.drop['cmdInCfg'] is None:
         ipsrcroute.drop['mustBeReported'] = True
 
     if ipsrcroute.drop['mustBeReported'] == True:
@@ -3433,7 +3435,7 @@ def analyzorICMPdeny(lines, denyicmp):
         denyicmp.filtered['cmdInCfg'] = searchString(lines, 'deny icmp any any')
     except AttributeError:
         pass
-    if denyicmp.filtered['cmdInCfg'] == None:
+    if denyicmp.filtered['cmdInCfg'] is None:
         denyicmp.filtered['mustBeReported'] = True
 
     if denyicmp.filtered['mustBeReported'] == True:
@@ -3472,13 +3474,13 @@ def analyzorIPfragments(lines, ipfrags):
     except AttributeError:
         pass
 
-    if ipfrags.filtered['tcp'] == None:
+    if ipfrags.filtered['tcp'] is None:
         ipfrags.filtered['mustBeReported'] = True
-    if ipfrags.filtered['udp'] == None:
+    if ipfrags.filtered['udp'] is None:
         ipfrags.filtered['mustBeReported'] = True
-    if ipfrags.filtered['icmp'] == None:
+    if ipfrags.filtered['icmp'] is None:
         ipfrags.filtered['mustBeReported'] = True
-    if ipfrags.filtered['ip'] == None:
+    if ipfrags.filtered['ip'] is None:
         ipfrags.filtered['mustBeReported'] = True
 
     if ipfrags.filtered['mustBeReported'] == True:
@@ -3534,13 +3536,13 @@ def analyzorURPFv6(lines, urpfv6, ifaceCfg):
 
     for j in range(0, len(ifaceCfg)):
         ipv6enable = False
-        if searchRegexString(ifaceCfg[j].configuration, '^ipv6 enable$') != None:
+        if searchRegexString(ifaceCfg[j].configuration, '^ipv6 enable$') is not None:
             ipv6enable = True
         if ipv6enable == True:
             urpfreachable = False
-            if searchRegexString(ifaceCfg[j].configuration, '^ipv6 verify unicast source reachable-via (rx|any)$') == None:
+            if searchRegexString(ifaceCfg[j].configuration, '^ipv6 verify unicast source reachable-via (rx|any)$') is None:
                 urpfreachable = True
-            if searchRegexString(ifaceCfg[j].configuration, '^ipv6 verify unicast reverse-path$') == None and urpfreachable == True:
+            if searchRegexString(ifaceCfg[j].configuration, '^ipv6 verify unicast reverse-path$') is None and urpfreachable == True:
                 urpfv6.spoofing['candidates'].append(ifaceCfg[j].name.strip())
                 urpfv6.spoofing['mustBeReported'] = True
 
@@ -3562,12 +3564,12 @@ def analyzorURPFv6(lines, urpfv6, ifaceCfg):
 
 def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
     for i in range(0, len(ifaceCfg)):
-        if searchRegexString(ifaceCfg[i].configuration, '^switchport access vlan .*$') != None:
-            if searchRegexString(ifaceCfg[i].configuration,'switchport port-security maximum .* vlan access') == None:
+        if searchRegexString(ifaceCfg[i].configuration, '^switchport access vlan .*$') is not None:
+            if searchRegexString(ifaceCfg[i].configuration,'switchport port-security maximum .* vlan access') is None:
                 portsecurity.maximumAccess['candidates'].append(ifaceCfg[i].name.strip())
                 portsecurity.maximumAccess['mustBeReported'] = True
-        if searchRegexString(ifaceCfg[i].configuration, '^switchport voice vlan .*$') != None:
-            if searchRegexString(ifaceCfg[i].configuration,'switchport port-security maximum .* vlan voice') == None:
+        if searchRegexString(ifaceCfg[i].configuration, '^switchport voice vlan .*$') is not None:
+            if searchRegexString(ifaceCfg[i].configuration,'switchport port-security maximum .* vlan voice') is None:
                 portsecurity.maximumVoice['candidates'].append(ifaceCfg[i].name.strip())
                 portsecurity.maximumVoice['mustBeReported'] = True
         for line in ifaceCfg[i].configuration:
@@ -3583,7 +3585,7 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
                     if not 'Vlan' or not 'Loopback' in ifaceCfg[i].name.strip():
                         portsecurity.sticky['candidates'].append(ifaceCfg[i].name.strip())
                         portsecurity.sticky['mustBeReported'] = True
-            if re.search('^switchport port-security maximum .*$', line) == None:
+            if re.search('^switchport port-security maximum .*$', line) is None:
                 if not ifaceCfg[i].name.strip() in portsecurity.maximumTotal['candidates']:
                     if not 'Vlan' or not 'Loopback' in ifaceCfg[i].name.strip():
                         portsecurity.maximumTotal['candidates'].append(ifaceCfg[i].name.strip())
@@ -3669,13 +3671,13 @@ def analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg):
     ACLv6name = (None)
     for i in range(0, len(aclIPv6)):
         denyRH0 = searchRegexString(aclIPv6[i].configuration, '^deny ipv6 .* routing-type 0$')
-        if denyRH0 != None:
+        if denyRH0 is not None:
             ACLv6name = aclIPv6[i].name
             for j in range(0, len(ifaceCfg)):
                 ipv6enable = False
-                if searchRegexString(ifaceCfg[j].configuration, '^ipv6 enable$') != None:
+                if searchRegexString(ifaceCfg[j].configuration, '^ipv6 enable$') is not None:
                     ipv6enable = True
-                if searchRegexString(ifaceCfg[j].configuration, '^ipv6 traffic-filter '+ ACLv6name.strip() +' in$') == None and ipv6enable == True:
+                if searchRegexString(ifaceCfg[j].configuration, '^ipv6 traffic-filter '+ ACLv6name.strip() +' in$') is None and ipv6enable == True:
                     ipv6.rh0['Notfiltered'].append(ifaceCfg[j].name.strip())
 
 
@@ -3684,7 +3686,7 @@ def analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg):
     except AttributeError:
         pass
 
-    if ipv6.rh0['cmdInCfg'] == None:
+    if ipv6.rh0['cmdInCfg'] is None:
         if len(ipv6.rh0['Notfiltered']) >= 1:
             ipv6.rh0['mustBeReported'] = True
 
@@ -3716,10 +3718,10 @@ def analyzorIPSEC(lines, ipsec):
     except AttributeError:
         pass
 
-    if ipsec.cacIKE['cmdInCfg'] == None:
+    if ipsec.cacIKE['cmdInCfg'] is None:
             ipsec.cacIKE['mustBeReported'] = True
 
-    if ipsec.cacRSC['cmdInCfg'] == None:
+    if ipsec.cacRSC['cmdInCfg'] is None:
         ipsec.cacRSC['mustBeReported'] = True
 
     if ipsec.cacIKE['mustBeReported'] == True:
@@ -3758,7 +3760,7 @@ def analyzorTclSH(lines, tclsh):
         tclsh.shell['cmdInCfg'] = searchRegexString(lines, '^event cli pattern \"tclsh\" .*$')
     except AttributeError:
         pass
-    if tclsh.shell['cmdInCfg'] == None:
+    if tclsh.shell['cmdInCfg'] is None:
         tclsh.shell['mustBeReported'] = True
 
     if tclsh.shell['mustBeReported'] == True:
@@ -3785,7 +3787,7 @@ def analyzorTcp(lines, tcp):
         tcp.synwait['cmdInCfg'] = searchRegexString(lines, '^ip tcp synwait-time .*$')
     except AttributeError:
         pass
-    if tcp.synwait['cmdInCfg'] == None:
+    if tcp.synwait['cmdInCfg'] is None:
         tcp.synwait['mustBeReported'] = True
     else:
         timer = tcp.synwait.split(' ')[3]
@@ -3813,32 +3815,32 @@ def analyzorTcp(lines, tcp):
 
 def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 
-    #if searchRegexString(lines,'^vtp domain .*$') != None:
-        #if searchRegexString(lines,'^vtp password .*$') == None and searchRegexString(lines,'^vtp mode transparent$') != None:
+    #if searchRegexString(lines,'^vtp domain .*$') is not None:
+        #if searchRegexString(lines,'^vtp password .*$') is None and searchRegexString(lines,'^vtp mode transparent$') is not None:
             #level2protocols.vtpsecure['mustBeReported'] = True
 
-    if __builtin__.deviceType != 'router' and searchRegexString(lines,'^spanning-tree portfast bpduguard default$') == None:
+    if __builtin__.deviceType != 'router' and searchRegexString(lines,'^spanning-tree portfast bpduguard default$') is None:
             level2protocols.bpduguard['mustBeReported'] = True
 
-    if __builtin__.deviceType == 'switch' and searchRegexString(lines,'^dot1x system-auth-control$') == None:
+    if __builtin__.deviceType == 'switch' and searchRegexString(lines,'^dot1x system-auth-control$') is None:
         level2protocols.dot1x['mustBeReported'] = True
 
     for i in range(0, len(ifaceCfg)):
-        if searchRegexString(ifaceCfg[i].configuration, '^switchport mode (access|trunk)$') != None:
-            if searchRegexString(ifaceCfg[i].configuration,'^switchport nonegotiate$') == None:
+        if searchRegexString(ifaceCfg[i].configuration, '^switchport mode (access|trunk)$') is not None:
+            if searchRegexString(ifaceCfg[i].configuration,'^switchport nonegotiate$') is None:
                 level2protocols.nonegotiate['candidates'].append(ifaceCfg[i].name.strip())
                 level2protocols.nonegotiate['mustBeReported'] = True
-            elif searchRegexString(ifaceCfg[i].configuration,'^switchport access vlan 1$') != None:
+            elif searchRegexString(ifaceCfg[i].configuration,'^switchport access vlan 1$') is not None:
                 level2protocols.vlan1['candidates'].append(ifaceCfg[i].name.strip())
                 level2protocols.vlan1['mustBeReported'] = True
 
-        if searchRegexString(ifaceCfg[i].configuration, '^flowcontrol receive off$') == None:
+        if searchRegexString(ifaceCfg[i].configuration, '^flowcontrol receive off$') is None:
             if not 'Loopback' in ifaceCfg[i].name.strip() and not 'Vlan' in ifaceCfg[i].name.strip():
                 level2protocols.flowcontrol['candidates'].append(ifaceCfg[i].name.strip())
                 level2protocols.flowcontrol['mustBeReported'] = True
 
-        if searchRegexString(ifaceCfg[i].configuration, '^shutdown$') != None:
-            if searchRegexString(ifaceCfg[i].configuration,'^switchport access vlan 999$') == None:
+        if searchRegexString(ifaceCfg[i].configuration, '^shutdown$') is not None:
+            if searchRegexString(ifaceCfg[i].configuration,'^switchport access vlan 999$') is None:
                 if __builtin__.deviceType == 'switch':
                     level2protocols.unusedports['candidates'].append(ifaceCfg[i].name.strip())
                     level2protocols.unusedports['mustBeReported'] = True
@@ -3848,7 +3850,7 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
     except AttributeError:
         pass
 
-    if level2protocols.udld['cmdInCfg'] == None:
+    if level2protocols.udld['cmdInCfg'] is None:
         level2protocols.udld['mustBeReported'] = True
 
     if level2protocols.nonegotiate['mustBeReported'] == True:
@@ -3980,7 +3982,7 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
 def analyzorNetflow(lines, netflow, ifaceCfg):
 
     for j in range(0, len(ifaceCfg)):
-        if searchRegexString(ifaceCfg[j].configuration, '^ip flow (ingress|egress)$') != None:
+        if searchRegexString(ifaceCfg[j].configuration, '^ip flow (ingress|egress)$') is not None:
             netflow.V9securityL2['interfacegress'] = True
 
     if netflow.V9securityL2['interfacegress'] == True:
@@ -4013,7 +4015,7 @@ def analyzorNetflow(lines, netflow, ifaceCfg):
         except AttributeError:
             pass
 
-    if ( (netflow.V9securityL2['fragoffset'] == None) or (netflow.V9securityL2['icmp'] == None) or (netflow.V9securityL2['ipid'] == None) or (netflow.V9securityL2['macaddr'] == None) or (netflow.V9securityL2['packetlen'] == None) or (netflow.V9securityL2['ttl'] == None) or (netflow.V9securityL2['vlid'] == None) ):
+    if ( (netflow.V9securityL2['fragoffset'] is None) or (netflow.V9securityL2['icmp'] is None) or (netflow.V9securityL2['ipid'] is None) or (netflow.V9securityL2['macaddr'] is None) or (netflow.V9securityL2['packetlen'] is None) or (netflow.V9securityL2['ttl'] is None) or (netflow.V9securityL2['vlid'] is None) ):
         netflow.V9securityL2['mustBeReported'] = True
 
     if netflow.V9securityL2['mustBeReported'] == True:
@@ -4046,7 +4048,7 @@ def analyzorNetflow(lines, netflow, ifaceCfg):
 
 def analyzorMulticast(lines, multicast):
 
-    if ( (searchRegexString(lines, '^ip pim rp-address .*$') != None) and (searchRegexString(lines, '^ip msdp peer .*$') != None) ):
+    if ( (searchRegexString(lines, '^ip pim rp-address .*$') is not None) and (searchRegexString(lines, '^ip msdp peer .*$') is not None) ):
 
         try:
             multicast.msdp['safilterin'] = searchRegexString(lines, '^ip msdp sa-filter in .*$')
@@ -4061,7 +4063,7 @@ def analyzorMulticast(lines, multicast):
         except AttributeError:
             pass
 
-        if ( (multicast.msdp['safilterin'] == None) or (multicast.msdp['safilterout'] == None) or (multicast.msdp['redistributelist'] == None) ):
+        if ( (multicast.msdp['safilterin'] is None) or (multicast.msdp['safilterout'] is None) or (multicast.msdp['redistributelist'] is None) ):
             multicast.msdp['mustBeReported'] = True
 
         if multicast.msdp['mustBeReported'] == True:
