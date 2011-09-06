@@ -1,12 +1,5 @@
 # -*- coding: iso-8859-1 -*-
 
-import inspect
-import __builtin__
-
-#from reporthtml import htmlReport
-#from reportpdf import pdfReport
-#from reportcsv import csvReport
-
 from routerdefense.common import *
 from routerdefense.metrics import *
 

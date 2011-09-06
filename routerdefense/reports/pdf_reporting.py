@@ -1,5 +1,8 @@
 # -*- coding: iso-8859-1 -*-
 
+from routerdefense.common import *
+from routerdefense.metrics import *
+
 def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetrics, DataPlaneMetrics):
     from reportlab.pdfgen import canvas
     from reportlab.lib.enums import TA_JUSTIFY
