@@ -169,7 +169,7 @@ $ *python -B onlyCONSOLE.sh show_run.txt*
 || Anti-IDS evasion || Data plane (IPv4) ||
 || IPv4 anti-spoofing || Data plane (IPv4) ||
 || IPv6 anti-spoofing || Data plane (IPv6) ||
-|| Source routing prevention || Data plane (IPv6)
+|| Source routing prevention || Data plane (IPv6) ||
 || Port violation || Data plane (Switching) ||
 || MAC address sticky || Data plane (Switching) ||
 || Total maximum MAC addresses || Data plane (Switching) ||
