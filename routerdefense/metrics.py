@@ -5,201 +5,200 @@ import __builtin__
 
 class metrics:
 
-    metricsList = list()
+    metrics_list = list()
 
     def __init__(self):
         pass
 
-    def add(self,metricName):
-        if metricName == 'cdp':
-            metricAdded = cdp()
-        if metricName == 'lldp':
-            metricAdded = lldp()
-        if metricName == 'archive':
-            metricAdded = ArchiveConfiguration()
-        if metricName == 'syslog':
-            metricAdded = Syslog()
-        if metricName == 'snmp':
-            metricAdded = Snmp()
-        if metricName == 'tacacsRed':
-            metricAdded = tacacsRedun()
-        if metricName == 'tacacsThe':
-            metricAdded = tacacsAuth()
-        if metricName == 'tacacsTho':
-            metricAdded = tacacsAuthorization()
-        if metricName == 'tacacsAcc':
-            metricAdded = tacacsAccounting()
-        if metricName == 'BannerMotd':
-            metricAdded = motdBanner()
-        if metricName == 'BannerLogin':
-            metricAdded = loginBanner()
-        if metricName == 'BannerExec':
-            metricAdded = execBanner()
-        if metricName == 'pwdMgmt':
-            metricAdded = passwordManagement()
-        if metricName == 'MgmtPP':
-            metricAdded = managementProtection()
-        if metricName == 'exceptions':
-            metricAdded = exceptionCrash()
-        if metricName == 'memCpu':
-            metricAdded = memCpu()
-        if metricName == 'genSvcs':
-            metricAdded = globalServices()
-        if metricName == 'consolePort':
-            metricAdded = lineConsole()
-        if metricName == 'auxPort':
-            metricAdded = lineAux()
-        if metricName == 'vtyPort':
-            metricAdded = lineVty()
-        self.metricsList.append(metricAdded)
-        return metricAdded
+    def add(self,metric_name):
+        if metric_name == 'cdp':
+            metric = cdp()
+        if metric_name == 'lldp':
+            metric = lldp()
+        if metric_name == 'archive':
+            metric = ArchiveConfiguration()
+        if metric_name == 'syslog':
+            metric = Syslog()
+        if metric_name == 'snmp':
+            metric = Snmp()
+        if metric_name == 'tacacsRed':
+            metric = tacacsRedun()
+        if metric_name == 'tacacsThe':
+            metric = tacacsAuth()
+        if metric_name == 'tacacsTho':
+            metric = tacacsAuthorization()
+        if metric_name == 'tacacsAcc':
+            metric = tacacsAccounting()
+        if metric_name == 'BannerMotd':
+            metric = motdBanner()
+        if metric_name == 'BannerLogin':
+            metric = loginBanner()
+        if metric_name == 'BannerExec':
+            metric = execBanner()
+        if metric_name == 'pwdMgmt':
+            metric = passwordManagement()
+        if metric_name == 'MgmtPP':
+            metric = managementProtection()
+        if metric_name == 'exceptions':
+            metric = exceptionCrash()
+        if metric_name == 'memCpu':
+            metric = memCpu()
+        if metric_name == 'genSvcs':
+            metric = globalServices()
+        if metric_name == 'consolePort':
+            metric = lineConsole()
+        if metric_name == 'auxPort':
+            metric = lineAux()
+        if metric_name == 'vtyPort':
+            metric = lineVty()
+        self.metrics_list.append(metric)
+        return metric
 
-    def listMetric(self):
-        return self.metricsList
+    def list_metric(self):
+        return self.metrics_list
 
 class IFSmetrics:
     def __init__(self):
         pass
-    def addInterface(self,metricName, name):
-        if metricName == 'interface':
-            metricAdded = interfaces()
-            metricAdded.name = name
-        return metricAdded
+    def add_if(self,metric_name, name):
+        if metric_name == 'interface':
+            metric = interfaces()
+            metric.name = name
+        return metric
 
 class ACLV4metrics:
     def __init__(self):
         pass
-    def addInterface(self,metricName, name):
-        if metricName == 'aclv4':
-            metricAdded = ACLv4()
-            metricAdded.name = name
-        return metricAdded
+    def add(self,metric_name, name):
+        if metric_name == 'aclv4':
+            metric = ACLv4()
+            metric.name = name
+        return metric
 
 class ACLV6metrics:
     def __init__(self):
         pass
-    def addInterface(self,metricName, name):
-        if metricName == 'aclv6':
-            metricAdded = ACLv6()
-            metricAdded.name = name
-        return metricAdded
+    def add(self,metric_name, name):
+        if metric_name == 'aclv6':
+            metric = ACLv6()
+            metric.name = name
+        return metric
 
 class CPmetrics:
 
-    metricsList = list()
+    metrics_list = list()
 
     def __init__(self):
         pass
 
-    def add(self,metricName):
-        if metricName == 'icmpredirects':
-            metricAdded = IPicmpRedirects()
-        if metricName == 'icmpunreach':
-            metricAdded = IPicmpUnreachable()
-        if metricName == 'proxyarp':
-            metricAdded = ARPproxy()
-        if metricName == 'ntp':
-            metricAdded = Ntp()
-        if metricName == 'bgp':
-            metricAdded = Bgp()
-        if metricName == 'eigrp':
-            metricAdded = Eigrp()
-        if metricName == 'rip':
-            metricAdded = Rip()
-        if metricName == 'ospf':
-            metricAdded = Ospf()
-        if metricName == 'glbp':
-            metricAdded = Glbp()
-        if metricName == 'hsrp':
-            metricAdded = Hsrp()
-        if metricName == 'vrrp':
-            metricAdded = Vrrp()
-        if metricName == 'tclsh':
-            metricAdded = TclSH()
-        if metricName == 'tcp':
-            metricAdded = Tcp()
-        if metricName == 'multicast':
-            metricAdded = Multicast()
-        if metricName == 'qos':
-            metricAdded = Qos()
-        self.metricsList.append(metricAdded)
-        return metricAdded
+    def add(self,metric_name):
+        if metric_name == 'icmpredirects':
+            metric = IPicmpRedirects()
+        if metric_name == 'icmpunreach':
+            metric = IPicmpUnreachable()
+        if metric_name == 'proxyarp':
+            metric = ARPproxy()
+        if metric_name == 'ntp':
+            metric = Ntp()
+        if metric_name == 'bgp':
+            metric = Bgp()
+        if metric_name == 'eigrp':
+            metric = Eigrp()
+        if metric_name == 'rip':
+            metric = Rip()
+        if metric_name == 'ospf':
+            metric = Ospf()
+        if metric_name == 'glbp':
+            metric = Glbp()
+        if metric_name == 'hsrp':
+            metric = Hsrp()
+        if metric_name == 'vrrp':
+            metric = Vrrp()
+        if metric_name == 'tclsh':
+            metric = TclSH()
+        if metric_name == 'tcp':
+            metric = Tcp()
+        if metric_name == 'multicast':
+            metric = Multicast()
+        if metric_name == 'qos':
+            metric = Qos()
+        self.metrics_list.append(metric)
+        return metric
 
-    def addInterface(self,metricName, name):
-        if metricName == 'interface':
-            metricAdded = interfaces()
-            metricAdded.name = name
-        self.metricsList.append(metricName)
-        return metricAdded
+    def add_if(self,metric_name, name):
+        if metric_name == 'interface':
+            metric = interfaces()
+            metric.name = name
+        self.metrics_list.append(metric_name)
+        return metric
 
 
-    def listMetric(self):
-        return self.metricsList
+    def list_metric(self):
+        return self.metrics_list
 
 
 class DPmetrics:
 
-    metricsList = list()
+    metrics_list = list()
 
     def __init__(self):
         pass
 
-    def add(self,metricName):
-        if metricName == 'icmpredirects':
-            metricAdded = IPicmpRedirects()
-        if metricName == 'ipoptions':
-            metricAdded = IPoptions()
-        if metricName == 'ipsourceroute':
-            metricAdded = IPsourceRoute()
-        if metricName == 'denyIcmpAnyAny':
-            metricAdded = ICMPdeny()
-        if metricName == 'IPfragments':
-            metricAdded = IPfrags()
-        if metricName == 'urpf':
-            metricAdded = URPF()
-        if metricName == 'urpfv6':
-            metricAdded = URPFv6()
-        if metricName == 'portsecurity':
-            metricAdded = PortSecurity()
-        if metricName == 'ipv6':
-            metricAdded = IPv6()
-        if metricName == 'ipsec':
-            metricAdded = IPSEC()
-        if metricName == 'l2protos':
-            metricAdded = dtpstpvlan()
-        if metricName == 'netflow':
-            metricAdded= Netflow()
-        self.metricsList.append(metricAdded)
-        return metricAdded
+    def add(self,metric_name):
+        if metric_name == 'icmpredirects':
+            metric = IPicmpRedirects()
+        if metric_name == 'ipoptions':
+            metric = IPoptions()
+        if metric_name == 'ipsourceroute':
+            metric = IPsourceRoute()
+        if metric_name == 'denyIcmpAnyAny':
+            metric = ICMPdeny()
+        if metric_name == 'IPfragments':
+            metric = IPfrags()
+        if metric_name == 'urpf':
+            metric = URPF()
+        if metric_name == 'urpfv6':
+            metric = URPFv6()
+        if metric_name == 'portsecurity':
+            metric = PortSecurity()
+        if metric_name == 'ipv6':
+            metric = IPv6()
+        if metric_name == 'ipsec':
+            metric = IPSEC()
+        if metric_name == 'l2protos':
+            metric = dtpstpvlan()
+        if metric_name == 'netflow':
+            metric= Netflow()
+        self.metrics_list.append(metric)
+        return metric
 
-    def addInterface(self,metricName, name):
-        if metricName == 'interface':
-            metricAdded = interfaces()
-            metricAdded.name = name
-        self.metricsList.append(metricName)
-        return metricAdded
+    def add_if(self,metric_name, name):
+        if metric_name == 'interface':
+            metric = interfaces()
+            metric.name = name
+        self.metrics_list.append(metric_name)
+        return metric
 
 
-    def listMetric(self):
-        return self.metricsList
+    def list_metric(self):
+        return self.metrics_list
 
 
 class interfaces:
     def __init__(self):
         self.name = ''
-        self.ipAddress = 'no ip address'
-        self.ShutdownState = 'no shutdown'
+        self.ip_address = 'no ip address'
+        self.shutdown_state = 'no shutdown'
         self.configuration = []
 
-
-    def populateMetricsFromConfig(self):
+    def get_metrics_from_config(self):
         for line in range (0, len(self.configuration)):
             if self.configuration[line].startswith('ip address'):
-                self.ipAddress = self.configuration[line]
+                self.ip_address = self.configuration[line]
             if self.configuration[line].startswith('no ip address'):
-                self.ipAddress = self.configuration[line]
+                self.ip_address = self.configuration[line]
             if self.configuration[line].startswith('shutdown'):
-                self.ShutdownState = 'shutdown'
+                self.shutdown_state = 'shutdown'
 
 class ACLv4:
     def __init__(self):
@@ -207,7 +206,7 @@ class ACLv4:
         self.type = ''
         self.configuration = []
 
-    def populateMetricsFromConfig(self):
+    def get_metrics_from_config(self):
         for line in range (0, len(self.configuration)):
             if self.configuration[line].startswith('ip access-list'):
                 #self.name = self.configuration[line].split(' ')[3]
@@ -219,19 +218,19 @@ class ACLv6:
         self.name = ''
         self.configuration = []
 
-    def populateMetricsFromConfig(self):
+    def get_metrics_from_config(self):
         for line in range (0, len(self.configuration)):
             if self.configuration[line].startswith('ipv6 access-list'):
                 self.name = self.configuration[line].split[' '][2]
 
 class lineConsole:
     def __init__(self):
-        self.metricName = 'Console'
-        self.longName = 'Console port'
+        self.metric_name = 'Console'
+        self.long_name = 'Console port'
         self.password = None
         self.execTimeout = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -244,7 +243,7 @@ class lineConsole:
         "cmdInCfg": (None),
         "loginlocal": (None),
         "globalusername": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -257,11 +256,11 @@ class lineConsole:
 class lineAux:
     def __init__(self):
         self.password = None
-        self.metricName = 'Aux'
-        self.longName = 'Aux port'
+        self.metric_name = 'Aux'
+        self.long_name = 'Aux port'
         self.execTimeout = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -272,7 +271,7 @@ class lineAux:
         }
         self.transportInput = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -283,7 +282,7 @@ class lineAux:
         }
         self.transportOutput = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -294,7 +293,7 @@ class lineAux:
         }
         self.noExec = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -306,13 +305,13 @@ class lineAux:
 
 class lineVty:
     def __init__(self):
-        self.metricName = 'Vty'
-        self.longName = 'Vty lines'
+        self.metric_name = 'Vty'
+        self.long_name = 'Vty lines'
         self.password = None
         self.sessionNumbers = None
         self.execTimeout = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -323,7 +322,7 @@ class lineVty:
         }
         self.transportInput = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -334,7 +333,7 @@ class lineVty:
         }
         self.transportOutput = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -345,7 +344,7 @@ class lineVty:
         }
         self.IPv4accessClass = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -356,7 +355,7 @@ class lineVty:
         }
         self.IPv6accessClass = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -368,11 +367,11 @@ class lineVty:
 
 class motdBanner:
     def __init__(self):
-        self.metricName = 'motdBanner'
-        self.longName = 'MOTD banner'
+        self.metric_name = 'motdBanner'
+        self.long_name = 'MOTD banner'
         self.configured = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -383,7 +382,7 @@ class motdBanner:
         }
         self.routerName = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -395,11 +394,11 @@ class motdBanner:
 
 class execBanner:
     def __init__(self):
-        self.metricName = 'execBanner'
-        self.longName = 'EXEC banner'
+        self.metric_name = 'execBanner'
+        self.long_name = 'EXEC banner'
         self.configured = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -410,7 +409,7 @@ class execBanner:
         }
         self.routerName = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -422,11 +421,11 @@ class execBanner:
 
 class loginBanner:
     def __init__(self):
-        self.metricName = 'loginBanner'
-        self.longName = 'LOGIN banner'
+        self.metric_name = 'loginBanner'
+        self.long_name = 'LOGIN banner'
         self.configured = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -437,7 +436,7 @@ class loginBanner:
         }
         self.routerName = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -449,11 +448,11 @@ class loginBanner:
 
 class globalServices:
     def __init__(self):
-        self.metricName = 'globalServices'
-        self.longName = 'IOS TCP/UDP services'
+        self.metric_name = 'globalServices'
+        self.long_name = 'IOS TCP/UDP services'
         self.pwdRecovery = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -464,7 +463,7 @@ class globalServices:
         }
         self.tcpSmallServers = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -475,7 +474,7 @@ class globalServices:
         }
         self.udpSmallServers = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -486,7 +485,7 @@ class globalServices:
         }
         self.serviceFinger = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -496,7 +495,7 @@ class globalServices:
         }
         self.serviceBootpServer = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -506,7 +505,7 @@ class globalServices:
         }
         self.serviceTcpKeepAliveIn = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -516,7 +515,7 @@ class globalServices:
         }
         self.serviceTcpKeepAliveOut = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -526,7 +525,7 @@ class globalServices:
         }
         self.serviceIpDhcpBootIgnore = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -536,7 +535,7 @@ class globalServices:
         }
         self.serviceDhcp = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -546,7 +545,7 @@ class globalServices:
         }
         self.Mop = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -556,7 +555,7 @@ class globalServices:
         }
         self.ipDomainLookup = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -566,7 +565,7 @@ class globalServices:
         }
         self.servicePad = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -576,7 +575,7 @@ class globalServices:
         }
         self.serviceHttpServer = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -586,7 +585,7 @@ class globalServices:
         }
         self.serviceHttpsServer = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -596,7 +595,7 @@ class globalServices:
         }
         self.serviceConfig = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -607,11 +606,11 @@ class globalServices:
 
 class memCpu:
     def __init__(self):
-        self.metricName = 'memCpu'
-        self.longName = 'CPU/Memory'
+        self.metric_name = 'memCpu'
+        self.long_name = 'CPU/Memory'
         self.schedulerallocate = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -622,7 +621,7 @@ class memCpu:
         }
         self.schedulerinterval = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -633,7 +632,7 @@ class memCpu:
         }
         self.lowWatermarkProcessor = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -644,7 +643,7 @@ class memCpu:
         }
         self.lowWatermarkIo = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -655,7 +654,7 @@ class memCpu:
         }
         self.memReserveCritical = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -666,7 +665,7 @@ class memCpu:
         }
         self.memReserveConsole = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -677,7 +676,7 @@ class memCpu:
         }
         self.memIgnoreOverflowIo = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -689,7 +688,7 @@ class memCpu:
 
         self.memIgnoreOverflowCpu = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -703,7 +702,7 @@ class memCpu:
         "cmdSnmpServerHost": (None),
         "cmdCpuThreshold": (None),
         "cmdCpuStats": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -715,11 +714,11 @@ class memCpu:
 
 class exceptionCrash:
     def __init__(self):
-        self.metricName = 'exceptionCrash'
-        self.longName = 'Exceptions/crashes'
+        self.metric_name = 'exceptionCrash'
+        self.long_name = 'Exceptions/crashes'
         self.crashinfoMaxFiles = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -731,12 +730,12 @@ class exceptionCrash:
 
 class managementProtection:
     def __init__(self):
-        self.metricName = 'managementProtection'
-        self.longName = 'Management protection'
+        self.metric_name = 'managementProtection'
+        self.long_name = 'Management protection'
         self.managementInterface = {
         "cpHostCfg": (None),
         "mgmtIfaceCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -747,7 +746,7 @@ class managementProtection:
         }
         self.sshServerTimeout = {
         "timeout": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -759,7 +758,7 @@ class managementProtection:
         self.sshServerAuthRetries = {
         "authRetries": (None),
         "sourceInterface": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -770,7 +769,7 @@ class managementProtection:
         }
         self.sshServerSourceInterface = {
         "sourceInterface": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -782,7 +781,7 @@ class managementProtection:
 
         self.scpServer = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -793,7 +792,7 @@ class managementProtection:
         }
         self.httpSecureServer = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -808,7 +807,7 @@ class managementProtection:
         "quietacl": (None),
         "faillog": (None),
         "successlog": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -820,10 +819,10 @@ class managementProtection:
 
 class tacacsRedun:
     def __init__(self):
-        self.metricName = 'tacacsRedundant'
-        self.longName = 'Tacacs+ servers redundancy'
+        self.metric_name = 'tacacsRedundant'
+        self.long_name = 'Tacacs+ servers redundancy'
         self.redundant = {
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -835,11 +834,11 @@ class tacacsRedun:
 
 class tacacsAuth:
     def __init__(self):
-        self.metricName = 'tacacsAuthentication'
-        self.longName = 'Tacacs+ authentication'
+        self.metric_name = 'tacacsAuthentication'
+        self.long_name = 'Tacacs+ authentication'
         self.aaaNewModel = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -850,7 +849,7 @@ class tacacsAuth:
         }
         self.authTacacs = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -861,7 +860,7 @@ class tacacsAuth:
         }
         self.authFallback = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -873,11 +872,11 @@ class tacacsAuth:
 
 class tacacsAuthorization:
     def __init__(self):
-        self.metricName = 'tacacsAuthorization'
-        self.longName = 'Tacacs+ authorization'
+        self.metric_name = 'tacacsAuthorization'
+        self.long_name = 'Tacacs+ authorization'
         self.aaaNewModel = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -888,7 +887,7 @@ class tacacsAuthorization:
         }
         self.authExec = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -899,7 +898,7 @@ class tacacsAuthorization:
         }
         self.level0 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -910,7 +909,7 @@ class tacacsAuthorization:
         }
         self.level1 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -921,7 +920,7 @@ class tacacsAuthorization:
         }
         self.level15 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -933,11 +932,11 @@ class tacacsAuthorization:
 
 class tacacsAccounting:
     def __init__(self):
-        self.metricName = 'tacacsAccounting'
-        self.longName = 'Tacacs+ accounting'
+        self.metric_name = 'tacacsAccounting'
+        self.long_name = 'Tacacs+ accounting'
         self.aaaNewModel = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -948,7 +947,7 @@ class tacacsAccounting:
         }
         self.authAccounting = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -959,7 +958,7 @@ class tacacsAccounting:
         }
         self.level0 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -970,7 +969,7 @@ class tacacsAccounting:
         }
         self.level1 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -981,7 +980,7 @@ class tacacsAccounting:
         }
         self.level15 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -994,11 +993,11 @@ class tacacsAccounting:
 
 class passwordManagement:
     def __init__(self):
-        self.metricName = 'passwordManagement'
-        self.longName = 'Passwords and authentication management'
+        self.metric_name = 'passwordManagement'
+        self.long_name = 'Passwords and authentication management'
         self.enableSecret = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -1009,7 +1008,7 @@ class passwordManagement:
         }
         self.svcPwdEncryption = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -1020,7 +1019,7 @@ class passwordManagement:
         }
         self.usernameSecret = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -1034,7 +1033,7 @@ class passwordManagement:
         "usernames": (None),
         "maxFail": (None),
         "aaaAuthLoginLocal": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -1046,13 +1045,13 @@ class passwordManagement:
 
 class cdp:
     def __init__(self):
-        self.metricName = 'cdp'
-        self.longName = 'CDP'
+        self.metric_name = 'cdp'
+        self.long_name = 'CDP'
         self.cdp = {
         "globalCdp": True,
         "disabledIfsCdp": [],
         "enabledIfsCdp": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": None,
         "definition": None,
         "threatInfo": None,
@@ -1061,14 +1060,14 @@ class cdp:
 
 class lldp:
     def __init__(self):
-        self.metricName = 'lldp'
-        self.longName = 'LLDP'
+        self.metric_name = 'lldp'
+        self.long_name = 'LLDP'
         self.lldp = {
         "globalLldp": True,
         "enabledTransmitLldp": [],
         "enabledReceiveLldp": [],
         "disabledIfsLldp": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": None,
         "definition": None,
         "threatInfo": None,
@@ -1078,11 +1077,11 @@ class lldp:
 
 class Snmp:
     def __init__(self):
-        self.metricName = 'snmp'
-        self.longName = 'SNMP'
+        self.metric_name = 'snmp'
+        self.long_name = 'SNMP'
         self.ROcommunity = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1093,7 +1092,7 @@ class Snmp:
         }
         self.ROcommunityACL = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1105,7 +1104,7 @@ class Snmp:
 
         self.RWcommunity = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1116,7 +1115,7 @@ class Snmp:
         }
         self.RWcommunityACL = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1127,7 +1126,7 @@ class Snmp:
         }
         self.ViewROcommunity = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1138,7 +1137,7 @@ class Snmp:
         }
         self.ViewROcommunityACL = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1150,7 +1149,7 @@ class Snmp:
 
         self.ViewRWcommunity = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1161,7 +1160,7 @@ class Snmp:
         }
         self.ViewRWcommunityACL = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1172,7 +1171,7 @@ class Snmp:
         }
         self.snmpV3 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1184,11 +1183,11 @@ class Snmp:
 
 class Syslog:
     def __init__(self):
-        self.metricName = 'syslog'
-        self.longName = 'Syslog'
+        self.metric_name = 'syslog'
+        self.long_name = 'Syslog'
         self.Server = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1199,7 +1198,7 @@ class Syslog:
         }
         self.levelTrap = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1210,7 +1209,7 @@ class Syslog:
         }
         self.levelBuffered = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1221,7 +1220,7 @@ class Syslog:
         }
         self.loggingConsole = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1232,7 +1231,7 @@ class Syslog:
         }
         self.loggingMonitor = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1243,7 +1242,7 @@ class Syslog:
         }
         self.loggingBuffered = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1254,7 +1253,7 @@ class Syslog:
         }
         self.Interface = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1265,7 +1264,7 @@ class Syslog:
         }
         self.timestamp = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1276,7 +1275,7 @@ class Syslog:
         }
         self.serverarp = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1288,11 +1287,11 @@ class Syslog:
 
 class ArchiveConfiguration:
     def __init__(self):
-        self.metricName = 'archive'
-        self.longName = 'Configuration Replace/Rollback'
+        self.metric_name = 'archive'
+        self.long_name = 'Configuration Replace/Rollback'
         self.configuration = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1303,7 +1302,7 @@ class ArchiveConfiguration:
         }
         self.exclusive = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1314,7 +1313,7 @@ class ArchiveConfiguration:
         }
         self.secureBoot = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1325,7 +1324,7 @@ class ArchiveConfiguration:
         }
         self.secureConfig = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1336,7 +1335,7 @@ class ArchiveConfiguration:
         }
         self.logs = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1348,12 +1347,12 @@ class ArchiveConfiguration:
 
 class IPicmpRedirects:
     def __init__(self):
-        self.metricName = 'icmpRedirects'
-        self.longName = 'ICMPv4 redirects'
+        self.metric_name = 'icmpRedirects'
+        self.long_name = 'ICMPv4 redirects'
         self.redirects = {
         "disabledIfsFeature": [],
         "enabledIfsFeature": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -1363,13 +1362,13 @@ class IPicmpRedirects:
 
 class IPicmpUnreachable:
     def __init__(self):
-        self.metricName = 'icmpUnreachable'
-        self.longName = 'ICMPv4 unreachable'
+        self.metric_name = 'icmpUnreachable'
+        self.long_name = 'ICMPv4 unreachable'
         self.unreachable = {
         "unreachableRate": None,
         "disabledIfsFeature": [],
         "enabledIfsFeature": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": None,
         "definition": None,
         "threatInfo": None,
@@ -1379,12 +1378,12 @@ class IPicmpUnreachable:
 
 class ARPproxy:
     def __init__(self):
-        self.metricName = 'proxyArp'
-        self.longName = 'ARP proxy'
+        self.metric_name = 'proxyArp'
+        self.long_name = 'ARP proxy'
         self.proxy = {
         "disabledIfsFeature": [],
         "enabledIfsFeature": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": None,
         "definition": None,
         "threatInfo": None,
@@ -1394,12 +1393,12 @@ class ARPproxy:
 
 class Ntp:
     def __init__(self):
-        self.metricName = 'ntp'
-        self.longName = 'NTP'
+        self.metric_name = 'ntp'
+        self.long_name = 'NTP'
         self.authentication = {
         "authenticate": (None),
         "key": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1410,10 +1409,10 @@ class Ntp:
         }
 class Bgp:
     def __init__(self):
-        self.metricName = 'bgp'
-        self.longName = 'BGP'
+        self.metric_name = 'bgp'
+        self.long_name = 'BGP'
         self.ttlSecurity = {
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1423,7 +1422,7 @@ class Bgp:
         "cvss": (None)
         }
         self.sessionPassword = {
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1433,7 +1432,7 @@ class Bgp:
         "cvss": (None)
         }
         self.maxPrefixes = {
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1443,7 +1442,7 @@ class Bgp:
         "cvss": (None)
         }
         self.prefixList = {
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1453,7 +1452,7 @@ class Bgp:
         "cvss": (None)
         }
         self.aspathList = {
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1463,7 +1462,7 @@ class Bgp:
         "cvss": (None)
         }
         self.maxpathlimit = {
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1475,13 +1474,13 @@ class Bgp:
 
 class Eigrp:
     def __init__(self):
-        self.metricName = 'eigrp'
-        self.longName = 'EIGRP'
+        self.metric_name = 'eigrp'
+        self.long_name = 'EIGRP'
         self.asNumber = []
         self.activeIfaces = []
-        self.passiveDefault = {
+        self.passive = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "asn": [],
         "fixImpact": (None),
         "definition": (None),
@@ -1491,11 +1490,11 @@ class Eigrp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.authModeMD5 = {
+        self.auth_md5 = {
         "cmdInCfg": (None),
         "interfaces": [],
         "asn": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1504,9 +1503,9 @@ class Eigrp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.routeFilteringIn = {
+        self.rfilter_in = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "asn": [],
         "fixImpact": (None),
         "definition": (None),
@@ -1516,9 +1515,9 @@ class Eigrp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.routeFilteringOut = {
+        self.rfilter_out = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "asn": [],
         "fixImpact": (None),
         "definition": (None),
@@ -1531,12 +1530,12 @@ class Eigrp:
 
 class Rip:
     def __init__(self):
-        self.metricName = 'rip'
-        self.longName = 'RIP'
+        self.metric_name = 'rip'
+        self.long_name = 'RIP'
         self.version = None
-        self.authModeMD5 = {
+        self.auth_md5 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "interfaces": [],
         "fixImpact": (None),
         "definition": (None),
@@ -1549,13 +1548,13 @@ class Rip:
 
 class Ospf:
     def __init__(self):
-        self.metricName = 'ospf'
-        self.longName = 'OSPF'
+        self.metric_name = 'ospf'
+        self.long_name = 'OSPF'
         self.area = []
-        self.passiveDefault = {
+        self.passive = {
         "pid": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1564,9 +1563,9 @@ class Ospf:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.authModeMD5 = {
+        self.auth_md5 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "pid": [],
         "area": [],
         "interfaces": [],
@@ -1578,11 +1577,11 @@ class Ospf:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.routeFilteringIn = {
+        self.rfilter_in = {
         "cmdInCfg": (None),
         "area": [],
         "pid": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1591,11 +1590,11 @@ class Ospf:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.routeFilteringOut = {
+        self.rfilter_out = {
         "cmdInCfg": (None),
         "area": [],
         "pid": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1607,7 +1606,7 @@ class Ospf:
         self.maxLSA = {
         "pid": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1619,11 +1618,11 @@ class Ospf:
 
 class Glbp:
     def __init__(self):
-        self.metricName = 'glbp'
-        self.longName = 'GLBP'
-        self.authModeMD5 = {
+        self.metric_name = 'glbp'
+        self.long_name = 'GLBP'
+        self.auth_md5 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1635,11 +1634,11 @@ class Glbp:
 
 class Hsrp:
     def __init__(self):
-        self.metricName = 'hsrp'
-        self.longName = 'HSRP'
-        self.authModeMD5 = {
+        self.metric_name = 'hsrp'
+        self.long_name = 'HSRP'
+        self.auth_md5 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1651,11 +1650,11 @@ class Hsrp:
 
 class Vrrp:
     def __init__(self):
-        self.metricName = 'vrrp'
-        self.longName = 'VRRP'
-        self.authModeMD5 = {
+        self.metric_name = 'vrrp'
+        self.long_name = 'VRRP'
+        self.auth_md5 = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1667,11 +1666,11 @@ class Vrrp:
 
 class IPoptions:
     def __init__(self):
-        self.metricName = 'ipoptions'
-        self.longName = 'IPv4 Options'
+        self.metric_name = 'ipoptions'
+        self.long_name = 'IPv4 Options'
         self.drop = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1683,11 +1682,11 @@ class IPoptions:
 
 class IPsourceRoute:
     def __init__(self):
-        self.metricName = 'ipsourceroute'
-        self.longName = 'IPv4 source route'
+        self.metric_name = 'ipsourceroute'
+        self.long_name = 'IPv4 source route'
         self.drop = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1699,11 +1698,11 @@ class IPsourceRoute:
 
 class ICMPdeny:
     def __init__(self):
-        self.metricName = 'icmpdeny'
-        self.longName = 'ICMP deny any any'
+        self.metric_name = 'icmpdeny'
+        self.long_name = 'ICMP deny any any'
         self.filtered = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1715,14 +1714,14 @@ class ICMPdeny:
 
 class IPfrags:
     def __init__(self):
-        self.metricName = 'ipfrags'
-        self.longName = 'IPv4 fragments'
+        self.metric_name = 'ipfrags'
+        self.long_name = 'IPv4 fragments'
         self.filtered = {
         "tcp": (None),
         "udp": (None),
         "icmp": (None),
         "ip": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1734,11 +1733,11 @@ class IPfrags:
 
 class URPF:
     def __init__(self):
-        self.metricName = 'urpf'
-        self.longName = 'Unicast Reverse Path Forwarding (IPv4)'
+        self.metric_name = 'urpf'
+        self.long_name = 'Unicast Reverse Path Forwarding (IPv4)'
         self.spoofing = {
         "candidates": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -1749,11 +1748,11 @@ class URPF:
 
 class URPFv6:
     def __init__(self):
-        self.metricName = 'urpfv6'
-        self.longName = 'Unicast Reverse Path Forwarding (IPv6)'
+        self.metric_name = 'urpfv6'
+        self.long_name = 'Unicast Reverse Path Forwarding (IPv6)'
         self.spoofing = {
         "candidates": [],
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "threatInfo": (None),
@@ -1764,12 +1763,12 @@ class URPFv6:
 
 class PortSecurity:
     def __init__(self):
-        self.metricName = 'portsecurity'
-        self.longName = 'Port Security'
+        self.metric_name = 'portsecurity'
+        self.long_name = 'Port Security'
         self.sticky = {
         "candidates": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1781,7 +1780,7 @@ class PortSecurity:
         self.violation = {
         "candidates": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1793,7 +1792,7 @@ class PortSecurity:
         self.maximumTotal = {
         "candidates": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1805,7 +1804,7 @@ class PortSecurity:
         self.maximumAccess = {
         "candidates": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1817,7 +1816,7 @@ class PortSecurity:
         self.maximumVoice = {
         "candidates": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1829,12 +1828,12 @@ class PortSecurity:
 
 class IPv6:
     def __init__(self):
-        self.metricName = 'ipv6'
-        self.longName = 'IPv6'
+        self.metric_name = 'ipv6'
+        self.long_name = 'IPv6'
         self.rh0 = {
         "Notfiltered": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1846,11 +1845,11 @@ class IPv6:
 
 class IPSEC:
     def __init__(self):
-        self.metricName = 'ipsec'
-        self.longName = 'IPSEC'
+        self.metric_name = 'ipsec'
+        self.long_name = 'IPSEC'
         self.cacIKE = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1861,7 +1860,7 @@ class IPSEC:
         }
         self.cacRSC = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1873,11 +1872,11 @@ class IPSEC:
 
 class TclSH:
     def __init__(self):
-        self.metricName = 'tclsh'
-        self.longName = 'TCLSH shell scripting'
+        self.metric_name = 'tclsh'
+        self.long_name = 'TCLSH shell scripting'
         self.shell = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -1889,11 +1888,11 @@ class TclSH:
 
 class Tcp:
     def __init__(self):
-        self.metricName = 'tcp'
-        self.longName = 'TCP'
+        self.metric_name = 'tcp'
+        self.long_name = 'TCP'
         self.synwait = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -1905,12 +1904,12 @@ class Tcp:
 
 class dtpstpvlan:
     def __init__(self):
-        self.metricName = 'l2protos'
-        self.longName = 'Level 2'
+        self.metric_name = 'l2protos'
+        self.long_name = 'Level 2'
         self.nonegotiate = {
         "candidates": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1923,7 +1922,7 @@ class dtpstpvlan:
         "candidates": [],
         "receive": (None),
         "transmit": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1934,7 +1933,7 @@ class dtpstpvlan:
         }
         self.udld = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1946,7 +1945,7 @@ class dtpstpvlan:
         self.vlan1 = {
         "candidates": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1958,7 +1957,7 @@ class dtpstpvlan:
         self.unusedports = {
         "candidates": [],
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1969,7 +1968,7 @@ class dtpstpvlan:
         }
         self.vtpsecure = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1980,7 +1979,7 @@ class dtpstpvlan:
         }
         self.bpduguard = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -1991,7 +1990,7 @@ class dtpstpvlan:
         }
         self.stproot = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -2002,7 +2001,7 @@ class dtpstpvlan:
         }
         self.dot1x = {
         "cmdInCfg": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "fixImpact": (None),
         "definition": (None),
         "desc": (None),
@@ -2014,8 +2013,8 @@ class dtpstpvlan:
 
 class Netflow:
     def __init__(self):
-        self.metricName = 'Netflow'
-        self.longName = 'Netflow'
+        self.metric_name = 'Netflow'
+        self.long_name = 'Netflow'
         self.V9securityL2 = {
         "fragoffset": (None),
         "icmp": (None),
@@ -2025,7 +2024,7 @@ class Netflow:
         "ttl": (None),
         "vlid": (None),
         "interfacegress": False,
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -2037,13 +2036,13 @@ class Netflow:
 
 class Multicast:
     def __init__(self):
-        self.metricName = 'Multicast'
-        self.longName = 'Multicast'
+        self.metric_name = 'Multicast'
+        self.long_name = 'Multicast'
         self.msdp = {
         "safilterin": (None),
         "safilterout": (None),
         "redistributelist": (None),
-        "mustBeReported": False,
+        "must_report": False,
         "desc": (None),
         "fixImpact": (None),
         "definition": (None),
@@ -2054,5 +2053,5 @@ class Multicast:
         }
 class Qos:
     def __init__(self):
-        self.metricName = 'Qos'
-        self.longName = 'Qos'
+        self.metric_name = 'Qos'
+        self.long_name = 'Qos'

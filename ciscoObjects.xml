@@ -1,6 +1,6 @@
-<configuration>
+<root>
 <globalServices>
-  <unique_object>
+  <item>
     <name>serviceCDP</name>
     <fixImpact>The NMS could stop gathering information from this device</fixImpact>
     <definition>Leak network topology</definition>
@@ -14,8 +14,8 @@
     </howtofix>
     <upgrade>Current IOS version disable this feature by default</upgrade>
     <CVSSmetric>AV:A/AC:M/Au:M/C:P/I:N/A:N</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceLLDP</name>
     <fixImpact>The NMS could stop gathering information from this device</fixImpact>
     <definition>Leak network topology</definition>
@@ -33,8 +33,8 @@
     </howtofix>
     <upgrade>Current IOS version disable this feature by default</upgrade>
     <CVSSmetric>AV:A/AC:M/Au:M/C:P/I:N/A:N</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>pwdRecovery</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Deny password recovery from the ROMMON</definition>
@@ -42,8 +42,8 @@
     <howtofix>Run the command "no service password-recovery"</howtofix>
     <upgrade>Upgrade to IOS > 12.3.14 to be able to disable password recovery at ROMMON</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:S/C:N/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>tcpSmallServers</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>TCP small servers</definition>
@@ -51,8 +51,8 @@
     <howtofix>Run the command "no tcp small servers"</howtofix>
     <upgrade>Current IOS version disable this feature by default</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:P/I:N/A:N</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>udpSmallServers</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>UDP small servers</definition>
@@ -60,8 +60,8 @@
     <howtofix>Run the command "no udp small servers"</howtofix>
     <upgrade>Current IOS version disable this feature by default</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:P/I:N/A:N</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceFinger</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Finger service</definition>
@@ -69,8 +69,8 @@
     <howtofix>Run the command "no service finger"</howtofix>
     <upgrade>Current IOS version disable this feature by default</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:P/I:N/A:N</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceBootpServer</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>BOOTP server disabling</definition>
@@ -78,8 +78,8 @@
     <howtofix>Run the command "no ip bootp server"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:A/AC:L/Au:N/C:N/I:P/A:P</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceTcpKeepAliveIn</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Keepalives for TCP Sessions (In)</definition>
@@ -87,8 +87,8 @@
     <howtofix>Run the command "service tcp-keepalive-in"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:N/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceTcpKeepAliveOut</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Keepalives for TCP Sessions (Out)</definition>
@@ -96,8 +96,8 @@
     <howtofix>Run the command "service tcp-keepalive-out"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:N/C:N/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceIpDhcpBootIgnore</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>IP DHCP BOOT IGNORE</definition>
@@ -105,8 +105,8 @@
     <howtofix>Run the command "ip dhcp bootp ignore"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:L/Au:N/C:N/I:N/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceDhcp</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Service DHCP</definition>
@@ -114,8 +114,8 @@
     <howtofix>Run the command "no service dhcp"</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:L/Au:N/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>Mop</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Service MOP</definition>
@@ -123,8 +123,8 @@
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ipDomainLookup</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Local DNS name resolution</definition>
@@ -132,8 +132,8 @@
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>servicePad</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Service PAD</definition>
@@ -141,8 +141,8 @@
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceHttpServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>HTTP service</definition>
@@ -150,8 +150,8 @@
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceHttpsServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>HTTPS service</definition>
@@ -159,8 +159,8 @@
     <howtofix>Fix it before it reach the brain of evil people</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>serviceConfig</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Remote configuration auto-load</definition>
@@ -173,10 +173,10 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </globalServices>
 <console>
-  <unique_object>
+  <item>
     <name>consoleExecTimeout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session timeout</definition>
@@ -186,8 +186,8 @@
     (config-line)# exec-timeout 0 10</howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>consoleprivilegezero</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Least privilege access</definition>
@@ -200,10 +200,10 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </console>
 <aux>
-  <unique_object>
+  <item>
     <name>auxExecTimeout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session timeout</definition>
@@ -217,8 +217,8 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>auxTransportInput</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Transport Input</definition>
@@ -229,8 +229,8 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>auxTransportOutput</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Transport Output</definition>
@@ -241,8 +241,8 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-    <unique_object>
+  </item>
+    <item>
     <name>auxNoExec</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Shell execution</definition>
@@ -253,10 +253,10 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </aux>
 <vty>
-  <unique_object>
+  <item>
     <name>vtyExecTimeout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session timeout</definition>
@@ -270,8 +270,8 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>vtyTransportInput</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session transport input</definition>
@@ -282,8 +282,8 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>vtyTransportOutput</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Session transport output</definition>
@@ -300,8 +300,8 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>vtyIPv4AccessClass</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPv4 SSH TELNET inbound session</definition>
@@ -320,8 +320,8 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>  
-  <unique_object>
+  </item>  
+  <item>
     <name>vtyIPv6AccessClass</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPv6 SSH TELNET inbound session</definition>
@@ -340,10 +340,10 @@
     </howtofix>
     <upgrade>Nothing</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </vty>
 <memCpu>
-  <unique_object>
+  <item>
     <name>lowWatermarkProcessor</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Low Free CPU Threshold</definition>
@@ -351,8 +351,8 @@
     <howtofix>Run the command "memory free low-watermark processor 20000"</howtofix>
     <upgrade>Upgrade to 12.3(4)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>lowWatermarkIo</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Low Free IO Threshold</definition>
@@ -360,8 +360,8 @@
     <howtofix>Run the command "memory free low-watermark io 20000"</howtofix>
     <upgrade>Upgrade to 12.3(4)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>memReserveCritical</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Memory reservation for critical notifications</definition>
@@ -369,8 +369,8 @@
     <howtofix>Run the command "memory reserve critical 1000"</howtofix>
     <upgrade>Upgrade to 12.3(4)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>memReserveConsole</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Reserve Memory for Console Access</definition>
@@ -378,8 +378,8 @@
     <howtofix>Run the command "memory reserve console 4096"</howtofix>
     <upgrade>Upgrade to 12.3(4)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>memOverflowIo</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Detection and Correction of Redzone Corruption (IO)</definition>
@@ -387,8 +387,8 @@
     <howtofix>Run the command "exception memory ignore overflow io"</howtofix>
     <upgrade>Upgrade to 12.3(8)T1 to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>memOverflowProcessor</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Detection and Correction of Redzone Corruption (Processor)</definition>
@@ -396,8 +396,8 @@
     <howtofix>Run the command "exception memory ignore overflow processor"</howtofix>
     <upgrade>Upgrade to 12.3(8)T1 to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>cpuThresholdNotification</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>CPU Thresholding Notification via SNMP</definition>
@@ -411,8 +411,8 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(4) to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>schedulerallocate</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Scheduler process allocate</definition>
@@ -422,8 +422,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>schedulerinterval</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Scheduler processinterval</definition>
@@ -433,10 +433,10 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </memCpu>
 <crash>
-  <unique_object>
+  <item>
     <name>ExceptionMaximumFiles</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Automatic Deletion of Crashinfo Files</definition>
@@ -444,10 +444,10 @@
     <howtofix>Run the command "exception crashinfo maximum files 22"</howtofix>
     <upgrade>Upgrade to 12.3(11)T to get this feature.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </crash>
 <passwordsManagement>
-  <unique_object>
+  <item>
     <name>enableSecret</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Enable secret</definition>
@@ -455,8 +455,8 @@
     <howtofix>Run the command "enable secret secureP4SSw0rd"</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>servicePasswordEncryption</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Keep the password unreadable from human eyes</definition>
@@ -464,8 +464,8 @@
     <howtofix>Run the command "service password-encryption"</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>usernameSecret</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Secret username and password</definition>
@@ -473,8 +473,8 @@
     <howtofix>Remove the command "username USER password" commands and run "username USER secret P4SSW0RD"</howtofix>
     <upgrade>Upgrade to 12.2(8)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>retryLockout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Anti bruteforce</definition>
@@ -486,10 +486,10 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(14)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </passwordsManagement>
 <managementPlane>
-  <unique_object>
+  <item>
     <name>ManagementPlaneProtection</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Secure HTTPS and SSH services</definition>
@@ -500,8 +500,8 @@
     </howtofix>
     <upgrade>Upgrade to 12.4(6)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>sshServerTimeout</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>SSH timeout</definition>
@@ -515,8 +515,8 @@
     </howtofix>
     <upgrade>Upgrade to a Crypto image.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>sshServerAuthretries</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>SSH authentication retries</definition>
@@ -530,8 +530,8 @@
     </howtofix>
     <upgrade>Upgrade to a Crypto image.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>sshServerSourceIf</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>SSH source-interface</definition>
@@ -545,8 +545,8 @@
     </howtofix>
     <upgrade>Upgrade to a Crypto image.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>sshSCPServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>SSH secure copy</definition>
@@ -558,8 +558,8 @@
     </howtofix>
     <upgrade>Upgrade to a Crypto image.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>HTTPServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>HTTP secure server</definition>
@@ -571,8 +571,8 @@
     </howtofix>
     <upgrade>Upgrade to a Crypto image.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>loginBruteforce</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Login bruteforce attempts</definition>
@@ -592,10 +592,10 @@
     </howtofix>
     <upgrade>Upgrade to IOS > 12.3(4) to be able to stop bruteforce attemps</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </managementPlane>
 <banners>
-  <unique_object>
+  <item>
     <name>bannerMOTDconfigured</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Please define a MOTD</definition>
@@ -607,8 +607,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bannerMOTDhostnameIncluded</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>The device hostname should not be included in the MOTD banner</definition>
@@ -616,8 +616,8 @@
     <howtofix>Remove hostname from the banner.</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bannerLOGINconfigured</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Please define a login banner</definition>
@@ -629,8 +629,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bannerLOGINhostnameIncluded</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>The device hostname should not be included in the LOGIN banner</definition>
@@ -638,8 +638,8 @@
     <howtofix>Remove hostname from the banner.</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bannerEXECconfigured</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Please define a EXEC banner</definition>
@@ -651,8 +651,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bannerEXEChostnameIncluded</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>The device hostname should not be included in the EXEC banner</definition>
@@ -660,10 +660,10 @@
     <howtofix>Remove hostname from the banner.</howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </banners>
 <aaa>
-  <unique_object>
+  <item>
     <name>aaaNewModel</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Running AAA in the infrastructure</definition>
@@ -673,8 +673,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAuthTacacs</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>More secure than RADIUS</definition>
@@ -687,8 +687,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAuthTacacsFallback</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Authentication fallback</definition>
@@ -702,8 +702,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAuthTacacsExec</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Authorization</definition>
@@ -713,8 +713,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAuthTacacsLevel0</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 0 commands authorization</definition>
@@ -724,8 +724,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAuthTacacsLevel1</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 1 commands authorization</definition>
@@ -735,8 +735,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAuthTacacsLevel15</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 15 commands authorization</definition>
@@ -746,8 +746,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAccountingTacacsExec</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Accounting</definition>
@@ -757,8 +757,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAccountingTacacsLevel0</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 0 commands accounting</definition>
@@ -768,8 +768,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAccountingTacacsLevel1</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 1 commands accounting</definition>
@@ -779,8 +779,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaAccountingTacacsLevel15</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Level 15 commands accounting</definition>
@@ -790,8 +790,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>aaaTacacsRedundant</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Servers redundancy</definition>
@@ -803,10 +803,10 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </aaa>
 <snmp>
-  <unique_object>
+  <item>
     <name>snmpROcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Too basic read-only community name</definition>
@@ -818,8 +818,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>snmpROcommunityHardenedACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>ACL required for the read-only community</definition>
@@ -832,8 +832,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>snmpRWcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Too basic read-write community name</definition>
@@ -845,8 +845,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>snmpRWcommunityHardenedACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>ACL required for the read-write community</definition>
@@ -859,8 +859,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ViewsnmpROcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Too basic read-only community name</definition>
@@ -872,8 +872,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ViewsnmpROcommunityHardenedACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>ACL required for the read-only community</definition>
@@ -886,8 +886,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ViewsnmpRWcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Too basic read-write community name</definition>
@@ -899,8 +899,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ViewsnmpRWcommunityHardenedACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>ACL required for the read-write community</definition>
@@ -913,8 +913,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>snmpVersion3</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Authentication and/or crypto on SNMP packets</definition>
@@ -933,10 +933,10 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </snmp>
 <syslog>
-  <unique_object>
+  <item>
     <name>syslogServer</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Export logs to a remote server</definition>
@@ -948,8 +948,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>syslogLevelTrap</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Export trap messages to a remote server</definition>
@@ -961,8 +961,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>syslogLevelBuffered</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Export buffer logs to a remote server</definition>
@@ -974,8 +974,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>syslogConsole</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Never display logs on the console</definition>
@@ -988,8 +988,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>syslogMonitor</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Never display logs on vty sessions</definition>
@@ -1002,8 +1002,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>syslogBuffered</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Enlarge the size of logs buffer</definition>
@@ -1015,8 +1015,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>syslogInterface</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Specify sending source interface</definition>
@@ -1027,8 +1027,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>syslogTimestamp</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Timestamp configuration</definition>
@@ -1040,8 +1040,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>syslogServerArp</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Check syslog server availability via ARP resolution</definition>
@@ -1050,11 +1050,11 @@
     </howtofix>
     <upgrade>Upgrade to IOS > 12.3 to be able to check if an ARP entry exist for the logging servers.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 
 </syslog>
 <archive>
-  <unique_object>
+  <item>
     <name>archiveConfiguration</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Keep the configurations history</definition>
@@ -1069,8 +1069,8 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(7)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>archiveExclusive</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Only one admin change at a time</definition>
@@ -1080,8 +1080,8 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(14)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>archiveSecureImage</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Prevent IOS deletion by hiding it in the Flash</definition>
@@ -1091,8 +1091,8 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(8)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>archiveSecureConfig</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Prevent configuration deletion</definition>
@@ -1102,8 +1102,8 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(8)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>archiveLogs</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Archive configuration changes</definition>
@@ -1118,10 +1118,10 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(4)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </archive>
 <controlPlane>
-  <unique_object>
+  <item>
     <name>ipICMPunreachable</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Prevent CPU spikes</definition>
@@ -1138,8 +1138,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>proxyArp</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>No reply to packets that are intended for another device</definition>
@@ -1154,8 +1154,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ntpAuthentication</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>MD5 authentication</definition>
@@ -1171,8 +1171,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bgpTTLsecurity</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>TTL hops number</definition>
@@ -1186,8 +1186,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bgpMaxASlimit</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>AS Path Length limit</definition>
@@ -1198,8 +1198,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bgpSessionPassword</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Peer MD5 authentication</definition>
@@ -1213,8 +1213,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bgpMaxPrefixes</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Maximum prefixes threshold</definition>
@@ -1228,8 +1228,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bgpPrefixList</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Prefixes list IN/OUT</definition>
@@ -1247,8 +1247,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bgpiACL</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>BGP infrastructure ACL</definition>
@@ -1262,8 +1262,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bgpaspathList</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>AS-PATH list IN/OUT</definition>
@@ -1280,8 +1280,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>eigrpPassiveDefault</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Passive interface default</definition>
@@ -1292,8 +1292,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>eigrpAuthModeMD5</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MD5 authentication</definition>
@@ -1304,8 +1304,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>eigrpRouteFilteringIn</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Route filtering inbound</definition>
@@ -1316,8 +1316,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>eigrpRouteFilteringOut</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Route filtering outbound</definition>
@@ -1328,8 +1328,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ripAuthModeMD5</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MD5 authentication</definition>
@@ -1340,8 +1340,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ospfPassiveDefault</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Passive interface default</definition>
@@ -1352,8 +1352,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ospfAuthModeMD5</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MD5 authentication</definition>
@@ -1366,8 +1366,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ospfRouteFilteringIn</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Route filtering in</definition>
@@ -1380,8 +1380,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ospfRouteFilteringOut</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Route filtering out</definition>
@@ -1394,8 +1394,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ospfMaxLSA</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Maximum amount of LSAs</definition>
@@ -1406,8 +1406,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>glbpMD5</name>
     <fixImpact>Not disruptive</fixImpact>
     <definition>MD5 authentication</definition>
@@ -1418,8 +1418,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>hsrpMD5</name>
     <fixImpact>Not disruptive</fixImpact>
     <definition>MD5 authentication</definition>
@@ -1430,8 +1430,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>vrrpMD5</name>
     <fixImpact>Not disruptive</fixImpact>
     <definition>MD5 authentication</definition>
@@ -1442,8 +1442,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>tclsh</name>
     <fixImpact>Not disruptive</fixImpact>
     <definition>Shell abuse</definition>
@@ -1456,8 +1456,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>tcpsynwait</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>SYN wait time</definition>
@@ -1467,8 +1467,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>mcastmsdp</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MSDP SA Filter</definition>
@@ -1496,10 +1496,10 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </controlPlane>
 <dataPlane>
-  <unique_object>
+  <item>
     <name>IPoptions</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Drop behavior</definition>
@@ -1509,8 +1509,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>IPsourceroute</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Source routing</definition>
@@ -1520,8 +1520,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ipICMPredirects</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Redirect packets</definition>
@@ -1536,8 +1536,8 @@
     </howtofix>
     <upgrade>Upgrade to 12.3(4)T.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>ICMPdeny</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Deny any any</definition>
@@ -1549,8 +1549,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>IPfrags</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Anti IDS evasion</definition>
@@ -1564,8 +1564,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>urpf</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPv4 anti-spoofing</definition>
@@ -1580,8 +1580,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>urpfv6</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPv6 anti-spoofing</definition>
@@ -1597,8 +1597,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>portsecurityViolation</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Port violation</definition>
@@ -1609,8 +1609,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>portsecuritySticky</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>MAC address sticky</definition>
@@ -1621,8 +1621,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>portsecurityMaximumTotal</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Total maximum MAC addresses</definition>
@@ -1633,8 +1633,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>portsecurityMaximumAccess</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Access vlan maximum MAC addresses</definition>
@@ -1645,8 +1645,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>portsecurityMaximumVoice</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Voice vlan maximum MAC addresses</definition>
@@ -1657,8 +1657,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>IPv6rh0</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Source routing prevention</definition>
@@ -1675,8 +1675,8 @@
     </howtofix>
     <upgrade>Upgrade to 12.2(15)T or later.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>IPSECcacIKE</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPSEC IKE SA call admission control</definition>
@@ -1686,8 +1686,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>IPSECcacRSC</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>IPSEC IKE system resources usage</definition>
@@ -1697,8 +1697,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:L/AC:H/Au:M/C:N/I:P/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>nonegotiate</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>DTP negotiation</definition>
@@ -1709,8 +1709,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>flowcontrol</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Flow Control 802.3x</definition>
@@ -1721,8 +1721,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>udld</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>UDLD</definition>
@@ -1732,8 +1732,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>vlan1</name>
     <fixImpact>Could be disruptive</fixImpact>
     <definition>Default Vlan 1</definition>
@@ -1749,8 +1749,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>unusedports</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Unused ports</definition>
@@ -1767,8 +1767,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>vtpsecure</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Password definition</definition>
@@ -1780,8 +1780,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>bpduguard</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>BPDU guard</definition>
@@ -1793,8 +1793,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>stproot</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Root guard</definition>
@@ -1804,8 +1804,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>dot1x</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>802.1x</definition>
@@ -1819,8 +1819,8 @@
     </howtofix>
     <upgrade>Nothing.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
-  <unique_object>
+  </item>
+  <item>
     <name>netflowV9</name>
     <fixImpact>Non-disruptive</fixImpact>
     <definition>Exporting network flows for security monitoring</definition>
@@ -1838,6 +1838,6 @@
     </howtofix>
     <upgrade>Upgrade to 12.4(2)T or later.</upgrade>
     <CVSSmetric>AV:N/AC:L/Au:M/C:C/I:C/A:C</CVSSmetric>
-  </unique_object>
+  </item>
 </dataPlane>
-</configuration>
+</root>

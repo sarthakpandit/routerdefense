@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 
 # modules imports
@@ -10,9 +9,9 @@ import ConfigParser
 from optparse import OptionParser
 
 from common import *
-from report import *
 from metrics import *
-from analyzor import *
+from engines import *
+from reports import *
 
 # arguments parsing
 parser = OptionParser()
@@ -46,9 +45,9 @@ try:
             entry = entry.split('/')
             if len(entry) == 1:
                 entry.append('32')
-            entry.append(dotted2Netmask(entry[1]))
-            entry.append(netmask2wildcard(entry[2]))
-            entry.append(networkAddress(entry[0], entry[2]))
+            entry.append(dotted_netmask(entry[1]))
+            entry.append(netmask_wildcard(entry[2]))
+            entry.append(network_address(entry[0], entry[2]))
             __builtin__.IPv4trustedNetManagementServers.append(entry)
     else:
         __builtin__.IPv4trustedNetManagementServers = None
@@ -60,9 +59,9 @@ try:
             entry = entry.split('/')
             if len(entry) == 1:
                 entry.append('32')
-            entry.append(dotted2Netmask(entry[1]))
-            entry.append(netmask2wildcard(entry[2]))
-            entry.append(networkAddress(entry[0], entry[2]))
+            entry.append(dotted_netmask(entry[1]))
+            entry.append(netmask_wildcard(entry[2]))
+            entry.append(network_address(entry[0], entry[2]))
             __builtin__.IPv4trustedNetManagementStations.append(entry)
     else:
         __builtin__.IPv4trustedNetManagementStations = None
@@ -72,14 +71,14 @@ except:
     print sys.exc_info()
     exit(1)
 
-print writeHeader()
+print stdout_header()
 
 # configuration file reading
-lines = readCfg(options.configurationFile)
+lines = read_cfg(options.configurationFile)
 __builtin__.wholeconfig = lines
 
 # Cisco IOS configuration file type checking
-checkCfg(lines)
+check_cfg(lines)
 
 __builtin__.genericCfg = addBasicInfo(lines)
 
@@ -97,19 +96,19 @@ AclsV4 = ACLV4metrics()
 AclsV6 = ACLV6metrics()
 
 # Find interfaces (ifaceCfg).  
-ifaceCfg = populateInterfaces(lines,Interfaces)
+ifaceCfg = populate_ifaces(lines,Interfaces)
 for i in range(0, len(ifaceCfg)):
-    ifaceCfg[i].populateMetricsFromConfig()
+    ifaceCfg[i].get_metrics_from_config()
 
 # Find IPv4 access-list (aclIPv4).  
-aclIPv4 = populateACLv4(lines, AclsV4)
+aclIPv4 = populate_acl_v4(lines, AclsV4)
 for i in range(0, len(aclIPv4)):
-    aclIPv4[i].populateMetricsFromConfig()
+    aclIPv4[i].get_metrics_from_config()
 
 # Find IPv6 access-list (aclIPv6).  
-aclIPv6 = populateACLv6(lines, AclsV6)
+aclIPv6 = populate_acl_v6(lines, AclsV6)
 for i in range(0, len(aclIPv6)):
-    aclIPv6[i].populateMetricsFromConfig()
+    aclIPv6[i].get_metrics_from_config()
 
 # Add generic metrics.  
 CdpProtocol                         = MgmtPlane.add('cdp')
@@ -152,27 +151,27 @@ analyzorCrashinfo(lines, exceptionCrashinfo)
 analyzorPasswordManagement(lines, pwdManagement)
 
 # motd banner
-bannerMotd = parseBannerMOTD(lines)
+bannerMotd = parse_motd(lines)
 analyzorBanner(bannerMotd, motd, 0)
 
 # login banner
-bannerLogin = parseBannerLOGIN(lines)
+bannerLogin = parse_login_banner(lines)
 analyzorBanner(bannerLogin, banLogin, 1)
 
 # exec banner
-bannerExec = parseBannerEXEC(lines)
+bannerExec = parse_exec_banner(lines)
 analyzorBanner(bannerExec, banExec, 2)
 
 # console port
-consoleCfg = parseConsole(lines)
+consoleCfg = parse_console(lines)
 analyzorConsole(consoleCfg, console, lines)
 
 # aux port
-auxCfg = parseAux(lines)
+auxCfg = parse_aux(lines)
 analyzorAux(auxCfg,aux)
 
 # vty
-vtyCfg = parseVty(lines)
+vtyCfg = parse_vty(lines)
 __builtin__.vtyList = []
 for i in range (0, len(vtyCfg)):
     __builtin__.vtyList.append(MgmtPlane.add('vtyPort'))
@@ -271,28 +270,28 @@ if (__builtin__.deviceType  == 'switch' or
 
 # reporting
 output = {
-    'stdout': lambda : stdoutReport(genericCfg,
-                                    MgmtPlane.metricsList,
-                                    CtrlPlane.metricsList,
-                                    DataPlane.metricsList),
+    'stdout': lambda : stdout_report(genericCfg,
+                                    MgmtPlane.metrics_list,
+                                    CtrlPlane.metrics_list,
+                                    DataPlane.metrics_list),
                                     
     'csv'   : lambda : csvReport   (__builtin__.outputFile,
-                                    MgmtPlane.metricsList,
-                                    CtrlPlane.metricsList,
-                                    DataPlane.metricsList),
+                                    MgmtPlane.metrics_list,
+                                    CtrlPlane.metrics_list,
+                                    DataPlane.metrics_list),
                                     
     'html'  : lambda : htmlReport  (__builtin__.outputFile, 
                                     genericCfg,
-                                    MgmtPlane.metricsList,
-                                    CtrlPlane.metricsList,
-                                    DataPlane.metricsList),
+                                    MgmtPlane.metrics_list,
+                                    CtrlPlane.metrics_list,
+                                    DataPlane.metrics_list),
                                     
     'pdf'   : lambda : pdfReport   (__builtin__.outputFile,
                                     genericCfg,
-                                    MgmtPlane.metricsList,
-                                    CtrlPlane.metricsList,
-                                    DataPlane.metricsList)
+                                    MgmtPlane.metrics_list,
+                                    CtrlPlane.metrics_list,
+                                    DataPlane.metrics_list)
     }[outputType]()
 
 # End of program
-print writeFooter()
+print stdout_footer()
