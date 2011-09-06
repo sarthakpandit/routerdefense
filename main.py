@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: iso-8859-15 -*-
+# -*- coding: iso-8859-1 -*-
 
 from optparse import OptionParser
 import sys
@@ -13,11 +13,16 @@ from analyzor import *
 
 # arguments parsing
 parser = OptionParser()
-parser.add_option("-c", "--config"  , dest = "configurationFile", help = "Configuration file.")
-parser.add_option("-t", "--template", dest = "templateFile"     , help = "Template file.")
+parser.add_option("-c", "--config",
+                  dest = "configurationFile",
+                  help = "Configuration file.")
+parser.add_option("-t", "--template",
+                  dest = "templateFile",
+                  help = "Template file.")
 (options, args) = parser.parse_args()
 
-if ( (len(sys.argv) <= 3) or (options.configurationFile == None) ):
+if ((len(sys.argv) <= 3) or
+    (options.configurationFile == None) ):
     parser.error("Arguments: no configuration nor template file.")
 
 # template parsing
@@ -187,46 +192,35 @@ analyzorNtp(lines, ntp)
 __builtin__.tcp = ControlPlaneAudit.addMetric('tcp')
 analyzorTcp(lines, tcp)
 
-if __builtin__.deviceType == 'router' or __builtin__.deviceType == 'both':
+if __builtin__.deviceType  == 'router' or
+    __builtin__.deviceType == 'both':
+    
     __builtin__.bgp = ControlPlaneAudit.addMetric('bgp')
     analyzorBgp(lines, bgp, aclIPv4)
-
     __builtin__.eigrp = ControlPlaneAudit.addMetric('eigrp')
     analyzorEigrp(lines, eigrp, ifaceCfg)
-
     __builtin__.rip = ControlPlaneAudit.addMetric('rip')
     analyzorRip(lines, rip, ifaceCfg)
-
     __builtin__.ospf = ControlPlaneAudit.addMetric('ospf')
     analyzorOspf(lines, ospf, ifaceCfg)
-
     __builtin__.glbp = ControlPlaneAudit.addMetric('glbp')
     analyzorGlbp(lines, glbp, ifaceCfg)
-
     __builtin__.hsrp = ControlPlaneAudit.addMetric('hsrp')
     analyzorHsrp(lines, hsrp, ifaceCfg)
-
     __builtin__.vrrp = ControlPlaneAudit.addMetric('vrrp')
     analyzorVrrp(lines, vrrp, ifaceCfg)
-
     icmpRedirects = DataPlaneAudit.addMetric('icmpredirects')
     analyzorICMPRedirects(icmpRedirects, lines, ifaceCfg)
-
     __builtin__.ipoptions = DataPlaneAudit.addMetric('ipoptions')
     analyzorIPoptions(lines, ipoptions)
-
     __builtin__.ipsrcroute = DataPlaneAudit.addMetric('ipsourceroute')
     analyzorIPsrcRoute(lines, ipsrcroute)
-
     __builtin__.denyicmp = DataPlaneAudit.addMetric('denyIcmpAnyAny')
     analyzorICMPdeny(lines, denyicmp)
-
     __builtin__.ipfrags = DataPlaneAudit.addMetric('IPfragments')
     analyzorIPfragments(lines, ipfrags)
-
     __builtin__.urpf = DataPlaneAudit.addMetric('urpf')
     analyzorURPF(lines, urpf, ifaceCfg)
-
     __builtin__.netflow = DataPlaneAudit.addMetric('netflow')
     analyzorNetflow(lines, netflow, ifaceCfg)
 
@@ -248,7 +242,9 @@ if __builtin__.deviceType == 'router' or __builtin__.deviceType == 'both':
     __builtin__.tclsh = ControlPlaneAudit.addMetric('tclsh')
     analyzorTclSH(lines, tclsh)
 
-if __builtin__.deviceType == 'switch' or __builtin__.deviceType == 'both':
+if __builtin__.deviceType  == 'switch' or
+    __builtin__.deviceType == 'both':
+    
     __builtin__.portsecurity = DataPlaneAudit.addMetric('portsecurity')
     analyzorPortSecurity(lines, portsecurity, ifaceCfg)
     __builtin__.level2protocols = DataPlaneAudit.addMetric('level2protocols')
@@ -259,10 +255,27 @@ if __builtin__.deviceType == 'switch' or __builtin__.deviceType == 'both':
         analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg)
 
 output = {
-    'stdout': lambda : stdoutReport(genericCfg, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList),
-    'csv': lambda : csvReport(__builtin__.outputFile, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList),
-    'html': lambda : htmlReport(__builtin__.outputFile, genericCfg, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList),
-    'pdf': lambda : pdfReport(__builtin__.outputFile, genericCfg, ManagementPlaneAudit.metricsList, ControlPlaneAudit.metricsList, DataPlaneAudit.metricsList)
+    'stdout': lambda : stdoutReport(genericCfg,
+                                    ManagementPlaneAudit.metricsList,
+                                    ControlPlaneAudit.metricsList,
+                                    DataPlaneAudit.metricsList),
+                                    
+    'csv'   : lambda : csvReport   (__builtin__.outputFile,
+                                    ManagementPlaneAudit.metricsList,
+                                    ControlPlaneAudit.metricsList,
+                                    DataPlaneAudit.metricsList),
+                                    
+    'html'  : lambda : htmlReport  (__builtin__.outputFile, 
+                                    genericCfg,
+                                    ManagementPlaneAudit.metricsList,
+                                    ControlPlaneAudit.metricsList,
+                                    DataPlaneAudit.metricsList),
+                                    
+    'pdf'   : lambda : pdfReport   (__builtin__.outputFile,
+                                    genericCfg,
+                                    ManagementPlaneAudit.metricsList,
+                                    ControlPlaneAudit.metricsList,
+                                    DataPlaneAudit.metricsList)
     }[outputType]()
 
 print writeFooter()
