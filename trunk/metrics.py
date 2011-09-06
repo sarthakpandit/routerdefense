@@ -21,7 +21,7 @@ class metrics:
             metricAdded = Syslog()
         if metricName == 'snmp':
             metricAdded = Snmp()
-        if metricName == 'tacacsRedundant':
+        if metricName == 'tacacsRedun':
             metricAdded = tacacsRedun()
         if metricName == 'tacacsAuthe':
             metricAdded = tacacsAuth()
@@ -43,7 +43,7 @@ class metrics:
             metricAdded = exceptionCrash()
         if metricName == 'memCpu':
             metricAdded = memCpu()
-        if metricName == 'genericServices':
+        if metricName == 'genericSvcs':
             metricAdded = globalServices()
         if metricName == 'consolePort':
             metricAdded = lineConsole()
@@ -102,7 +102,7 @@ class CPmetrics:
     def addMetric(self,metricName):
         if metricName == 'icmpredirects':
             metricAdded = IPicmpRedirects()
-        if metricName == 'icmpunreachable':
+        if metricName == 'icmpunreach':
             metricAdded = IPicmpUnreachable()
         if metricName == 'proxyarp':
             metricAdded = ARPproxy()
