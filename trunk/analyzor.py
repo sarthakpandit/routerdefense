@@ -3439,7 +3439,7 @@ def analyzorIPoptions(lines, ipoptions):
     return toBeReturned
 
 def analyzorIPsrcRoute(lines, ipsrcroute):
-   """IPv4 source-routing configuration."""
+    """IPv4 source-routing configuration."""
 
     try:
         ipsrcroute.drop['cmdInCfg'] = searchString(lines, 'no ip source-route')
@@ -4132,6 +4132,6 @@ def analyzorMulticast(lines, multicast):
     return toBeReturned
 
 def analyzorQos(lines, qos, ifaceCfg):
-    """QoS configuration assessment. Not ready."
+    """QoS configuration assessment. Not ready."""
     toBeReturned = ''
     return toBeReturned

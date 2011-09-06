@@ -112,29 +112,29 @@ for i in range(0, len(aclIPv6)):
     aclIPv6[i].populateMetricsFromConfig()
 
 # Add generic metrics.  
-CdpProtocol                         = MgmtPlane.addMetric('cdp')
-LldpProtocol                        = MgmtPlane.addMetric('lldp')
-__builtin__.console                 = MgmtPlane.addMetric('consolePort')
-__builtin__.aux                     = MgmtPlane.addMetric('auxPort')
-__builtin__.motd                    = MgmtPlane.addMetric('BannerMotd')
-__builtin__.banLogin                = MgmtPlane.addMetric('BannerLogin')
-__builtin__.banExec                 = MgmtPlane.addMetric('BannerExec')
-__builtin__.genericServices         = MgmtPlane.addMetric('genSvcs')
-__builtin__.memoryCpu               = MgmtPlane.addMetric('memCpu')
-__builtin__.exceptionCrashinfo      = MgmtPlane.addMetric('exceptions')
-__builtin__.pwdManagement           = MgmtPlane.addMetric('pwdMgmt')
-__builtin__.ManagementProtection    = MgmtPlane.addMetric('MgmtPP')
-__builtin__.tacacsPlusRedundant     = MgmtPlane.addMetric('tacacsRed')
-__builtin__.tacacsPlusAuth          = MgmtPlane.addMetric('tacacsThe')
-__builtin__.tacacsPlusAuthorization = MgmtPlane.addMetric('tacacsTho')
-__builtin__.tacacsPlusAccounting    = MgmtPlane.addMetric('tacacsAcc')
-__builtin__.snmp                    = MgmtPlane.addMetric('snmp')
-__builtin__.syslog                  = MgmtPlane.addMetric('syslog')
-__builtin__.archive                 = MgmtPlane.addMetric('archive')
-icmpUnreachable                     = CtrlPlane.addMetric('icmpunreach')
-proxyArp                            = CtrlPlane.addMetric('proxyarp')
-__builtin__.ntp                     = CtrlPlane.addMetric('ntp')
-__builtin__.tcp                     = CtrlPlane.addMetric('tcp')
+CdpProtocol                         = MgmtPlane.add('cdp')
+LldpProtocol                        = MgmtPlane.add('lldp')
+__builtin__.console                 = MgmtPlane.add('consolePort')
+__builtin__.aux                     = MgmtPlane.add('auxPort')
+__builtin__.motd                    = MgmtPlane.add('BannerMotd')
+__builtin__.banLogin                = MgmtPlane.add('BannerLogin')
+__builtin__.banExec                 = MgmtPlane.add('BannerExec')
+__builtin__.genericServices         = MgmtPlane.add('genSvcs')
+__builtin__.memoryCpu               = MgmtPlane.add('memCpu')
+__builtin__.exceptionCrashinfo      = MgmtPlane.add('exceptions')
+__builtin__.pwdManagement           = MgmtPlane.add('pwdMgmt')
+__builtin__.ManagementProtection    = MgmtPlane.add('MgmtPP')
+__builtin__.tacacsPlusRedundant     = MgmtPlane.add('tacacsRed')
+__builtin__.tacacsPlusAuth          = MgmtPlane.add('tacacsThe')
+__builtin__.tacacsPlusAuthorization = MgmtPlane.add('tacacsTho')
+__builtin__.tacacsPlusAccounting    = MgmtPlane.add('tacacsAcc')
+__builtin__.snmp                    = MgmtPlane.add('snmp')
+__builtin__.syslog                  = MgmtPlane.add('syslog')
+__builtin__.archive                 = MgmtPlane.add('archive')
+icmpUnreachable                     = CtrlPlane.add('icmpunreach')
+proxyArp                            = CtrlPlane.add('proxyarp')
+__builtin__.ntp                     = CtrlPlane.add('ntp')
+__builtin__.tcp                     = CtrlPlane.add('tcp')
 
 # Launch generic engines.  
 analyzorCdp(CdpProtocol, lines, ifaceCfg)
@@ -150,7 +150,6 @@ analyzorServices(lines, genericServices)
 analyzorMemCpu(lines, memoryCpu)
 analyzorCrashinfo(lines, exceptionCrashinfo)
 analyzorPasswordManagement(lines, pwdManagement)
-analyzorMPP(lines, vtyList, vtyCfg, ManagementProtection)
 
 # motd banner
 bannerMotd = parseBannerMOTD(lines)
@@ -176,10 +175,12 @@ analyzorAux(auxCfg,aux)
 vtyCfg = parseVty(lines)
 __builtin__.vtyList = []
 for i in range (0, len(vtyCfg)):
-    __builtin__.vtyList.append(MgmtPlane.addMetric('vtyPort'))
+    __builtin__.vtyList.append(MgmtPlane.add('vtyPort'))
     __builtin__.vtyList[i].sessionNumbers = vtyCfg[i][0].split(' ')[2:]
 for i in range(0, len(vtyList)):
     analyzorVty(vtyCfg[i],vtyList[i])
+
+analyzorMPP(lines, vtyList, vtyCfg, ManagementProtection)
 
 # AAA redundancy
 mode = 'RedundantAAA'
@@ -198,24 +199,24 @@ mode = 'Accounting'
 analyzorTacacs(lines, tacacsPlusAccounting, mode)
 
 # If device is a router or a multilayer switch.  
-if __builtin__.deviceType  == 'router' or
-    __builtin__.deviceType == 'both':
+if (__builtin__.deviceType  == 'router' or
+    __builtin__.deviceType == 'both'):
     
-    __builtin__.bgp        = CtrlPlane.addMetric('bgp')
-    __builtin__.eigrp      = CtrlPlane.addMetric('eigrp')
-    __builtin__.rip        = CtrlPlane.addMetric('rip')
-    __builtin__.ospf       = CtrlPlane.addMetric('ospf')
-    __builtin__.glbp       = CtrlPlane.addMetric('glbp')
-    __builtin__.hsrp       = CtrlPlane.addMetric('hsrp')
-    __builtin__.vrrp       = CtrlPlane.addMetric('vrrp')
-    icmpRedirects          = DataPlane.addMetric('icmpredirects')
-    __builtin__.ipoptions  = DataPlane.addMetric('ipoptions')
-    __builtin__.ipsrcroute = DataPlane.addMetric('ipsourceroute')
-    __builtin__.denyicmp   = DataPlane.addMetric('denyIcmpAnyAny')
-    __builtin__.ipfrags    = DataPlane.addMetric('IPfragments')
-    __builtin__.urpf       = DataPlane.addMetric('urpf')
-    __builtin__.netflow    = DataPlane.addMetric('netflow')
-    __builtin__.tclsh = CtrlPlane.addMetric('tclsh')
+    __builtin__.bgp        = CtrlPlane.add('bgp')
+    __builtin__.eigrp      = CtrlPlane.add('eigrp')
+    __builtin__.rip        = CtrlPlane.add('rip')
+    __builtin__.ospf       = CtrlPlane.add('ospf')
+    __builtin__.glbp       = CtrlPlane.add('glbp')
+    __builtin__.hsrp       = CtrlPlane.add('hsrp')
+    __builtin__.vrrp       = CtrlPlane.add('vrrp')
+    icmpRedirects          = DataPlane.add('icmpredirects')
+    __builtin__.ipoptions  = DataPlane.add('ipoptions')
+    __builtin__.ipsrcroute = DataPlane.add('ipsourceroute')
+    __builtin__.denyicmp   = DataPlane.add('denyIcmpAnyAny')
+    __builtin__.ipfrags    = DataPlane.add('IPfragments')
+    __builtin__.urpf       = DataPlane.add('urpf')
+    __builtin__.netflow    = DataPlane.add('netflow')
+    __builtin__.tclsh = CtrlPlane.add('tclsh')
     
     analyzorBgp(lines, bgp, aclIPv4)
     analyzorEigrp(lines, eigrp, ifaceCfg)
@@ -235,37 +236,37 @@ if __builtin__.deviceType  == 'router' or
     
     # multicast
     if __builtin__.genericCfg.multicast == "Enabled":
-        __builtin__.multicast = CtrlPlane.addMetric('multicast')
+        __builtin__.multicast = CtrlPlane.add('multicast')
         analyzorMulticast(lines, multicast)
 
     # qos
     if __builtin__.genericCfg.qos == "Enabled":
-        __builtin__.qos = CtrlPlane.addMetric('qos')
+        __builtin__.qos = CtrlPlane.add('qos')
         analyzorQos(lines, qos, ifaceCfg)
 
     # IPv6
     if __builtin__.genericCfg.ipv6 == "Enabled":
-        __builtin__.urpfv6 = DataPlane.addMetric('urpfv6')
+        __builtin__.urpfv6 = DataPlane.add('urpfv6')
         analyzorURPFv6(lines, urpfv6, ifaceCfg)
 
     # IPsec
     if __builtin__.genericCfg.ipsec == "Enabled":
-        __builtin__.ipsec = DataPlane.addMetric('ipsec')
+        __builtin__.ipsec = DataPlane.add('ipsec')
         analyzorIPSEC(lines, ipsec)
 
 # If device is a switch or a multilayer switch.  
-if __builtin__.deviceType  == 'switch' or
-    __builtin__.deviceType == 'both':
+if (__builtin__.deviceType  == 'switch' or
+    __builtin__.deviceType == 'both'):
     
-    __builtin__.portsecurity = DataPlane.addMetric('portsecurity')
-    __builtin__.level2protocols = DataPlane.addMetric('level2protocols')
+    __builtin__.portsecurity = DataPlane.add('portsecurity')
+    __builtin__.l2protos = DataPlane.add('l2protos')
 
     analyzorPortSecurity(lines, portsecurity, ifaceCfg)
-    analyzorLevel2Protocols(lines, level2protocols, ifaceCfg)
+    analyzorLevel2Protocols(lines, l2protos, ifaceCfg)
 
     # IPv6
     if __builtin__.genericCfg.ipv6 == "Enabled":
-        __builtin__.ipv6 = DataPlane.addMetric('ipv6')
+        __builtin__.ipv6 = DataPlane.add('ipv6')
         analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg)
 
 # reporting
