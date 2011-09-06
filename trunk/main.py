@@ -82,11 +82,11 @@ checkCfg(lines)
 __builtin__.genericCfg = addBasicInfo(lines)
 
 # add metrics for the Management Plane
-ManagementPlaneAudit = metrics()
+MgmtPlane = metrics()
 # add metrics for the Management Plane
-ControlPlaneAudit = CPmetrics()
+CtrlPlane = CPmetrics()
 # add metrics for the Management Plane
-DataPlaneAudit = DPmetrics()
+DataPlane = DPmetrics()
 # add metric for the interfaces
 Interfaces = IFSmetrics()
 # add metric for the IPv4 ACLs
@@ -106,176 +106,176 @@ aclIPv6 = populateACLv6(lines, AclsV6)
 for i in range(0, len(aclIPv6)):
     aclIPv6[i].populateMetricsFromConfig()
 
-CdpProtocol = ManagementPlaneAudit.addMetric('cdp')
+CdpProtocol = MgmtPlane.addMetric('cdp')
 analyzorCdp(CdpProtocol, lines, ifaceCfg)
 
-LldpProtocol = ManagementPlaneAudit.addMetric('lldp')
+LldpProtocol = MgmtPlane.addMetric('lldp')
 analyzorLldp(LldpProtocol, lines, ifaceCfg)
 
 consoleCfg = parseConsole(lines)
-__builtin__.console = ManagementPlaneAudit.addMetric('consolePort')
+__builtin__.console = MgmtPlane.addMetric('consolePort')
 analyzorConsole(consoleCfg, console, lines)
 
 auxCfg = parseAux(lines)
-__builtin__.aux = ManagementPlaneAudit.addMetric('auxPort')
+__builtin__.aux = MgmtPlane.addMetric('auxPort')
 analyzorAux(auxCfg,aux)
 
 vtyCfg = parseVty(lines)
 __builtin__.vtyList = []
 for i in range (0, len(vtyCfg)):
-    __builtin__.vtyList.append(ManagementPlaneAudit.addMetric('vtyPort'))
+    __builtin__.vtyList.append(MgmtPlane.addMetric('vtyPort'))
     __builtin__.vtyList[i].sessionNumbers = vtyCfg[i][0].split(' ')[2:]
 for i in range(0, len(vtyList)):
     analyzorVty(vtyCfg[i],vtyList[i])
 
 bannerMotd = parseBannerMOTD(lines)
-__builtin__.motd = ManagementPlaneAudit.addMetric('BannerMotd')
+__builtin__.motd = MgmtPlane.addMetric('BannerMotd')
 analyzorBanner(bannerMotd, motd, 0)
 
 bannerLogin = parseBannerLOGIN(lines)
-__builtin__.banLogin = ManagementPlaneAudit.addMetric('BannerLogin')
+__builtin__.banLogin = MgmtPlane.addMetric('BannerLogin')
 analyzorBanner(bannerLogin, banLogin, 1)
 
 bannerExec = parseBannerEXEC(lines)
-__builtin__.banExec = ManagementPlaneAudit.addMetric('BannerExec')
+__builtin__.banExec = MgmtPlane.addMetric('BannerExec')
 analyzorBanner(bannerExec, banExec, 2)
 
-__builtin__.genericServices = ManagementPlaneAudit.addMetric('genericServices')
+__builtin__.genericServices = MgmtPlane.addMetric('genericServices')
 analyzorServices(lines, genericServices)
 
-__builtin__.memoryCpu = ManagementPlaneAudit.addMetric('memCpu')
+__builtin__.memoryCpu = MgmtPlane.addMetric('memCpu')
 analyzorMemCpu(lines, memoryCpu)
 
-__builtin__.exceptionCrashinfo = ManagementPlaneAudit.addMetric('exceptions')
+__builtin__.exceptionCrashinfo = MgmtPlane.addMetric('exceptions')
 analyzorCrashinfo(lines, exceptionCrashinfo)
 
-__builtin__.pwdManagement = ManagementPlaneAudit.addMetric('pwdMgmt')
+__builtin__.pwdManagement = MgmtPlane.addMetric('pwdMgmt')
 analyzorPasswordManagement(lines, pwdManagement)
 
-__builtin__.ManagementProtection = ManagementPlaneAudit.addMetric('MgmtPP')
+__builtin__.ManagementProtection = MgmtPlane.addMetric('MgmtPP')
 analyzorMPP(lines, vtyList, vtyCfg, ManagementProtection)
 
-__builtin__.tacacsPlusRedundant = ManagementPlaneAudit.addMetric('tacacsRedundant')
+__builtin__.tacacsPlusRedundant = MgmtPlane.addMetric('tacacsRedundant')
 mode = 'RedundantAAA'
 analyzorTacacs(lines, tacacsPlusRedundant, mode)
 
-__builtin__.tacacsPlusAuth = ManagementPlaneAudit.addMetric('tacacsAuthentication')
+__builtin__.tacacsPlusAuth = MgmtPlane.addMetric('tacacsAuthentication')
 mode = 'Authentication'
 analyzorTacacs(lines, tacacsPlusAuth, mode)
 
-__builtin__.tacacsPlusAuthorization = ManagementPlaneAudit.addMetric('tacacsAuthorization')
+__builtin__.tacacsPlusAuthorization = MgmtPlane.addMetric('tacacsAuthorization')
 mode = 'Authorization'
 analyzorTacacs(lines, tacacsPlusAuthorization, mode)
 
-__builtin__.tacacsPlusAccounting = ManagementPlaneAudit.addMetric('tacacsAccounting')
+__builtin__.tacacsPlusAccounting = MgmtPlane.addMetric('tacacsAccounting')
 mode = 'Accounting'
 analyzorTacacs(lines, tacacsPlusAccounting, mode)
 
-__builtin__.snmp = ManagementPlaneAudit.addMetric('snmp')
+__builtin__.snmp = MgmtPlane.addMetric('snmp')
 analyzorSNMP(lines, snmp)
 
-__builtin__.syslog = ManagementPlaneAudit.addMetric('syslog')
+__builtin__.syslog = MgmtPlane.addMetric('syslog')
 analyzorSyslog(lines, syslog)
 
-__builtin__.archive = ManagementPlaneAudit.addMetric('archive')
+__builtin__.archive = MgmtPlane.addMetric('archive')
 analyzorArchive(lines, archive)
 
-icmpUnreachable = ControlPlaneAudit.addMetric('icmpunreachable')
+icmpUnreachable = CtrlPlane.addMetric('icmpunreachable')
 analyzorICMPUnreachable(icmpUnreachable, lines, ifaceCfg)
 
-proxyArp = ControlPlaneAudit.addMetric('proxyarp')
+proxyArp = CtrlPlane.addMetric('proxyarp')
 analyzorARPproxy(proxyArp, lines, ifaceCfg)
 
-__builtin__.ntp = ControlPlaneAudit.addMetric('ntp')
+__builtin__.ntp = CtrlPlane.addMetric('ntp')
 analyzorNtp(lines, ntp)
 
-__builtin__.tcp = ControlPlaneAudit.addMetric('tcp')
+__builtin__.tcp = CtrlPlane.addMetric('tcp')
 analyzorTcp(lines, tcp)
 
 if __builtin__.deviceType  == 'router' or
     __builtin__.deviceType == 'both':
     
-    __builtin__.bgp = ControlPlaneAudit.addMetric('bgp')
+    __builtin__.bgp = CtrlPlane.addMetric('bgp')
     analyzorBgp(lines, bgp, aclIPv4)
-    __builtin__.eigrp = ControlPlaneAudit.addMetric('eigrp')
+    __builtin__.eigrp = CtrlPlane.addMetric('eigrp')
     analyzorEigrp(lines, eigrp, ifaceCfg)
-    __builtin__.rip = ControlPlaneAudit.addMetric('rip')
+    __builtin__.rip = CtrlPlane.addMetric('rip')
     analyzorRip(lines, rip, ifaceCfg)
-    __builtin__.ospf = ControlPlaneAudit.addMetric('ospf')
+    __builtin__.ospf = CtrlPlane.addMetric('ospf')
     analyzorOspf(lines, ospf, ifaceCfg)
-    __builtin__.glbp = ControlPlaneAudit.addMetric('glbp')
+    __builtin__.glbp = CtrlPlane.addMetric('glbp')
     analyzorGlbp(lines, glbp, ifaceCfg)
-    __builtin__.hsrp = ControlPlaneAudit.addMetric('hsrp')
+    __builtin__.hsrp = CtrlPlane.addMetric('hsrp')
     analyzorHsrp(lines, hsrp, ifaceCfg)
-    __builtin__.vrrp = ControlPlaneAudit.addMetric('vrrp')
+    __builtin__.vrrp = CtrlPlane.addMetric('vrrp')
     analyzorVrrp(lines, vrrp, ifaceCfg)
-    icmpRedirects = DataPlaneAudit.addMetric('icmpredirects')
+    icmpRedirects = DataPlane.addMetric('icmpredirects')
     analyzorICMPRedirects(icmpRedirects, lines, ifaceCfg)
-    __builtin__.ipoptions = DataPlaneAudit.addMetric('ipoptions')
+    __builtin__.ipoptions = DataPlane.addMetric('ipoptions')
     analyzorIPoptions(lines, ipoptions)
-    __builtin__.ipsrcroute = DataPlaneAudit.addMetric('ipsourceroute')
+    __builtin__.ipsrcroute = DataPlane.addMetric('ipsourceroute')
     analyzorIPsrcRoute(lines, ipsrcroute)
-    __builtin__.denyicmp = DataPlaneAudit.addMetric('denyIcmpAnyAny')
+    __builtin__.denyicmp = DataPlane.addMetric('denyIcmpAnyAny')
     analyzorICMPdeny(lines, denyicmp)
-    __builtin__.ipfrags = DataPlaneAudit.addMetric('IPfragments')
+    __builtin__.ipfrags = DataPlane.addMetric('IPfragments')
     analyzorIPfragments(lines, ipfrags)
-    __builtin__.urpf = DataPlaneAudit.addMetric('urpf')
+    __builtin__.urpf = DataPlane.addMetric('urpf')
     analyzorURPF(lines, urpf, ifaceCfg)
-    __builtin__.netflow = DataPlaneAudit.addMetric('netflow')
+    __builtin__.netflow = DataPlane.addMetric('netflow')
     analyzorNetflow(lines, netflow, ifaceCfg)
 
     if __builtin__.genericCfg.multicast == "Enabled":
-        __builtin__.multicast = ControlPlaneAudit.addMetric('multicast')
+        __builtin__.multicast = CtrlPlane.addMetric('multicast')
         analyzorMulticast(lines, multicast)
 
     if __builtin__.genericCfg.qos == "Enabled":
-        __builtin__.qos = ControlPlaneAudit.addMetric('qos')
+        __builtin__.qos = CtrlPlane.addMetric('qos')
         analyzorQos(lines, qos, ifaceCfg)
 
     if __builtin__.genericCfg.ipv6 == "Enabled":
-        __builtin__.urpfv6 = DataPlaneAudit.addMetric('urpfv6')
+        __builtin__.urpfv6 = DataPlane.addMetric('urpfv6')
         analyzorURPFv6(lines, urpfv6, ifaceCfg)
 
     if __builtin__.genericCfg.ipsec == "Enabled":
-        __builtin__.ipsec = DataPlaneAudit.addMetric('ipsec')
+        __builtin__.ipsec = DataPlane.addMetric('ipsec')
         analyzorIPSEC(lines, ipsec)
-    __builtin__.tclsh = ControlPlaneAudit.addMetric('tclsh')
+    __builtin__.tclsh = CtrlPlane.addMetric('tclsh')
     analyzorTclSH(lines, tclsh)
 
 if __builtin__.deviceType  == 'switch' or
     __builtin__.deviceType == 'both':
     
-    __builtin__.portsecurity = DataPlaneAudit.addMetric('portsecurity')
+    __builtin__.portsecurity = DataPlane.addMetric('portsecurity')
     analyzorPortSecurity(lines, portsecurity, ifaceCfg)
-    __builtin__.level2protocols = DataPlaneAudit.addMetric('level2protocols')
+    __builtin__.level2protocols = DataPlane.addMetric('level2protocols')
     analyzorLevel2Protocols(lines, level2protocols, ifaceCfg)
 
     if __builtin__.genericCfg.ipv6 == "Enabled":
-        __builtin__.ipv6 = DataPlaneAudit.addMetric('ipv6')
+        __builtin__.ipv6 = DataPlane.addMetric('ipv6')
         analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg)
 
 output = {
     'stdout': lambda : stdoutReport(genericCfg,
-                                    ManagementPlaneAudit.metricsList,
-                                    ControlPlaneAudit.metricsList,
-                                    DataPlaneAudit.metricsList),
+                                    MgmtPlane.metricsList,
+                                    CtrlPlane.metricsList,
+                                    DataPlane.metricsList),
                                     
     'csv'   : lambda : csvReport   (__builtin__.outputFile,
-                                    ManagementPlaneAudit.metricsList,
-                                    ControlPlaneAudit.metricsList,
-                                    DataPlaneAudit.metricsList),
+                                    MgmtPlane.metricsList,
+                                    CtrlPlane.metricsList,
+                                    DataPlane.metricsList),
                                     
     'html'  : lambda : htmlReport  (__builtin__.outputFile, 
                                     genericCfg,
-                                    ManagementPlaneAudit.metricsList,
-                                    ControlPlaneAudit.metricsList,
-                                    DataPlaneAudit.metricsList),
+                                    MgmtPlane.metricsList,
+                                    CtrlPlane.metricsList,
+                                    DataPlane.metricsList),
                                     
     'pdf'   : lambda : pdfReport   (__builtin__.outputFile,
                                     genericCfg,
-                                    ManagementPlaneAudit.metricsList,
-                                    ControlPlaneAudit.metricsList,
-                                    DataPlaneAudit.metricsList)
+                                    MgmtPlane.metricsList,
+                                    CtrlPlane.metricsList,
+                                    DataPlane.metricsList)
     }[outputType]()
 
 print writeFooter()
