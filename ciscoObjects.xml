@@ -890,7 +890,7 @@
   <unique_object>
     <name>ViewsnmpRWcommunityHardened</name>
     <fixImpact>Non-disruptive</fixImpact>
-    <definition>Too basic read-only community name</definition>
+    <definition>Too basic read-write community name</definition>
     <threatInfo>Someone could easily find the read-write community name and modify device configuration.</threatInfo>
     <howtofix>
     You need at least one character from these characters families: digits, lowercase, uppercase, punctuation.
