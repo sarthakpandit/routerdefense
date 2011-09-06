@@ -9,7 +9,7 @@ The user must provides a "show run" to the tool.
 
 Reporting supported formats are stdout, html5, csv and pdf.
 
-Python >= 2.7 is required to use Routerdefense.
+[pythonRequirements Python version and modules requirements]
 
 = Run the tool =
 
