@@ -1,12 +1,15 @@
 # -*- coding: iso-8859-1 -*-
 
-from common import *
-from metrics import *
+import inspect
+import __builtin__
+
 from reporthtml import htmlReport
 from reportpdf import pdfReport
 from reportcsv import csvReport
-import inspect
-import __builtin__
+
+from common import *
+from metrics import *
+
 
 def add(title, comment):
     strippedLine = line.lstrip().rstrip()
