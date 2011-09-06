@@ -1,4 +1,5 @@
 #summary Python version and modules requirements
+#labels Python
 
 = Python Version =
 
