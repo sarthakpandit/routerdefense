@@ -114,7 +114,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
         if name != 'interface':
             for k,v in inspect.getmembers(name):
                 if isinstance(v, dict):
-                    if v['mustBeReported'] == True:
+                    if v['must_report'] == True:
                         vulnIndex = vulnIndex + 1
                         definition = v['definition'].strip()
                         threatInfo = v['threatInfo'].strip()
@@ -128,7 +128,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                         htmlMPlane.append('\n')
                         htmlMPlane.append('<tr>')
                         htmlMPlane.append('\n')
-                        htmlMPlane.append('<a id="planeContent" name="MP'+ str(MPlaneCounter) +'">' + '<td id="name">' + name.longName + '</td>' + '</a>')
+                        htmlMPlane.append('<a id="planeContent" name="MP'+ str(MPlaneCounter) +'">' + '<td id="name">' + name.long_name + '</td>' + '</a>')
                         htmlMPlane.append('\n')
                         htmlMPlane.append('<td id="definition">' + definition + '</td>')
                         htmlMPlane.append('\n')
@@ -186,7 +186,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                         </script> \
                         ')
 
-                        htmlTOC.append('<li><a href=#MP'+ str(MPlaneCounter) + '>' + name.longName + ': ' + definition + '</a></li>')
+                        htmlTOC.append('<li><a href=#MP'+ str(MPlaneCounter) + '>' + name.long_name + ': ' + definition + '</a></li>')
                         htmlTOC.append('\n')
                         MPlaneCounter = MPlaneCounter + 1
 
@@ -196,37 +196,37 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
         if name != 'interface':
             for k,v in inspect.getmembers(name):
                 if isinstance(v, dict):
-                    if v['mustBeReported'] == True:
+                    if v['must_report'] == True:
                         vulnIndex = vulnIndex + 1
                         definition = v['definition'].strip()
                         threatInfo = v['threatInfo'].strip()
                         fixImpact = v['fixImpact'].strip()
                         cvss = v['cvss'].strip()
                         if definition == 'OSPF route filtering in':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.routeFilteringIn['pid']), 1)
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.routeFilteringIn['area']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.rfilter_in['pid']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.rfilter_in['area']), 1)
                         elif definition == 'OSPF MD5 authentication':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInterface]', ", ".join(name.authModeMD5['interfaces']), 1)
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.authModeMD5['area']), 1)
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.authModeMD5['pid']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInterface]', ", ".join(name.auth_md5['interfaces']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.auth_md5['area']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.auth_md5['pid']), 1)
                         elif definition == 'OSPF route filtering out':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.routeFilteringOut['pid']), 1)
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.routeFilteringOut['area']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.rfilter_out['pid']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.rfilter_out['area']), 1)
                         elif definition == 'OSPF passive interface default':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInstance]', ", ".join(name.passiveDefault['pid']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInstance]', ", ".join(name.passive['pid']), 1)
                         elif definition == 'OSPF maximum LSA':
                             v['howtofix'] = v['howtofix'].strip().replace('[%ospfInstance]', ", ".join(name.maxLSA['pid']), 1)
                         elif definition == 'EIGRP MD5 authentication':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpInterface]', ", ".join(name.authModeMD5['interfaces']), 1)
-                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.authModeMD5['asn']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpInterface]', ", ".join(name.auth_md5['interfaces']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.auth_md5['asn']), 1)
                         elif definition == 'EIGRP passive interface default':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.passiveDefault['asn']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.passive['asn']), 1)
                         elif definition == 'EIGRP route filtering inbound':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.routeFilteringIn['asn']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.rfilter_in['asn']), 1)
                         elif definition == 'EIGRP route filtering outbound':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.routeFilteringOut['asn']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.rfilter_out['asn']), 1)
                         elif definition == 'RIP MD5 authentication':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ripInterface]', ", ".join(name.authModeMD5['interfaces']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ripInterface]', ", ".join(name.auth_md5['interfaces']), 1)
 
                         howtofix = v['howtofix'].split('\n')
                         htmlCPlane.append(' \
@@ -245,7 +245,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                         htmlCPlane.append('\n')
                         htmlCPlane.append('<tr>')
                         htmlCPlane.append('\n')
-                        htmlCPlane.append('<a id="planeContent" name="CP'+ str(CPlaneCounter) +'">' + '<td id="name">' + name.longName + '</td>' + '</a>')
+                        htmlCPlane.append('<a id="planeContent" name="CP'+ str(CPlaneCounter) +'">' + '<td id="name">' + name.long_name + '</td>' + '</a>')
                         htmlCPlane.append('\n')
                         htmlCPlane.append('<td id="definition">' + definition + '</td>')
                         htmlCPlane.append('\n')
@@ -302,7 +302,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                         </script> \
                         ')
 
-                        htmlTOC.append('<li><a href=#CP'+ str(CPlaneCounter) + '>' + name.longName + ': ' + definition + '</a></li>')
+                        htmlTOC.append('<li><a href=#CP'+ str(CPlaneCounter) + '>' + name.long_name + ': ' + definition + '</a></li>')
                         htmlTOC.append('\n')
                         CPlaneCounter = CPlaneCounter + 1
 
@@ -312,7 +312,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
         if name != 'interface':
             for k,v in inspect.getmembers(name):
                 if isinstance(v, dict):
-                    if v['mustBeReported'] == True:
+                    if v['must_report'] == True:
                         vulnIndex = vulnIndex + 1
                         definition = v['definition'].strip()
                         threatInfo = v['threatInfo'].strip()
@@ -354,7 +354,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                         htmlDPlane.append('\n')
                         htmlDPlane.append('<tr>')
                         htmlDPlane.append('\n')
-                        htmlDPlane.append('<a id="planeContent" name="DP'+ str(DPlaneCounter) +'">' + '<td id="name">' + name.longName + '</td>' + '</a>')
+                        htmlDPlane.append('<a id="planeContent" name="DP'+ str(DPlaneCounter) +'">' + '<td id="name">' + name.long_name + '</td>' + '</a>')
                         htmlDPlane.append('\n')
                         htmlDPlane.append('<td id="definition">' + definition + '</td>')
                         htmlDPlane.append('\n')
@@ -411,7 +411,7 @@ def htmlReport(outputFile,genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                         </script> \
                         ')
 
-                        htmlTOC.append('<li><a href=#DP'+ str(DPlaneCounter) + '>' + name.longName + ': ' + definition + '</a></li>')
+                        htmlTOC.append('<li><a href=#DP'+ str(DPlaneCounter) + '>' + name.long_name + ': ' + definition + '</a></li>')
                         htmlTOC.append('\n')
                         DPlaneCounter = DPlaneCounter + 1
 

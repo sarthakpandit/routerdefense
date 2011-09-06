@@ -4,7 +4,6 @@ Coding style:
 
 * 4 spaces per indentation level, not tabs
 * 72 max. chars per line
-* Don't use the backslash '\' for multi-lines
 * Comment the code with """ for docstring
 * Use blank lines in functions sparingly, to indicate logical sections
 * Encoding is ISO-8859-1
@@ -19,6 +18,7 @@ Coding style:
 * Modules names must be all-lowercase.
 * Class names use the CapWords convention. Internal use: leading underscore "_"
 * Function names must be lowercase with words separated by underscores
+* Variables names must be lowercase with words separated by underscores
 
 Submit your code:
 
