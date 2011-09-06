@@ -9,7 +9,7 @@ Python 2.7 is great.
 
  * optparse
  * inspect
- * ConfigParser
+ * configparser
  * xml
  * csv
  * reportlab
