@@ -7,7 +7,9 @@ from xml import *
 
 
 class genericInfo:
+    """Generic configuration information storage: IOS version, hostname, switching method, multicast, ipv6."""
     def __init__(self):
+        """Set IOS version, hostname, switching method, multicast and IPv6 variables to None."""
         self.iosVersion = None
         self.hostName = None
         self.switchingMethod = None
@@ -15,6 +17,7 @@ class genericInfo:
         self.ipv6 = None
 
 def addBasicInfo(lines):
+    """Fetch the generic information (IOS version, hostname, switching method, multicast and IPv6) from the Cisco IOS configuration file."""
     genericCfg = genericInfo()
     genericCfg.switchingMethod = "Unknown"
     genericCfg.hostName = "Unknown"
@@ -51,6 +54,7 @@ def addBasicInfo(lines):
     return genericCfg
 
 def CheckExecTimeout(timeout):
+    """Detect if the session timeout is disable or too large."""
     Compliant = True
     if timeout <= 0:
         Compliant = False
@@ -59,6 +63,7 @@ def CheckExecTimeout(timeout):
     return Compliant
 
 def analyzorCdp(cdpConfiguration, fullConfig, ifaceCfg):
+    """CDP services assessment."""
     globalCdpFound = False
     noCdpEnableFound = False
     for line in fullConfig:
@@ -93,6 +98,7 @@ def analyzorCdp(cdpConfiguration, fullConfig, ifaceCfg):
         return cdpConfiguration.cdp['definition'] + '\n' + cdpConfiguration.cdp['threatInfo'] + '\n\n' + cdpConfiguration.cdp['howtofix'] + '\n'
 
 def analyzorLldp(lldpConfiguration, fullConfig, ifaceCfg):
+    """LLDP services assessment."""
     globalLldpFound = True
     for line in fullConfig:
         if line == 'lldp run global' or line == 'lldp run':
@@ -176,6 +182,7 @@ def analyzorLldp(lldpConfiguration, fullConfig, ifaceCfg):
         return ToBeReturned
 
 def analyzorConsole(consoleCfg,con0,lines):
+    """Console port assessment."""
     try:
         con0.execTimeout['cmdInCfg'] = int(searchString(consoleCfg, 'exec-timeout').split(' ',3)[2]) + int(searchString(consoleCfg, 'exec-timeout').split(' ',3)[1]) * 60
     except AttributeError:
@@ -259,6 +266,7 @@ def analyzorConsole(consoleCfg,con0,lines):
     return toBeReturned
 
 def analyzorAux(auxCfg,aux0):
+    """Auxiliary port assessment."""
     try:
         aux0.execTimeout['cmdInCfg'] = int(searchString(auxCfg, 'exec-timeout').split(' ',3)[2]) + int(searchString(auxCfg, 'exec-timeout').split(' ',3)[1]) * 60
     except AttributeError:
@@ -360,6 +368,7 @@ def analyzorAux(auxCfg,aux0):
     return toBeReturned
 
 def analyzorVty(vtyCfg,vty):
+    """VTY sessions assessment."""
     try:
         vty.execTimeout['cmdInCfg'] = int(searchString(vtyCfg, 'exec-timeout').split(' ',3)[2]) + int(searchString(vtyCfg, 'exec-timeout').split(' ',3)[1]) * 60
     except AttributeError:
@@ -515,6 +524,7 @@ def analyzorVty(vtyCfg,vty):
     return toBeReturned
 
 def analyzorBanner(bannerMotd, motd, bannerType):
+    """MOTD, EXEC and LOGIN banner assessment."""
     toBeReturned = ''
     if bannerType == 0:
         if len(bannerMotd) == 0:
@@ -601,6 +611,7 @@ def analyzorBanner(bannerMotd, motd, bannerType):
     return toBeReturned
 
 def analyzorServices(lines, services):
+    """Generic services assessment: password recovery, tcp/udp small servers, finger, bootp, ..."""
     try:
         services.pwdRecovery['cmdInCfg'] = searchString(lines, 'no service password-recovery')
     except AttributeError:
@@ -958,6 +969,7 @@ def analyzorServices(lines, services):
     return toBeReturned
 
 def analyzorMemCpu(lines, memCpu):
+    """Memory and CPU configuration assessment."""
 
     try:
         memCpu.schedulerallocate['cmdInCfg'] = searchString(lines, 'scheduler allocate 4000 400')
@@ -1239,6 +1251,7 @@ def analyzorMemCpu(lines, memCpu):
     return toBeReturned
 
 def analyzorCrashinfo(lines, crashinfo):
+    """Crashinfo generation configuration assessment."""
     try:
         crashinfo.crashinfoMaxFiles['cmdInCfg'] = searchString(lines, 'exception crashinfo maximum files')
     except AttributeError:
@@ -1263,6 +1276,7 @@ def analyzorCrashinfo(lines, crashinfo):
     return toBeReturned
 
 def analyzorMPP(lines, vtyList, vtyCfg, mpp):
+    """Management plane protection assessment.""" 
 
     if len(vtyList) == 0:
         # if all vty are removed
@@ -1498,6 +1512,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
     return toBeReturned
 
 def analyzorPasswordManagement(lines, pwdManagement):
+    """Access management assessment."""
     try:
         pwdManagement.enableSecret['cmdInCfg'] = searchString(lines, 'enable secret')
     except AttributeError:
@@ -1618,6 +1633,7 @@ def analyzorPasswordManagement(lines, pwdManagement):
     return toBeReturned
 
 def analyzorTacacs(lines, tacacs, mode):
+    """Tacacs+ assessment."""
     toBeReturned = ''
     try:
         tacacs.aaaNewModel['cmdInCfg'] = searchString(lines, 'aaa new-model')
@@ -1875,6 +1891,7 @@ def analyzorTacacs(lines, tacacs, mode):
     return toBeReturned
 
 def analyzorSNMP(lines, snmp):
+    """SNMP configuration assessment."""
     try:
         snmp.ROcommunity['cmdInCfg'] = searchRegexString(lines, 'snmp-server community .* (RO|ro)')
     except AttributeError:
@@ -2163,6 +2180,7 @@ def analyzorSNMP(lines, snmp):
     return toBeReturned
 
 def analyzorSyslog(lines, syslog):
+    """Syslog assessment."""
     try:
         syslog.Server['cmdInCfg'] = searchString(lines, 'logging host')
     except AttributeError:
@@ -2460,6 +2478,7 @@ def analyzorSyslog(lines, syslog):
 
 
 def analyzorArchive(lines, archive):
+    """Archive configuration assessment."""
     try:
         archive.configuration['cmdInCfg'] = searchRegexString(lines, '^archive$')
     except AttributeError:
@@ -2622,6 +2641,7 @@ def analyzorArchive(lines, archive):
     return toBeReturned
 
 def analyzorICMPRedirects(icmpRedirects, fullConfig, ifaceCfg):
+    """ICMP redirects assessments."""
     for i in range(0, len(ifaceCfg)):
         ipIcmpRedirectsFound = False
         for line in ifaceCfg[i].configuration:
@@ -2681,6 +2701,7 @@ def analyzorICMPRedirects(icmpRedirects, fullConfig, ifaceCfg):
 
 
 def analyzorICMPUnreachable(icmpUnreachable, fullConfig, ifaceCfg):
+    """ICMP unreachable configuration."""
     for i in range(0, len(ifaceCfg)):
         for line in ifaceCfg[i].configuration:
             ipIcmpUnreachableFound = False
@@ -2730,6 +2751,7 @@ def analyzorICMPUnreachable(icmpUnreachable, fullConfig, ifaceCfg):
     return toBeReturned
 
 def analyzorARPproxy(proxyArp, fullConfig, ifaceCfg):
+    """ARP proxy configuration."""
     for i in range(0, len(ifaceCfg)):
         for line in ifaceCfg[i].configuration:
             proxyArpFound = False
@@ -2771,6 +2793,7 @@ def analyzorARPproxy(proxyArp, fullConfig, ifaceCfg):
     return toBeReturned
 
 def analyzorNtp(lines, ntp):
+    """NTP configuration."""
     try:
         ntp.authentication['authenticate'] = searchString(lines, 'ntp authenticate')
     except AttributeError:
@@ -2801,6 +2824,7 @@ def analyzorNtp(lines, ntp):
     return toBeReturned
 
 def analyzorBgp(lines, bgp, aclIPv4):
+    """BGP configuration assessment."""
 
     if searchString(lines, 'router bgp') is None:
         return
@@ -2932,6 +2956,8 @@ def analyzorBgp(lines, bgp, aclIPv4):
     return toBeReturned
 
 def analyzorEigrp(lines, eigrp, ifaceCfg):
+    """EIGRP configuration assessment."""
+
     if searchString(lines, 'router eigrp') is None:
         return
     authModeMD5 = None
@@ -3049,6 +3075,8 @@ def analyzorEigrp(lines, eigrp, ifaceCfg):
     return toBeReturned
 
 def analyzorRip(lines, rip, ifaceCfg):
+    """RIP configuration assessment."""
+
     if searchString(lines, 'router rip') is None:
         return
     rip.version = 1
@@ -3115,6 +3143,8 @@ def analyzorRip(lines, rip, ifaceCfg):
 
 
 def analyzorOspf(lines, ospf, ifaceCfg):
+    """"OSPF configuration assessment."""
+
     if searchString(lines, 'router ospf') is None:
         return
     authModeMD5 = None
@@ -3293,6 +3323,8 @@ def analyzorOspf(lines, ospf, ifaceCfg):
     return toBeReturned
 
 def analyzorGlbp(lines, glbp, ifaceCfg):
+    """GLBP configuration assessment."""
+
     glbpConfigured = []
     for index in ifaceCfg:
         glbpConfigured = searchRegexMultiString(index.configuration,'glbp .* ip .*')
@@ -3350,6 +3382,8 @@ def analyzorHsrp(lines, hsrp, ifaceCfg):
     return toBeReturned
 
 def analyzorVrrp(lines, vrrp, ifaceCfg):
+    """VRRP configuration assessment."""
+
     vrrpConfigured = []
     for index in ifaceCfg:
         vrrpConfigured = searchRegexMultiString(index.configuration,'vrrp .* ip .*')
@@ -3378,6 +3412,7 @@ def analyzorVrrp(lines, vrrp, ifaceCfg):
     return toBeReturned
 
 def analyzorIPoptions(lines, ipoptions):
+    """IP options configuration."""
 
     try:
         ipoptions.drop['cmdInCfg'] = searchString(lines, 'ip options drop')
@@ -3404,6 +3439,7 @@ def analyzorIPoptions(lines, ipoptions):
     return toBeReturned
 
 def analyzorIPsrcRoute(lines, ipsrcroute):
+   """IPv4 source-routing configuration."""
 
     try:
         ipsrcroute.drop['cmdInCfg'] = searchString(lines, 'no ip source-route')
@@ -3430,6 +3466,7 @@ def analyzorIPsrcRoute(lines, ipsrcroute):
     return toBeReturned
 
 def analyzorICMPdeny(lines, denyicmp):
+    """ICMP deny configuration."""
 
     try:
         denyicmp.filtered['cmdInCfg'] = searchString(lines, 'deny icmp any any')
@@ -3456,6 +3493,7 @@ def analyzorICMPdeny(lines, denyicmp):
     return toBeReturned
 
 def analyzorIPfragments(lines, ipfrags):
+    """IPv4 fragments configuration."""
 
     try:
         ipfrags.filtered['tcp'] = searchString(lines, 'deny tcp any any fragments')
@@ -3501,6 +3539,7 @@ def analyzorIPfragments(lines, ipfrags):
     return toBeReturned
 
 def analyzorURPF(lines, urpf, ifaceCfg):
+    """URPF IPv4 configuration."""
     for i in range(0, len(ifaceCfg)):
         routedPort = 0
         urpfOK = 0
@@ -3533,7 +3572,7 @@ def analyzorURPF(lines, urpf, ifaceCfg):
         return "URPF configuration is OK."
 
 def analyzorURPFv6(lines, urpfv6, ifaceCfg):
-
+    "URPF IPv6 configuration."""
     for j in range(0, len(ifaceCfg)):
         ipv6enable = False
         if searchRegexString(ifaceCfg[j].configuration, '^ipv6 enable$') is not None:
@@ -3563,6 +3602,7 @@ def analyzorURPFv6(lines, urpfv6, ifaceCfg):
         return "URPFv6 configuration is OK."
 
 def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
+    """Port security configuration."""
     for i in range(0, len(ifaceCfg)):
         if searchRegexString(ifaceCfg[i].configuration, '^switchport access vlan .*$') is not None:
             if searchRegexString(ifaceCfg[i].configuration,'switchport port-security maximum .* vlan access') is None:
@@ -3667,6 +3707,7 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
     return toBeReturned
 
 def analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg):
+    """IPv6 configuration assessment: RH0, traffic filter."""
     denyRH0 = (None)
     ACLv6name = (None)
     for i in range(0, len(aclIPv6)):
@@ -3708,6 +3749,7 @@ def analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg):
     return toBeReturned
 
 def analyzorIPSEC(lines, ipsec):
+    """IPSec configuration assessment: call admission."""
 
     try:
         ipsec.cacIKE['cmdInCfg'] = searchRegexString(lines, '^crypto call admission limit ike sa .*$')
@@ -3755,6 +3797,7 @@ def analyzorIPSEC(lines, ipsec):
     return toBeReturned
 
 def analyzorTclSH(lines, tclsh):
+    """TCLShell configuration assessment."""
 
     try:
         tclsh.shell['cmdInCfg'] = searchRegexString(lines, '^event cli pattern \"tclsh\" .*$')
@@ -3782,6 +3825,7 @@ def analyzorTclSH(lines, tclsh):
 
 
 def analyzorTcp(lines, tcp):
+    """TCP synwait configuration."""
 
     try:
         tcp.synwait['cmdInCfg'] = searchRegexString(lines, '^ip tcp synwait-time .*$')
@@ -3814,6 +3858,7 @@ def analyzorTcp(lines, tcp):
     return toBeReturned
 
 def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
+    """Level 2 protocols configuration assessment: spanning-tree, dot1x, flow-control, unused ports, UDLD."""
 
     #if searchRegexString(lines,'^vtp domain .*$') is not None:
         #if searchRegexString(lines,'^vtp password .*$') is None and searchRegexString(lines,'^vtp mode transparent$') is not None:
@@ -3980,6 +4025,7 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
     return toBeReturned
 
 def analyzorNetflow(lines, netflow, ifaceCfg):
+    """Netflow configuration assessment."""
 
     for j in range(0, len(ifaceCfg)):
         if searchRegexString(ifaceCfg[j].configuration, '^ip flow (ingress|egress)$') is not None:
@@ -4047,6 +4093,7 @@ def analyzorNetflow(lines, netflow, ifaceCfg):
     return toBeReturned
 
 def analyzorMulticast(lines, multicast):
+    """Multicast configuration assessment."""
 
     if ( (searchRegexString(lines, '^ip pim rp-address .*$') is not None) and (searchRegexString(lines, '^ip msdp peer .*$') is not None) ):
 
@@ -4085,5 +4132,6 @@ def analyzorMulticast(lines, multicast):
     return toBeReturned
 
 def analyzorQos(lines, qos, ifaceCfg):
+    """QoS configuration assessment. Not ready."
     toBeReturned = ''
     return toBeReturned
