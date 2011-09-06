@@ -6,8 +6,10 @@ import random
 import string
 import os
 import sys
-__builtin__.iosVersion = None
+
 from xml.dom.minidom import parse
+
+__builtin__.iosVersion = None
 
 def readCfg(File):
     lines = []
