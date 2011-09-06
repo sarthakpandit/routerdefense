@@ -10,7 +10,7 @@ class metrics:
     def __init__(self):
         pass
 
-    def addMetric(self,metricName):
+    def add(self,metricName):
         if metricName == 'cdp':
             metricAdded = cdp()
         if metricName == 'lldp':
@@ -54,14 +54,6 @@ class metrics:
         self.metricsList.append(metricAdded)
         return metricAdded
 
-#   def addInterface(self,metricName, name):
-#       if metricName == 'interface':
-#           metricAdded = interfaces()
-#           metricAdded.name = name
-#       self.metricsList.append(metricName)
-#       return metricAdded
-
-
     def listMetric(self):
         return self.metricsList
 
@@ -99,7 +91,7 @@ class CPmetrics:
     def __init__(self):
         pass
 
-    def addMetric(self,metricName):
+    def add(self,metricName):
         if metricName == 'icmpredirects':
             metricAdded = IPicmpRedirects()
         if metricName == 'icmpunreach':
@@ -152,7 +144,7 @@ class DPmetrics:
     def __init__(self):
         pass
 
-    def addMetric(self,metricName):
+    def add(self,metricName):
         if metricName == 'icmpredirects':
             metricAdded = IPicmpRedirects()
         if metricName == 'ipoptions':
@@ -173,7 +165,7 @@ class DPmetrics:
             metricAdded = IPv6()
         if metricName == 'ipsec':
             metricAdded = IPSEC()
-        if metricName == 'level2protocols':
+        if metricName == 'l2protos':
             metricAdded = dtpstpvlan()
         if metricName == 'netflow':
             metricAdded= Netflow()
@@ -1913,7 +1905,7 @@ class Tcp:
 
 class dtpstpvlan:
     def __init__(self):
-        self.metricName = 'level2protocols'
+        self.metricName = 'l2protos'
         self.longName = 'Level 2'
         self.nonegotiate = {
         "candidates": [],

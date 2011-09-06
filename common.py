@@ -68,13 +68,20 @@ class xformXML2Data:
             if lines.nodeType == lines.ELEMENT_NODE:
                 obj = unique_object()
                 try:
-                    obj.name = self.getText(lines.getElementsByTagName("name")[0])
-                    obj.fixImpact = self.getText(lines.getElementsByTagName("fixImpact")[0])
-                    obj.definition = self.getText(lines.getElementsByTagName("definition")[0])
-                    obj.threatInfo = self.getText(lines.getElementsByTagName("threatInfo")[0])
-                    obj.howtofix = self.getText(lines.getElementsByTagName("howtofix")[0])
-                    obj.upgrade = self.getText(lines.getElementsByTagName("upgrade")[0])
-                    obj.cvssMetric = self.getText(lines.getElementsByTagName("CVSSmetric")[0])
+                    obj.name = self.getText(
+                        lines.getElementsByTagName("name")[0])
+                    obj.fixImpact = self.getText(
+                        lines.getElementsByTagName("fixImpact")[0])
+                    obj.definition = self.getText(
+                        lines.getElementsByTagName("definition")[0])
+                    obj.threatInfo = self.getText(
+                        lines.getElementsByTagName("threatInfo")[0])
+                    obj.howtofix = self.getText(
+                        lines.getElementsByTagName("howtofix")[0])
+                    obj.upgrade = self.getText(
+                        lines.getElementsByTagName("upgrade")[0])
+                    obj.cvssMetric = self.getText(
+                        lines.getElementsByTagName("CVSSmetric")[0])
                 except:
                     pass
                 self.__uniqueObjectsList__.append(obj)
