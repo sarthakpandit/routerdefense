@@ -1,5 +1,8 @@
 # -*- coding: iso-8859-1 -*-
 
+__docformat__ = 'restructuredtext'
+__version__ = '$Id$'
+
 from routerdefense.common import *
 from routerdefense.metrics import *
 
@@ -8,7 +11,7 @@ def add(title, comment):
     return strippedLine
 
 def stdout_header():
-    """Write header at the beginning of stdout."""    
+    """Write header at the beginning of stdout."""
     header = """
 ______            _             ______      __
 | ___ \          | |            |  _  \    / _|
@@ -114,7 +117,7 @@ def stdout_report(generic, mgmt_plane, ctrl_plane, data_plane):
                             'OSPF MD5 authentication':
                                 v['howtofix'] = \
                                 v['howtofix'].strip() \
-                                .replace('[%ospfInterface]', ", " \
+                                .replace('[%ospfinterface]', ", " \
                                 .join(name.auth_md5['interfaces']), 1)
                                 v['howtofix'] = \
                                 v['howtofix'].strip() \
@@ -150,7 +153,7 @@ def stdout_report(generic, mgmt_plane, ctrl_plane, data_plane):
                             'EIGRP MD5 authentication':
                                 v['howtofix'] = \
                                 v['howtofix'].strip() \
-                                .replace('[%eigrpInterface]', ", " \
+                                .replace('[%eigrpinterface]', ", " \
                                 .join(name.auth_md5['interfaces']), 1)
                                 v['howtofix'] = \
                                 v['howtofix'].strip() \
@@ -178,7 +181,7 @@ def stdout_report(generic, mgmt_plane, ctrl_plane, data_plane):
                             'RIP MD5 authentication':
                                 v['howtofix'] = \
                                 v['howtofix'].strip() \
-                                .replace('[%ripInterface]', ", " \
+                                .replace('[%ripinterface]', ", " \
                                 .join(name.auth_md5['interfaces']), 1)
                             howtofix = v['howtofix']
                             print stdout_content(
@@ -230,7 +233,7 @@ def stdout_report(generic, mgmt_plane, ctrl_plane, data_plane):
                                 v['howtofix'].strip() \
                                 .replace('[%interface]', ", " \
                                 .join( \
-                                name.maximumTotal['candidates']), 1)
+                                name.maximum_total['candidates']), 1)
                             if definition == \
                             'Port security access vlan \
                             maximum MAC addresses':
@@ -238,7 +241,7 @@ def stdout_report(generic, mgmt_plane, ctrl_plane, data_plane):
                                 v['howtofix'].strip() \
                                 .replace('[%interface]', ", " \
                                 .join( \
-                                name.maximumAccess['candidates']), 1)
+                                name.maximum_access['candidates']), 1)
                             if definition == \
                             'Port security voice vlan \
                             maximum MAC addresses':
@@ -246,7 +249,7 @@ def stdout_report(generic, mgmt_plane, ctrl_plane, data_plane):
                                 v['howtofix'].strip() \
                                 .replace('[%interface]', ", " \
                                 .join( \
-                                name.maximumVoice['candidates']), 1)
+                                name.maximum_voice['candidates']), 1)
                             if definition == 'DTP negotiation':
                                 v['howtofix'] = \
                                 v['howtofix'].strip() \
@@ -263,13 +266,13 @@ def stdout_report(generic, mgmt_plane, ctrl_plane, data_plane):
                                 v['howtofix'] = \
                                 v['howtofix'].strip() \
                                 .replace('[%interface]', ", " \
-                                .join(name.vlan1['candidates']), 1)
+                                .join(name.vlan_1['candidates']), 1)
                             if definition == 'Unused ports':
                                 v['howtofix'] = \
                                 v['howtofix'].strip() \
                                 .replace('[%interface]', ", " \
                                 .join( \
-                                name.unusedports['candidates']), 1)
+                                name.unused_ports['candidates']), 1)
 
                             howtofix = v['howtofix']
                             print stdout_content(

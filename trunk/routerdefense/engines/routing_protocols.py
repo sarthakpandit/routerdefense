@@ -1,64 +1,67 @@
 # -*- coding: iso-8859-1 -*-
 
+__docformat__ = 'restructuredtext'
+__version__ = '$Id$'
+
 import __builtin__
 from routerdefense.common import *
 
 from xml import *
 
-def analyzorBgp(lines, bgp, aclIPv4):
+def engine_bgp(lines, bgp, aclIPv4):
     """BGP configuration assessment."""
 
     if search_string(lines, 'router bgp') is None:
         return
 
     remoteAsCount = 0
-    ttlSecurityCount = 0
-    sessionPasswordCount = 0
-    maxPrefixesCount = 0
-    prefixListInCount = 0
-    prefixListOutCount = 0
-    aspathListInCount = 0
-    aspathListOutCount = 0
+    ttl_securityCount = 0
+    session_passwordCount = 0
+    max_prefixesCount = 0
+    prefix_listInCount = 0
+    prefix_listOutCount = 0
+    aspath_listInCount = 0
+    aspath_listOutCount = 0
     maxaspathLimit = 0
 
     remoteAsCount = search_re_string_count(lines, 'neighbor .* remote-as .*')
-    ttlSecurityCount = search_re_string_count(lines, 'neighbor .* ttl-security hops .*')
-    sessionPasswordCount = search_re_string_count(lines, 'neighbor .* password .*')
-    maxPrefixesCount = search_re_string_count(lines, 'neighbor .* maximum-prefix .*')
-    prefixListInCount = search_re_string_count(lines, 'neighbor .* prefix-list .* in')
-    prefixListOutCount = search_re_string_count(lines, 'neighbor .* prefix-list .* out')
-    aspathListInCount = search_re_string_count(lines, 'neighbor .* filter-list .* in')
-    aspathListOutCount = search_re_string_count(lines, 'neighbor .* filter-list .* out')
+    ttl_securityCount = search_re_string_count(lines, 'neighbor .* ttl-security hops .*')
+    session_passwordCount = search_re_string_count(lines, 'neighbor .* password .*')
+    max_prefixesCount = search_re_string_count(lines, 'neighbor .* maximum-prefix .*')
+    prefix_listInCount = search_re_string_count(lines, 'neighbor .* prefix-list .* in')
+    prefix_listOutCount = search_re_string_count(lines, 'neighbor .* prefix-list .* out')
+    aspath_listInCount = search_re_string_count(lines, 'neighbor .* filter-list .* in')
+    aspath_listOutCount = search_re_string_count(lines, 'neighbor .* filter-list .* out')
     maxaspathLimit = search_re_string_count(lines, '^bgp maxas-limit .*$')
 
-    if ttlSecurityCount < remoteAsCount:
-        bgp.ttlSecurity['must_report'] = True
+    if ttl_securityCount < remoteAsCount:
+        bgp.ttl_security['must_report'] = True
 
-    if sessionPasswordCount < remoteAsCount:
-        bgp.sessionPassword['must_report'] = True
+    if session_passwordCount < remoteAsCount:
+        bgp.session_password['must_report'] = True
 
-    if maxPrefixesCount < remoteAsCount:
-        bgp.maxPrefixes['must_report'] = True
+    if max_prefixesCount < remoteAsCount:
+        bgp.max_prefixes['must_report'] = True
 
-    if prefixListInCount < remoteAsCount:
-        bgp.prefixList['must_report'] = True
+    if prefix_listInCount < remoteAsCount:
+        bgp.prefix_list['must_report'] = True
 
-    if prefixListOutCount < remoteAsCount:
-        bgp.prefixList['must_report'] = True
+    if prefix_listOutCount < remoteAsCount:
+        bgp.prefix_list['must_report'] = True
 
-    if aspathListInCount < remoteAsCount:
-        bgp.aspathList['must_report'] = True
+    if aspath_listInCount < remoteAsCount:
+        bgp.aspath_list['must_report'] = True
 
-    if aspathListOutCount < remoteAsCount:
-        bgp.aspathList['must_report'] = True
+    if aspath_listOutCount < remoteAsCount:
+        bgp.aspath_list['must_report'] = True
 
     if maxaspathLimit <= 0:
-        bgp.maxpathlimit['must_report'] = True
+        bgp.maxpath_limit['must_report'] = True
 
-    if bgp.ttlSecurity['must_report'] == True:
-        items = search_xml('bgpTTLsecurity')
+    if bgp.ttl_security['must_report'] == True:
+        items = search_xml('bgpttl_security')
         cvssMetrics = str(cvss_score(items[5]))
-        bgp.ttlSecurity = {
+        bgp.ttl_security = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -66,10 +69,10 @@ def analyzorBgp(lines, bgp, aclIPv4):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if bgp.sessionPassword['must_report'] == True:
-        items = search_xml('bgpSessionPassword')
+    if bgp.session_password['must_report'] == True:
+        items = search_xml('bgpsession_password')
         cvssMetrics = str(cvss_score(items[5]))
-        bgp.sessionPassword = {
+        bgp.session_password = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -77,10 +80,10 @@ def analyzorBgp(lines, bgp, aclIPv4):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if bgp.maxPrefixes['must_report'] == True:
-        items = search_xml('bgpMaxPrefixes')
+    if bgp.max_prefixes['must_report'] == True:
+        items = search_xml('bgpmax_prefixes')
         cvssMetrics = str(cvss_score(items[5]))
-        bgp.maxPrefixes = {
+        bgp.max_prefixes = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -88,10 +91,10 @@ def analyzorBgp(lines, bgp, aclIPv4):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if bgp.prefixList['must_report'] == True:
-        items = search_xml('bgpPrefixList')
+    if bgp.prefix_list['must_report'] == True:
+        items = search_xml('bgpprefix_list')
         cvssMetrics = str(cvss_score(items[5]))
-        bgp.prefixList = {
+        bgp.prefix_list = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -99,10 +102,10 @@ def analyzorBgp(lines, bgp, aclIPv4):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if bgp.aspathList['must_report'] == True:
-        items = search_xml('bgpaspathList')
+    if bgp.aspath_list['must_report'] == True:
+        items = search_xml('bgpaspath_list')
         cvssMetrics = str(cvss_score(items[5]))
-        bgp.aspathList = {
+        bgp.aspath_list = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -110,10 +113,10 @@ def analyzorBgp(lines, bgp, aclIPv4):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if bgp.maxpathlimit['must_report'] == True:
+    if bgp.maxpath_limit['must_report'] == True:
         items = search_xml('bgpMaxASlimit')
         cvssMetrics = str(cvss_score(items[5]))
-        bgp.maxpathlimit = {
+        bgp.maxpath_limit = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -122,22 +125,22 @@ def analyzorBgp(lines, bgp, aclIPv4):
         "cvss": (cvssMetrics)}
 
     toBeReturned = ''
-    if bgp.ttlSecurity['must_report'] == True:
-        toBeReturned = bgp.ttlSecurity['definition'] + '\n'+ bgp.ttlSecurity['threatInfo'] + '\n\n' + bgp.ttlSecurity['howtofix'] + '\n'
-    if bgp.sessionPassword['must_report'] == True:
-        toBeReturned = toBeReturned + bgp.sessionPassword['definition'] + '\n' + bgp.sessionPassword['threatInfo'] + '\n\n' + bgp.sessionPassword['howtofix'] + '\n'
-    if bgp.maxPrefixes['must_report'] == True:
-        toBeReturned = toBeReturned + bgp.maxPrefixes['definition'] + '\n' + bgp.maxPrefixes['threatInfo'] + '\n\n' + bgp.maxPrefixes['howtofix'] + '\n'
-    if bgp.prefixList['must_report'] == True:
-        toBeReturned = toBeReturned + bgp.prefixList['definition'] + '\n' + bgp.prefixList['threatInfo'] + '\n\n' + bgp.prefixList['howtofix'] + '\n'
-    if bgp.aspathList['must_report'] == True:
-        toBeReturned = toBeReturned + bgp.aspathList['definition'] + '\n' + bgp.aspathList['threatInfo'] + '\n\n' + bgp.aspathList['howtofix'] + '\n'
-    if bgp.maxpathlimit['must_report'] == True:
-        toBeReturned = toBeReturned + bgp.maxpathlimit['definition'] + '\n' + bgp.maxpathlimit['threatInfo'] + '\n\n' + bgp.maxpathlimit['howtofix'] + '\n'
+    if bgp.ttl_security['must_report'] == True:
+        toBeReturned = bgp.ttl_security['definition'] + '\n'+ bgp.ttl_security['threatInfo'] + '\n\n' + bgp.ttl_security['howtofix'] + '\n'
+    if bgp.session_password['must_report'] == True:
+        toBeReturned = toBeReturned + bgp.session_password['definition'] + '\n' + bgp.session_password['threatInfo'] + '\n\n' + bgp.session_password['howtofix'] + '\n'
+    if bgp.max_prefixes['must_report'] == True:
+        toBeReturned = toBeReturned + bgp.max_prefixes['definition'] + '\n' + bgp.max_prefixes['threatInfo'] + '\n\n' + bgp.max_prefixes['howtofix'] + '\n'
+    if bgp.prefix_list['must_report'] == True:
+        toBeReturned = toBeReturned + bgp.prefix_list['definition'] + '\n' + bgp.prefix_list['threatInfo'] + '\n\n' + bgp.prefix_list['howtofix'] + '\n'
+    if bgp.aspath_list['must_report'] == True:
+        toBeReturned = toBeReturned + bgp.aspath_list['definition'] + '\n' + bgp.aspath_list['threatInfo'] + '\n\n' + bgp.aspath_list['howtofix'] + '\n'
+    if bgp.maxpath_limit['must_report'] == True:
+        toBeReturned = toBeReturned + bgp.maxpath_limit['definition'] + '\n' + bgp.maxpath_limit['threatInfo'] + '\n\n' + bgp.maxpath_limit['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorEigrp(lines, eigrp, ifaceCfg):
+def engine_eigrp(lines, eigrp, ifaceCfg):
     """EIGRP configuration assessment."""
 
     if search_string(lines, 'router eigrp') is None:
@@ -256,7 +259,7 @@ def analyzorEigrp(lines, eigrp, ifaceCfg):
 
     return toBeReturned
 
-def analyzorRip(lines, rip, ifaceCfg):
+def engine_rip(lines, rip, ifaceCfg):
     """RIP configuration assessment."""
 
     if search_string(lines, 'router rip') is None:
@@ -324,7 +327,7 @@ def analyzorRip(lines, rip, ifaceCfg):
     return toBeReturned
 
 
-def analyzorOspf(lines, ospf, ifaceCfg):
+def engine_ospf(lines, ospf, ifaceCfg):
     """"OSPF configuration assessment."""
 
     if search_string(lines, 'router ospf') is None:
@@ -444,7 +447,7 @@ def analyzorOspf(lines, ospf, ifaceCfg):
         "howtofix": (items[3].strip() \
             .replace('[%ospfPID]', "".join(ospf.auth_md5['pid']), 1) \
             .replace('[%ospfArea]', "".join(ospf.auth_md5['area']), 1) \
-            .replace('[%ospfInterface]', ", ".join(ospf.auth_md5['interfaces']), 1)),
+            .replace('[%ospfinterface]', ", ".join(ospf.auth_md5['interfaces']), 1)),
         "cvss": (cvssMetrics)}
 
     if ospf.rfilter_in['must_report'] == True:

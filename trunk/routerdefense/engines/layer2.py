@@ -1,21 +1,24 @@
 # -*- coding: iso-8859-1 -*-
 
+__docformat__ = 'restructuredtext'
+__version__ = '$Id$'
+
 import __builtin__
 from routerdefense.common import *
 
 from xml import *
 
-def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
+def engine_port_security(lines, portsecurity, ifaceCfg):
     """Port security configuration."""
     for i in range(0, len(ifaceCfg)):
         if search_re_string(ifaceCfg[i].configuration, '^switchport access vlan .*$') is not None:
             if search_re_string(ifaceCfg[i].configuration,'switchport port-security maximum .* vlan access') is None:
-                portsecurity.maximumAccess['candidates'].append(ifaceCfg[i].name.strip())
-                portsecurity.maximumAccess['must_report'] = True
+                portsecurity.maximum_access['candidates'].append(ifaceCfg[i].name.strip())
+                portsecurity.maximum_access['must_report'] = True
         if search_re_string(ifaceCfg[i].configuration, '^switchport voice vlan .*$') is not None:
             if search_re_string(ifaceCfg[i].configuration,'switchport port-security maximum .* vlan voice') is None:
-                portsecurity.maximumVoice['candidates'].append(ifaceCfg[i].name.strip())
-                portsecurity.maximumVoice['must_report'] = True
+                portsecurity.maximum_voice['candidates'].append(ifaceCfg[i].name.strip())
+                portsecurity.maximum_voice['must_report'] = True
         for line in ifaceCfg[i].configuration:
             if line.find('switchport mode access') != -1:
                 break
@@ -30,10 +33,10 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
                         portsecurity.sticky['candidates'].append(ifaceCfg[i].name.strip())
                         portsecurity.sticky['must_report'] = True
             if re.search('^switchport port-security maximum .*$', line) is None:
-                if not ifaceCfg[i].name.strip() in portsecurity.maximumTotal['candidates']:
+                if not ifaceCfg[i].name.strip() in portsecurity.maximum_total['candidates']:
                     if not 'Vlan' or not 'Loopback' in ifaceCfg[i].name.strip():
-                        portsecurity.maximumTotal['candidates'].append(ifaceCfg[i].name.strip())
-                        portsecurity.maximumTotal['must_report'] = True
+                        portsecurity.maximum_total['candidates'].append(ifaceCfg[i].name.strip())
+                        portsecurity.maximum_total['must_report'] = True
 
 
     if portsecurity.violation['must_report'] == True:
@@ -60,11 +63,11 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         "howtofix": (items[3].strip().replace('[%interface]', ", ".join(portsecurity.violation['candidates']), 1)),
         "cvss": (cvssMetrics)}
 
-    if portsecurity.maximumTotal['must_report'] == True:
-        items = search_xml('portsecurityMaximumTotal')
+    if portsecurity.maximum_total['must_report'] == True:
+        items = search_xml('portsecuritymaximum_total')
         cvssMetrics = str(cvss_score(items[5]))
-        portsecurity.maximumTotal = {
-        "candidates": portsecurity.maximumTotal['candidates'],
+        portsecurity.maximum_total = {
+        "candidates": portsecurity.maximum_total['candidates'],
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -72,11 +75,11 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         "howtofix": (items[3].strip().replace('[%interface]', ", ".join(portsecurity.violation['candidates']), 1)),
         "cvss": (cvssMetrics)}
 
-    if portsecurity.maximumAccess['must_report'] == True:
-        items = search_xml('portsecurityMaximumAccess')
+    if portsecurity.maximum_access['must_report'] == True:
+        items = search_xml('portsecuritymaximum_access')
         cvssMetrics = str(cvss_score(items[5]))
-        portsecurity.maximumAccess = {
-        "candidates": portsecurity.maximumAccess['candidates'],
+        portsecurity.maximum_access = {
+        "candidates": portsecurity.maximum_access['candidates'],
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -84,11 +87,11 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         "howtofix": (items[3].strip().replace('[%interface]', ", ".join(portsecurity.violation['candidates']), 1)),
         "cvss": (cvssMetrics)}
 
-    if portsecurity.maximumVoice['must_report'] == True:
-        items = search_xml('portsecurityMaximumVoice')
+    if portsecurity.maximum_voice['must_report'] == True:
+        items = search_xml('portsecuritymaximum_voice')
         cvssMetrics = str(cvss_score(items[5]))
-        portsecurity.maximumVoice = {
-        "candidates": portsecurity.maximumVoice['candidates'],
+        portsecurity.maximum_voice = {
+        "candidates": portsecurity.maximum_voice['candidates'],
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -101,24 +104,24 @@ def analyzorPortSecurity(lines, portsecurity, ifaceCfg):
         toBeReturned = portsecurity.sticky['definition'] + '\n' + portsecurity.sticky['threatInfo'] + '\n\n' + portsecurity.sticky['howtofix'] + '\n'
     if portsecurity.violation['must_report'] == True:
         toBeReturned = toBeReturned + portsecurity.violation['definition'] + '\n' + portsecurity.violation['threatInfo'] + '\n\n' + portsecurity.violation['howtofix'] + '\n'
-    if portsecurity.maximumTotal['must_report'] == True:
-        toBeReturned = toBeReturned + portsecurity.maximumTotal['definition'] + '\n' + portsecurity.maximumTotal['threatInfo'] + '\n\n' + portsecurity.maximumTotal['howtofix'] + '\n'
-    if portsecurity.maximumAccess['must_report'] == True:
-        toBeReturned = toBeReturned + portsecurity.maximumAccess['definition'] + '\n' + portsecurity.maximumAccess['threatInfo'] + '\n\n' + portsecurity.maximumAccess['howtofix'] + '\n'
-    if portsecurity.maximumVoice['must_report'] == True:
-        toBeReturned = toBeReturned + portsecurity.maximumVoice['definition'] + '\n' + portsecurity.maximumVoice['threatInfo'] + '\n\n' + portsecurity.maximumVoice['howtofix'] + '\n'
+    if portsecurity.maximum_total['must_report'] == True:
+        toBeReturned = toBeReturned + portsecurity.maximum_total['definition'] + '\n' + portsecurity.maximum_total['threatInfo'] + '\n\n' + portsecurity.maximum_total['howtofix'] + '\n'
+    if portsecurity.maximum_access['must_report'] == True:
+        toBeReturned = toBeReturned + portsecurity.maximum_access['definition'] + '\n' + portsecurity.maximum_access['threatInfo'] + '\n\n' + portsecurity.maximum_access['howtofix'] + '\n'
+    if portsecurity.maximum_voice['must_report'] == True:
+        toBeReturned = toBeReturned + portsecurity.maximum_voice['definition'] + '\n' + portsecurity.maximum_voice['threatInfo'] + '\n\n' + portsecurity.maximum_voice['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
+def engine_layer2(lines, level2protocols, ifaceCfg):
     """Level 2 protocols configuration assessment: spanning-tree, dot1x, flow-control, unused ports, UDLD."""
 
     #if search_re_string(lines,'^vtp domain .*$') is not None:
         #if search_re_string(lines,'^vtp password .*$') is None and search_re_string(lines,'^vtp mode transparent$') is not None:
-            #level2protocols.vtpsecure['must_report'] = True
+            #level2protocols.vtp_secure['must_report'] = True
 
-    if __builtin__.deviceType != 'router' and search_re_string(lines,'^spanning-tree portfast bpduguard default$') is None:
-            level2protocols.bpduguard['must_report'] = True
+    if __builtin__.deviceType != 'router' and search_re_string(lines,'^spanning-tree portfast bpdu_guard default$') is None:
+            level2protocols.bpdu_guard['must_report'] = True
 
     if __builtin__.deviceType == 'switch' and search_re_string(lines,'^dot1x system-auth-control$') is None:
         level2protocols.dot1x['must_report'] = True
@@ -129,8 +132,8 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
                 level2protocols.nonegotiate['candidates'].append(ifaceCfg[i].name.strip())
                 level2protocols.nonegotiate['must_report'] = True
             elif search_re_string(ifaceCfg[i].configuration,'^switchport access vlan 1$') is not None:
-                level2protocols.vlan1['candidates'].append(ifaceCfg[i].name.strip())
-                level2protocols.vlan1['must_report'] = True
+                level2protocols.vlan_1['candidates'].append(ifaceCfg[i].name.strip())
+                level2protocols.vlan_1['must_report'] = True
 
         if search_re_string(ifaceCfg[i].configuration, '^flowcontrol receive off$') is None:
             if not 'Loopback' in ifaceCfg[i].name.strip() and not 'Vlan' in ifaceCfg[i].name.strip():
@@ -140,8 +143,8 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
         if search_re_string(ifaceCfg[i].configuration, '^shutdown$') is not None:
             if search_re_string(ifaceCfg[i].configuration,'^switchport access vlan 999$') is None:
                 if __builtin__.deviceType == 'switch':
-                    level2protocols.unusedports['candidates'].append(ifaceCfg[i].name.strip())
-                    level2protocols.unusedports['must_report'] = True
+                    level2protocols.unused_ports['candidates'].append(ifaceCfg[i].name.strip())
+                    level2protocols.unused_ports['must_report'] = True
 
     try:
         level2protocols.udld['cmdInCfg'] = search_string(lines, 'no udld enable')
@@ -186,11 +189,11 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if level2protocols.vlan1['must_report'] == True:
-        items = search_xml('vlan1')
+    if level2protocols.vlan_1['must_report'] == True:
+        items = search_xml('vlan_1')
         cvssMetrics = str(cvss_score(items[5]))
-        level2protocols.vlan1 = {
-        "candidates": level2protocols.vlan1['candidates'],
+        level2protocols.vlan_1 = {
+        "candidates": level2protocols.vlan_1['candidates'],
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -198,11 +201,11 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if (level2protocols.unusedports['must_report'] == True):
-        items = search_xml('unusedports')
+    if (level2protocols.unused_ports['must_report'] == True):
+        items = search_xml('unused_ports')
         cvssMetrics = str(cvss_score(items[5]))
-        level2protocols.unusedports = {
-        "candidates": level2protocols.unusedports['candidates'],
+        level2protocols.unused_ports = {
+        "candidates": level2protocols.unused_ports['candidates'],
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -211,10 +214,10 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
         "cvss": (cvssMetrics)}
 
     """
-    if level2protocols.vtpsecure['must_report'] == True:
-        items = search_xml('vtpsecure')
+    if level2protocols.vtp_secure['must_report'] == True:
+        items = search_xml('vtp_secure')
         cvssMetrics = str(cvss_score(items[5]))
-        level2protocols.vtpsecure = {
+        level2protocols.vtp_secure = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -222,10 +225,10 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     """
-    if level2protocols.bpduguard['must_report'] == True:
-        items = search_xml('bpduguard')
+    if level2protocols.bpdu_guard['must_report'] == True:
+        items = search_xml('bpdu_guard')
         cvssMetrics = str(cvss_score(items[5]))
-        level2protocols.bpduguard = {
+        level2protocols.bpdu_guard = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -233,10 +236,10 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if level2protocols.stproot['must_report'] == True:
-        items = search_xml('stproot')
+    if level2protocols.stp_root['must_report'] == True:
+        items = search_xml('stp_root')
         cvssMetrics = str(cvss_score(items[5]))
-        level2protocols.stproot = {
+        level2protocols.stp_root = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -262,22 +265,22 @@ def analyzorLevel2Protocols(lines, level2protocols, ifaceCfg):
         toBeReturned = toBeReturned + level2protocols.flowcontrol['definition'] + '\n' + level2protocols.flowcontrol['threatInfo'] + '\n\n' + level2protocols.flowcontrol['howtofix'] + '\n'
     if level2protocols.udld['must_report'] == True:
         toBeReturned = toBeReturned + level2protocols.udld['definition'] + '\n' + level2protocols.udld['threatInfo'] + '\n\n' + level2protocols.udld['howtofix'] + '\n'
-    if level2protocols.vlan1['must_report'] == True:
-        toBeReturned = toBeReturned + level2protocols.vlan1['definition'] + '\n' + level2protocols.vlan1['threatInfo'] + '\n\n' + level2protocols.vlan1['howtofix'] + '\n'
-    if level2protocols.unusedports['must_report'] == True:
-        toBeReturned = toBeReturned + level2protocols.unusedports['definition'] + '\n' + level2protocols.unusedports['threatInfo'] + '\n\n' + level2protocols.unusedports['howtofix'] + '\n'
-    if level2protocols.vtpsecure['must_report'] == True:
-        toBeReturned = toBeReturned + level2protocols.vtpsecure['definition'] + '\n' + level2protocols.vtpsecure['threatInfo'] + '\n\n' + level2protocols.vtpsecure['howtofix'] + '\n'
-    if level2protocols.bpduguard['must_report'] == True:
-        toBeReturned = toBeReturned + level2protocols.bpduguard['definition'] + '\n' + level2protocols.bpduguard['threatInfo'] + '\n\n' + level2protocols.bpduguard['howtofix'] + '\n'
-    if level2protocols.stproot['must_report'] == True:
-        toBeReturned = toBeReturned + level2protocols.stproot['definition'] + '\n' + level2protocols.stproot['threatInfo'] + '\n\n' + level2protocols.stproot['howtofix'] + '\n'
+    if level2protocols.vlan_1['must_report'] == True:
+        toBeReturned = toBeReturned + level2protocols.vlan_1['definition'] + '\n' + level2protocols.vlan_1['threatInfo'] + '\n\n' + level2protocols.vlan_1['howtofix'] + '\n'
+    if level2protocols.unused_ports['must_report'] == True:
+        toBeReturned = toBeReturned + level2protocols.unused_ports['definition'] + '\n' + level2protocols.unused_ports['threatInfo'] + '\n\n' + level2protocols.unused_ports['howtofix'] + '\n'
+    if level2protocols.vtp_secure['must_report'] == True:
+        toBeReturned = toBeReturned + level2protocols.vtp_secure['definition'] + '\n' + level2protocols.vtp_secure['threatInfo'] + '\n\n' + level2protocols.vtp_secure['howtofix'] + '\n'
+    if level2protocols.bpdu_guard['must_report'] == True:
+        toBeReturned = toBeReturned + level2protocols.bpdu_guard['definition'] + '\n' + level2protocols.bpdu_guard['threatInfo'] + '\n\n' + level2protocols.bpdu_guard['howtofix'] + '\n'
+    if level2protocols.stp_root['must_report'] == True:
+        toBeReturned = toBeReturned + level2protocols.stp_root['definition'] + '\n' + level2protocols.stp_root['threatInfo'] + '\n\n' + level2protocols.stp_root['howtofix'] + '\n'
     if level2protocols.dot1x['must_report'] == True:
         toBeReturned = toBeReturned + level2protocols.dot1x['definition'] + '\n' + level2protocols.dot1x['threatInfo'] + '\n\n' + level2protocols.dot1x['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorCdp(cdpConfiguration, fullConfig, ifaceCfg):
+def engine_cdp(cdpConfiguration, fullConfig, ifaceCfg):
     """CDP services assessment."""
     globalCdpFound = False
     noCdpEnableFound = False
@@ -312,7 +315,7 @@ def analyzorCdp(cdpConfiguration, fullConfig, ifaceCfg):
 
         return cdpConfiguration.cdp['definition'] + '\n' + cdpConfiguration.cdp['threatInfo'] + '\n\n' + cdpConfiguration.cdp['howtofix'] + '\n'
 
-def analyzorLldp(lldpConfiguration, fullConfig, ifaceCfg):
+def engine_lldp(lldpConfiguration, fullConfig, ifaceCfg):
     """LLDP services assessment."""
     globalLldpFound = True
     for line in fullConfig:
