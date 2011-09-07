@@ -1,5 +1,8 @@
 # -*- coding: iso-8859-1 -*-
 
+__docformat__ = 'restructuredtext'
+__version__ = '$Id$'
+
 from routerdefense.common import *
 from routerdefense.metrics import *
 
@@ -12,8 +15,8 @@ def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
     import time
     import inspect
     import __builtin__
-    
-    doc = SimpleDocTemplate(outputFile) 
+
+    doc = SimpleDocTemplate(outputFile)
     report = []
     logo = "logo-router-defense.png"
     im = Image(logo)
@@ -22,9 +25,9 @@ def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
     <font size=12>Some of those recommandations could not fit with your environment for any reason from layer 1 to layer 8 (financial) and layer 9 (political).
     </font>
     """
-    
+
     outro = """RouterDefense is created and maintained by Francois Ropert.<br />
-    <a href='http://code.google.com/p/routerdefense'>http://code.google.com/p/routerdefense</a> 
+    <a href='http://code.google.com/p/routerdefense'>http://code.google.com/p/routerdefense</a>
     """
     report.append(im)
     report.append(Spacer(1, 24))
@@ -44,7 +47,7 @@ def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
     ptext += '<font size=14><b><u>IPv6:</u></b> %s </font><br />' % genericCfg.ipv6
     ptext += '<font size=14><b><u>IPSEC VPN:</u></b> %s </font><br />' % genericCfg.ipsec
     report.append(Paragraph(ptext, styles["Justify"]))
-    
+
     report.append(Spacer(1, 24))
     ptext = '<font size=20>Management Plane</font>'
     report.append(Paragraph(ptext, styles["Justify"]))
@@ -91,18 +94,18 @@ def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                             v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.rfilter_in['pid']), 1)
                             v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.rfilter_in['area']), 1)
                         elif definition == 'OSPF MD5 authentication':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInterface]', ", ".join(name.auth_md5['interfaces']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfinterface]', ", ".join(name.auth_md5['interfaces']), 1)
                             v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.auth_md5['area']), 1)
                             v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.auth_md5['pid']), 1)
                         elif definition == 'OSPF route filtering out':
                             v['howtofix'] = v['howtofix'].strip().replace('[%ospfPID]', ", ".join(name.rfilter_out['pid']), 1)
                             v['howtofix'] = v['howtofix'].strip().replace('[%ospfArea]', ", ".join(name.rfilter_out['area']), 1)
                         elif definition == 'OSPF passive interface default':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInstance]', ", ".join(name.passive['pid']), 1)                          
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInstance]', ", ".join(name.passive['pid']), 1)
                         elif definition == 'OSPF maximum LSA':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInstance]', ", ".join(name.maxLSA['pid']), 1)                          
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ospfInstance]', ", ".join(name.maxLSA['pid']), 1)
                         elif definition == 'EIGRP MD5 authentication':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpInterface]', ", ".join(name.auth_md5['interfaces']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%eigrpinterface]', ", ".join(name.auth_md5['interfaces']), 1)
                             v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.auth_md5['asn']), 1)
                         elif definition == 'EIGRP passive interface default':
                             v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.passive['asn']), 1)
@@ -111,9 +114,9 @@ def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                         elif definition == 'EIGRP route filtering outbound':
                             v['howtofix'] = v['howtofix'].strip().replace('[%eigrpAs]', ", ".join(name.rfilter_out['asn']), 1)
                         elif definition == 'RIP MD5 authentication':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%ripInterface]', ", ".join(name.auth_md5['interfaces']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%ripinterface]', ", ".join(name.auth_md5['interfaces']), 1)
                         howtofix = v['howtofix']
-                        
+
                         ptext = '<font size=12><u>%s</u> <b>%s</b></font><br />' % (name.long_name, definition)
                         report.append(Paragraph(ptext, styles["Justify"]))
                         report.append(Spacer(1, 6))
@@ -143,24 +146,24 @@ def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
                         if definition == 'Port security violation':
                             v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.violation['candidates']), 1)
                         if definition == 'Port security MAC address sticky':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.sticky['candidates']), 1)          
+                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.sticky['candidates']), 1)
                         if definition == 'Port security total maximum MAC addresses':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.maximumTotal['candidates']), 1)            
+                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.maximum_total['candidates']), 1)
                         if definition == 'Port security access vlan maximum MAC addresses':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.maximumAccess['candidates']), 1)           
+                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.maximum_access['candidates']), 1)
                         if definition == 'Port security voice vlan maximum MAC addresses':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.maximumVoice['candidates']), 1)            
+                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.maximum_voice['candidates']), 1)
                         if definition == 'DTP negotiation':
                             v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.nonegotiate['candidates']), 1)
                         if definition == 'Flow Control 802.3x':
                             v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.flowcontrol['candidates']), 1)
                         if definition == 'VLAN 1':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.vlan1['candidates']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.vlan_1['candidates']), 1)
                         if definition == 'Unused ports':
-                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.unusedports['candidates']), 1)
+                            v['howtofix'] = v['howtofix'].strip().replace('[%interface]', ", ".join(name.unused_ports['candidates']), 1)
 
                         howtofix = v['howtofix']
-                    
+
                         ptext = '<font size=12><u>%s</u> <b>%s</b></font><br />' % (name.long_name, definition)
                         report.append(Paragraph(ptext, styles["Justify"]))
                         report.append(Spacer(1, 6))
@@ -177,9 +180,9 @@ def pdfReport(outputFile, genericCfg, ManagementPlaneMetrics, ControlPlaneMetric
 
     ptext = outro
     report.append(Paragraph(ptext, styles["Justify"]))
-    
+
     doc.build(report)
-    
-    print "Audit has been saved under the filename: %s " % outputFile 
+
+    print "Audit has been saved under the filename: %s " % outputFile
     return "PDF"
 

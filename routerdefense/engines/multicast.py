@@ -1,11 +1,14 @@
 # -*- coding: iso-8859-1 -*-
 
+__docformat__ = 'restructuredtext'
+__version__ = '$Id$'
+
 import __builtin__
 from routerdefense.common import *
 
 from xml import *
 
-def analyzorMulticast(lines, multicast):
+def engine_multicast(lines, multicast):
     """Multicast configuration assessment."""
 
     if ( (search_re_string(lines, '^ip pim rp-address .*$') is not None) and (search_re_string(lines, '^ip msdp peer .*$') is not None) ):

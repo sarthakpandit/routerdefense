@@ -1,5 +1,8 @@
 # -*- coding: iso-8859-1 -*-
 
+__docformat__ = 'restructuredtext'
+__version__ = '$Id$'
+
 import __builtin__
 import re
 import random
@@ -84,7 +87,7 @@ class Xml2Data:
                         lines.getElementsByTagName("upgrade")[0])
                     obj.cvssMetric = self.get_text(
                         lines.getElementsByTagName("CVSSmetric")[0])
-                except:
+                except xml.dom.DOMException:
                     pass
                 self.__itemsList__.append(obj)
         return self.__itemsList__
@@ -125,18 +128,15 @@ def search_string(iosConfig, search_string):
                 stringLookup = line
                 return stringLookup
     else:
-        try:
-            stringLookup = next(
-            (line for line in iosConfig if
-            line.lower().rfind(search_string) != -1), None)
-        except:
-            raise "FAIL during the search_string() function."
+        stringLookup = next(
+        (line for line in iosConfig if
+        line.lower().rfind(search_string) != -1), None)
         return stringLookup
 
 def search_multi_string(iosConfig, search_string):
     """Search multiple occurence of a string
     into a configuration block.
-    
+
     """
     stringLookup = None
     stringTable = []
@@ -154,28 +154,22 @@ def search_re_string(iosConfig, search_string):
                 stringLookup = line
                 return stringLookup
     else:
-        try:
-            stringLookup = next(
-            (line for line in iosConfig if
-            re.search(search_string, line) is not None), None)
-        except:
-            raise "FAIL during the search_re_string() function."
+        stringLookup = next(
+        (line for line in iosConfig if
+        re.search(search_string, line) is not None), None)
     return stringLookup
 
 def search_re_multi_string(iosConfig, search_string):
     """Search multiple occurence of a regex string
     into a configuration block.
-    
+
     """
     stringLookup = None
     stringTable = []
-    try:
-        for line in iosConfig:
-            stringLookup = re.search(search_string, line)
-            if stringLookup is not None:
-                stringTable.append(stringLookup.string)
-    except:
-        print "ECHEC search regexmultistring."
+    for line in iosConfig:
+        stringLookup = re.search(search_string, line)
+        if stringLookup is not None:
+            stringTable.append(stringLookup.string)
     return stringTable
 
 def search_string_count(iosConfig, search_string):
@@ -187,7 +181,7 @@ def search_string_count(iosConfig, search_string):
     return stringCount
 
 def search_re_string_count(iosConfig, search_string):
-    """Count occurence of a regex string."""    
+    """Count occurence of a regex string."""
     stringCount = 0
     for line in iosConfig:
         if re.search(search_string, line) is not None:
@@ -210,7 +204,7 @@ def parse_console(lines):
     return consoleTable
 
 def parse_aux(lines):
-    """Aux port section."""    
+    """Aux port section."""
     auxTable = []
     lineAuxLocation = 0
     for i,v in enumerate(lines):
@@ -228,7 +222,7 @@ def parse_aux(lines):
     return auxTable
 
 def parse_vty(lines):
-    """VTY section."""      
+    """VTY section."""
     vtyTable = []
     lineVtyLocation = []
     for i,v in enumerate(lines):
@@ -282,7 +276,7 @@ def parse_motd(lines):
     return bannerTable
 
 def parse_exec_banner(lines):
-    """Parse the EXEC banner."""    
+    """Parse the EXEC banner."""
     bannerTable = []
     bannerStartLocation = 0
     for i,v in enumerate(lines):
@@ -301,7 +295,7 @@ def parse_exec_banner(lines):
     return bannerTable
 
 def parse_login_banner(lines):
-    """Parse the LOGIN banner."""    
+    """Parse the LOGIN banner."""
     bannerTable = []
     bannerStartLocation = 0
     for i,v in enumerate(lines):
@@ -365,7 +359,7 @@ the Resource Reservation Protocol (RSVP).
         catdef = """Although the data plane is responsible for \
 moving data from source to destination, within the context of \
 security, the data plane is the least important of the three planes. \
-It is for this reason that when securing a network device it is \ 
+It is for this reason that when securing a network device it is \
 important to protect the management and control planes \
 in preference over the data plane.
 
@@ -520,7 +514,7 @@ def network_reverse_address(address, inversedmask):
 
 def check_std_acl(lines, aclnumber):
     """Check if the standard ACL is found within the block."""
-    if __builtin__.IPv4trustedNetManagementServers is None:
+    if __builtin__.ipv4_mgmt_outbound is None:
         return False
     acl = 'access-list ' + aclnumber.strip()  + ' permit'
     matchACL = search_string(lines, acl)
@@ -531,14 +525,14 @@ def check_std_acl(lines, aclnumber):
         except IndexError:
             mask = "0.0.0.0"
         net = network_reverse_address(network, mask)
-        for entry in __builtin__.IPv4trustedNetManagementServers:
+        for entry in __builtin__.ipv4_mgmt_outbound:
             if net == entry[4]:
                 return True
     return False
 
 def check_extd_acl(lines, aclumber):
-    """Check if the extended ACL is found within the block."""    
-    if __builtin__.IPv4trustedNetManagementStations is None:
+    """Check if the extended ACL is found within the block."""
+    if __builtin__.ipv4_mgmt_inbound is None:
         return False
     acl = 'ip access-list extended ' + aclumber.strip()
     specificacl = parse_extd_acl(acl)
@@ -557,7 +551,7 @@ def check_extd_acl(lines, aclumber):
                 mask = ace.split(' ')[3]
                 net = network_reverse_address(network, mask)
 
-        for entry in __builtin__.IPv4trustedNetManagementStations:
+        for entry in __builtin__.ipv4_mgmt_inbound:
             if net == entry[4]:
                 validated = True
             else:

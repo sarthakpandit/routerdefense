@@ -1,5 +1,8 @@
 # -*- coding: iso-8859-1 -*-
 
+__docformat__ = 'restructuredtext'
+__version__ = '$Id$'
+
 import __builtin__
 from routerdefense.common import *
 
@@ -24,7 +27,7 @@ def addBasicInfo(lines):
     try:
         genericCfg.hostName = search_string(lines, 'hostname').split(' ',1)[1]
         genericCfg.iosVersion = search_string(lines, 'version').split(' ',1)[1]
-    except:
+    except AttributeError:
         raise "No hostname nor version detected in the configuration file."
 
     if search_string(lines, 'ip cef') is not None:
@@ -52,7 +55,7 @@ def addBasicInfo(lines):
 
     return genericCfg
 
-def CheckExecTimeout(timeout):
+def Checkexec_timeout(timeout):
     """Detect if the session timeout is disable or too large."""
     Compliant = True
     if timeout <= 0:
@@ -61,12 +64,12 @@ def CheckExecTimeout(timeout):
         Compliant = False
     return Compliant
 
-def analyzorConsole(consoleCfg,con0,lines):
+def engine_console(consoleCfg,con0,lines):
     """Console port assessment."""
     try:
-        con0.execTimeout['cmdInCfg'] = int(search_string(consoleCfg, 'exec-timeout').split(' ',3)[2]) + int(search_string(consoleCfg, 'exec-timeout').split(' ',3)[1]) * 60
+        con0.exec_timeout['cmdInCfg'] = int(search_string(consoleCfg, 'exec-timeout').split(' ',3)[2]) + int(search_string(consoleCfg, 'exec-timeout').split(' ',3)[1]) * 60
     except AttributeError:
-        con0.execTimeout['cmdInCfg'] = None
+        con0.exec_timeout['cmdInCfg'] = None
 
     try:
         con0.privilegezero['cmdInCfg'] = search_string(consoleCfg, 'privilege 0')
@@ -107,12 +110,12 @@ def analyzorConsole(consoleCfg,con0,lines):
     else:
         con0.privilegezero['must_report'] = False
 
-    if con0.execTimeout['cmdInCfg'] is not None:
-        CheckExecTimeout(con0.execTimeout)
-        items = search_xml('consoleExecTimeout')
-        if CheckExecTimeout(con0.execTimeout['cmdInCfg']) == False:
+    if con0.exec_timeout['cmdInCfg'] is not None:
+        Checkexec_timeout(con0.exec_timeout)
+        items = search_xml('consoleexec_timeout')
+        if Checkexec_timeout(con0.exec_timeout['cmdInCfg']) == False:
             cvssMetrics = str(cvss_score(items[5]))
-            con0.execTimeout = {
+            con0.exec_timeout = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -121,11 +124,11 @@ def analyzorConsole(consoleCfg,con0,lines):
             "upgrade": (items[4]),
             "cvss": (cvssMetrics)}
         else:
-            con0.execTimeout['must_report'] = False
+            con0.exec_timeout['must_report'] = False
     else:
-        items = search_xml('consoleExecTimeout')
+        items = search_xml('consoleexec_timeout')
         cvssMetrics = str(cvss_score(items[5]))
-        con0.execTimeout = {
+        con0.exec_timeout = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -141,37 +144,37 @@ def analyzorConsole(consoleCfg,con0,lines):
     toBeReturned = ''
     if con0.privilegezero['must_report'] == True:
         toBeReturned = con0.privilegezero['definition'] + '\n' + con0.privilegezero['threatInfo'] + '\n\n' + con0.privilegezero['howtofix'] + '\n'
-    if con0.execTimeout['must_report'] == True:
-        toBeReturned = toBeReturned + con0.execTimeout['definition'] + '\n' + con0.execTimeout['threatInfo'] + '\n\n' + con0.execTimeout['howtofix'] + '\n'
+    if con0.exec_timeout['must_report'] == True:
+        toBeReturned = toBeReturned + con0.exec_timeout['definition'] + '\n' + con0.exec_timeout['threatInfo'] + '\n\n' + con0.exec_timeout['howtofix'] + '\n'
     return toBeReturned
 
-def analyzorAux(auxCfg,aux0):
+def engine_aux(auxCfg,aux0):
     """Auxiliary port assessment."""
     try:
-        aux0.execTimeout['cmdInCfg'] = int(search_string(auxCfg, 'exec-timeout').split(' ',3)[2]) + int(search_string(auxCfg, 'exec-timeout').split(' ',3)[1]) * 60
+        aux0.exec_timeout['cmdInCfg'] = int(search_string(auxCfg, 'exec-timeout').split(' ',3)[2]) + int(search_string(auxCfg, 'exec-timeout').split(' ',3)[1]) * 60
     except AttributeError:
-        aux0.execTimeout['cmdInCfg'] = None
+        aux0.exec_timeout['cmdInCfg'] = None
 
     try:
-        aux0.transportInput['cmdInCfg'] = search_string(auxCfg, 'transport input none')
+        aux0.transport_input['cmdInCfg'] = search_string(auxCfg, 'transport input none')
     except AttributeError:
-        aux0.transportInput['cmdInCfg'] = None
+        aux0.transport_input['cmdInCfg'] = None
 
     try:
-        aux0.transportOutput['cmdInCfg'] = search_string(auxCfg, 'transport output none')
+        aux0.transport_output['cmdInCfg'] = search_string(auxCfg, 'transport output none')
     except AttributeError:
-        aux0.transportOutput['cmdInCfg'] = None
+        aux0.transport_output['cmdInCfg'] = None
 
     try:
         aux0.noExec['cmdInCfg'] = search_string(auxCfg, 'no exec')
     except AttributeError:
         aux0.noExec['cmdInCfg'] = None
 
-    items = search_xml('auxExecTimeout')
-    if aux0.execTimeout['cmdInCfg'] is not None:
-        if CheckExecTimeout(aux0.execTimeout) == False:
+    items = search_xml('auxexec_timeout')
+    if aux0.exec_timeout['cmdInCfg'] is not None:
+        if Checkexec_timeout(aux0.exec_timeout) == False:
             cvssMetrics = str(cvss_score(items[5]))
-            aux0.execTimeout = {
+            aux0.exec_timeout = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -180,10 +183,10 @@ def analyzorAux(auxCfg,aux0):
             "upgrade": (items[4]),
             "cvss": (cvssMetrics)}
         else:
-            aux0.execTimeout['must_report'] = True
+            aux0.exec_timeout['must_report'] = True
     else:
         cvssMetrics = str(cvss_score(items[5]))
-        aux0.execTimeout = {
+        aux0.exec_timeout = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -191,12 +194,12 @@ def analyzorAux(auxCfg,aux0):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if aux0.transportInput['cmdInCfg'] is not None:
-        aux0.transportInput['must_report'] = False
+    if aux0.transport_input['cmdInCfg'] is not None:
+        aux0.transport_input['must_report'] = False
     else:
-        items = search_xml('auxTransportInput')
+        items = search_xml('auxtransport_input')
         cvssMetrics = str(cvss_score(items[5]))
-        aux0.transportInput = {
+        aux0.transport_input = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -204,12 +207,12 @@ def analyzorAux(auxCfg,aux0):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
 
-    if aux0.transportOutput['cmdInCfg'] is not None:
-        aux0.transportOutput['must_report'] = False
+    if aux0.transport_output['cmdInCfg'] is not None:
+        aux0.transport_output['must_report'] = False
     else:
-        items = search_xml('auxTransportOutput')
+        items = search_xml('auxtransport_output')
         cvssMetrics = str(cvss_score(items[5]))
-        aux0.transportOutput = {
+        aux0.transport_output = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -236,50 +239,50 @@ def analyzorAux(auxCfg,aux0):
         aux0.password = None
 
     toBeReturned = ''
-    if aux0.execTimeout['must_report'] == True:
-        toBeReturned = aux0.execTimeout['definition'] + '\n' + aux0.execTimeout['threatInfo'] + '\n\n' + aux0.execTimeout['howtofix'] + '\n'
-    if aux0.transportInput['must_report'] == True:
-        toBeReturned = toBeReturned + aux0.transportInput['definition'] + '\n' + aux0.transportInput['threatInfo'] + '\n\n' + aux0.transportInput['howtofix'] + '\n'
-    if aux0.transportOutput['must_report'] == True:
-        toBeReturned = toBeReturned + aux0.transportOutput['definition'] + '\n' + aux0.transportOutput['threatInfo'] + '\n\n' + aux0.transportOutput['howtofix'] + '\n'
+    if aux0.exec_timeout['must_report'] == True:
+        toBeReturned = aux0.exec_timeout['definition'] + '\n' + aux0.exec_timeout['threatInfo'] + '\n\n' + aux0.exec_timeout['howtofix'] + '\n'
+    if aux0.transport_input['must_report'] == True:
+        toBeReturned = toBeReturned + aux0.transport_input['definition'] + '\n' + aux0.transport_input['threatInfo'] + '\n\n' + aux0.transport_input['howtofix'] + '\n'
+    if aux0.transport_output['must_report'] == True:
+        toBeReturned = toBeReturned + aux0.transport_output['definition'] + '\n' + aux0.transport_output['threatInfo'] + '\n\n' + aux0.transport_output['howtofix'] + '\n'
     if aux0.noExec['must_report'] == True:
         toBeReturned = toBeReturned + aux0.noExec['definition'] + '\n' + aux0.noExec['threatInfo']+ '\n\n' + aux0.noExec['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorVty(vtyCfg,vty):
+def engine_vty(vtyCfg,vty):
     """VTY sessions assessment."""
     try:
-        vty.execTimeout['cmdInCfg'] = int(search_string(vtyCfg, 'exec-timeout').split(' ',3)[2]) + int(search_string(vtyCfg, 'exec-timeout').split(' ',3)[1]) * 60
+        vty.exec_timeout['cmdInCfg'] = int(search_string(vtyCfg, 'exec-timeout').split(' ',3)[2]) + int(search_string(vtyCfg, 'exec-timeout').split(' ',3)[1]) * 60
     except AttributeError:
-        vty.execTimeout['cmdInCfg'] = None
+        vty.exec_timeout['cmdInCfg'] = None
 
     try:
-        vty.transportInput['cmdInCfg'] = search_re_string(vtyCfg, '^transport input (ssh|none)$')
+        vty.transport_input['cmdInCfg'] = search_re_string(vtyCfg, '^transport input (ssh|none)$')
     except AttributeError:
-        vty.transportInput['cmdInCfg'] = None
+        vty.transport_input['cmdInCfg'] = None
 
     try:
-        vty.transportOutput['cmdInCfg'] = search_re_string(vtyCfg, '^transport output (ssh|none)$')
+        vty.transport_output['cmdInCfg'] = search_re_string(vtyCfg, '^transport output (ssh|none)$')
     except AttributeError:
-        vty.transportOutput['cmdInCfg'] = None
+        vty.transport_output['cmdInCfg'] = None
 
     try:
-        vty.IPv4accessClass['cmdInCfg'] = search_re_string(vtyCfg, 'access-class .* in$')
+        vty.ipv4_access_class['cmdInCfg'] = search_re_string(vtyCfg, 'access-class .* in$')
     except AttributeError:
-        vty.IPv4accessClass['cmdInCfg'] = None
+        vty.ipv4_access_class['cmdInCfg'] = None
 
     if __builtin__.genericCfg.ipv6 == "Enabled":
         try:
-            vty.IPv6accessClass['cmdInCfg'] = search_re_string(vtyCfg, '^ipv6 access-class .* in$')
+            vty.ipv6_access_class['cmdInCfg'] = search_re_string(vtyCfg, '^ipv6 access-class .* in$')
         except AttributeError:
-            vty.IPv6accessClass['cmdInCfg'] = None
+            vty.ipv6_access_class['cmdInCfg'] = None
 
-    if vty.execTimeout['cmdInCfg'] is not None:
-        items = search_xml('vtyExecTimeout')
-        if CheckExecTimeout(vty.execTimeout) == False:
+    if vty.exec_timeout['cmdInCfg'] is not None:
+        items = search_xml('vtyexec_timeout')
+        if Checkexec_timeout(vty.exec_timeout) == False:
             cvssMetrics = str(cvss_score(items[5]))
-            vty.execTimeout = {
+            vty.exec_timeout = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -288,11 +291,11 @@ def analyzorVty(vtyCfg,vty):
             "upgrade": (items[4]),
             "cvss": (cvssMetrics)}
         else:
-            vty.execTimeout['must_report'] = False
+            vty.exec_timeout['must_report'] = False
     else:
-        items = search_xml('vtyExecTimeout')
+        items = search_xml('vtyexec_timeout')
         cvssMetrics = str(cvss_score(items[5]))
-        vty.execTimeout = {
+        vty.exec_timeout = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -300,12 +303,12 @@ def analyzorVty(vtyCfg,vty):
         "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
         "cvss": (cvssMetrics)}
 
-    if vty.transportInput['cmdInCfg'] is not None:
-        vty.transportInput['must_report'] = False
+    if vty.transport_input['cmdInCfg'] is not None:
+        vty.transport_input['must_report'] = False
     else:
-        items = search_xml('vtyTransportInput')
+        items = search_xml('vtytransport_input')
         cvssMetrics = str(cvss_score(items[5]))
-        vty.transportInput = {
+        vty.transport_input = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -313,12 +316,12 @@ def analyzorVty(vtyCfg,vty):
         "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
         "cvss": (cvssMetrics)}
 
-    if vty.transportOutput['cmdInCfg'] is not None:
-        vty.transportOutput['must_report'] = False
+    if vty.transport_output['cmdInCfg'] is not None:
+        vty.transport_output['must_report'] = False
     else:
-        items = search_xml('vtyTransportOutput')
+        items = search_xml('vtytransport_output')
         cvssMetrics = str(cvss_score(items[5]))
-        vty.transportOutput = {
+        vty.transport_output = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -326,10 +329,10 @@ def analyzorVty(vtyCfg,vty):
         "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
         "cvss": (cvssMetrics)}
 
-    if vty.IPv4accessClass['cmdInCfg'] is None:
-        items = search_xml('vtyIPv4AccessClass')
+    if vty.ipv4_access_class['cmdInCfg'] is None:
+        items = search_xml('vtyipv4_access_class')
         cvssMetrics = str(cvss_score(items[5]))
-        vty.IPv4accessClass = {
+        vty.ipv4_access_class = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -337,7 +340,7 @@ def analyzorVty(vtyCfg,vty):
         "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
         "cvss": (cvssMetrics)}
     else:
-        accessListNumber = vty.IPv4accessClass['cmdInCfg'].split(' ')[1]
+        accessListNumber = vty.ipv4_access_class['cmdInCfg'].split(' ')[1]
         verifStdACL = False
         verifExtACL = False
 
@@ -346,22 +349,22 @@ def analyzorVty(vtyCfg,vty):
             verifExtACL = check_extd_acl(vtyCfg, accessListNumber)
 
         if verifStdACL == True or verifStdACL == True :
-            vty.IPv4accessClass['must_report'] = False
+            vty.ipv4_access_class['must_report'] = False
         else:
             try:
-                mgmtSubnet = __builtin__.IPv4trustedNetManagementServers[0][0]
-            except:
+                mgmtSubnet = __builtin__.ipv4_mgmt_outbound[0][0]
+            except TypeError:
                 mgmtSubnet = ""
                 pass
             try:
-                mgmtWildcardMask = __builtin__.IPv4trustedNetManagementServers[0][3]
-            except:
+                mgmtWildcardMask = __builtin__.ipv4_mgmt_outbound[0][3]
+            except TypeError:
                 mgmtWildcardMask = ""
                 pass
 
-            items = search_xml('vtyIPv4AccessClass')
+            items = search_xml('vtyipv4_access_class')
             cvssMetrics = str(cvss_score(items[5]))
-            vty.IPv4accessClass = {
+            vty.ipv4_access_class = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -371,12 +374,12 @@ def analyzorVty(vtyCfg,vty):
             "howtofix": (items[3]).strip().replace('[%vtySessionNumbers]', " ".join(vty.sessionNumbers), 2),
             "cvss": (cvssMetrics)}
 
-    if vty.IPv6accessClass['cmdInCfg'] is None:
-        vty.IPv6accessClass['must_report'] = False
+    if vty.ipv6_access_class['cmdInCfg'] is None:
+        vty.ipv6_access_class['must_report'] = False
     else:
-        items = search_xml('vtyIPv6AccessClass')
+        items = search_xml('vtyipv6_access_class')
         cvssMetrics = str(cvss_score(items[5]))
-        vty.IPv6accessClass = {
+        vty.ipv6_access_class = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -390,20 +393,20 @@ def analyzorVty(vtyCfg,vty):
         vty.password = None
 
     toBeReturned = ''
-    if vty.execTimeout['must_report'] == True:
-        toBeReturned = vty.execTimeout['definition'] + '\n' + vty.execTimeout['threatInfo'] + '\n\n' + vty.execTimeout['howtofix'] + '\n'
-    if vty.transportInput['must_report'] == True:
-        toBeReturned = toBeReturned + vty.transportInput['definition'] + '\n' + vty.transportInput['threatInfo'] + '\n\n' + vty.transportInput['howtofix'] + '\n'
-    if vty.transportOutput['must_report'] == True:
-        toBeReturned = toBeReturned + vty.transportOutput['definition'] + '\n' + vty.transportOutput['threatInfo'] + '\n\n' + vty.transportOutput['howtofix'] + '\n'
-    if vty.IPv4accessClass['must_report'] == True:
-        toBeReturned = toBeReturned + vty.IPv4accessClass['definition'] + '\n' + vty.IPv4accessClass['threatInfo'] + '\n\n' + vty.IPv4accessClass['howtofix'] + '\n'
-    if vty.IPv6accessClass['must_report'] == True:
-        toBeReturned = toBeReturned + vty.IPv6accessClass['definition'] + '\n' + vty.IPv6accessClass['threatInfo'] + '\n\n' + vty.IPv6accessClass['howtofix'] + '\n'
+    if vty.exec_timeout['must_report'] == True:
+        toBeReturned = vty.exec_timeout['definition'] + '\n' + vty.exec_timeout['threatInfo'] + '\n\n' + vty.exec_timeout['howtofix'] + '\n'
+    if vty.transport_input['must_report'] == True:
+        toBeReturned = toBeReturned + vty.transport_input['definition'] + '\n' + vty.transport_input['threatInfo'] + '\n\n' + vty.transport_input['howtofix'] + '\n'
+    if vty.transport_output['must_report'] == True:
+        toBeReturned = toBeReturned + vty.transport_output['definition'] + '\n' + vty.transport_output['threatInfo'] + '\n\n' + vty.transport_output['howtofix'] + '\n'
+    if vty.ipv4_access_class['must_report'] == True:
+        toBeReturned = toBeReturned + vty.ipv4_access_class['definition'] + '\n' + vty.ipv4_access_class['threatInfo'] + '\n\n' + vty.ipv4_access_class['howtofix'] + '\n'
+    if vty.ipv6_access_class['must_report'] == True:
+        toBeReturned = toBeReturned + vty.ipv6_access_class['definition'] + '\n' + vty.ipv6_access_class['threatInfo'] + '\n\n' + vty.ipv6_access_class['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorBanner(bannerMotd, motd, bannerType):
+def engine_banner(bannerMotd, motd, bannerType):
     """MOTD, EXEC and LOGIN banner assessment."""
     toBeReturned = ''
     if bannerType == 0:
@@ -421,7 +424,7 @@ def analyzorBanner(bannerMotd, motd, bannerType):
             if search_string(bannerMotd, __builtin__.genericCfg.hostName) is not None :
                 items = search_xml('bannerMOTDhostnameIncluded')
                 cvssMetrics = str(cvss_score(items[5]))
-                motd.routerName = {
+                motd.device_hostname = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -430,8 +433,8 @@ def analyzorBanner(bannerMotd, motd, bannerType):
                 "cvss": (cvssMetrics)}
         if motd.configured['must_report'] == True:
             toBeReturned = motd.configured['definition'] + '\n' + motd.configured['threatInfo'] + '\n\n' + motd.configured['howtofix'] + '\n'
-        if motd.routerName['must_report'] == True:
-            toBeReturned = toBeReturned + motd.routerName['definition'] + '\n' + motd.routerName['threatInfo'] + '\n\n' + motd.routerName['howtofix'] + '\n'
+        if motd.device_hostname['must_report'] == True:
+            toBeReturned = toBeReturned + motd.device_hostname['definition'] + '\n' + motd.device_hostname['threatInfo'] + '\n\n' + motd.device_hostname['howtofix'] + '\n'
 
     if bannerType == 1:
         if len(bannerMotd) == 0:
@@ -448,7 +451,7 @@ def analyzorBanner(bannerMotd, motd, bannerType):
             if search_string(bannerMotd, __builtin__.genericCfg.hostName) is not None :
                 items = search_xml('bannerLOGINhostnameIncluded')
                 cvssMetrics = str(cvss_score(items[5]))
-                banLogin.routerName = {
+                banLogin.device_hostname = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -457,8 +460,8 @@ def analyzorBanner(bannerMotd, motd, bannerType):
                 "cvss": (cvssMetrics)}
         if banLogin.configured['must_report'] == True:
             toBeReturned = toBeReturned + banLogin.configured['definition'] + '\n' + banLogin.configured['threatInfo'] + '\n\n' + banLogin.configured['howtofix']
-        if banLogin.routerName['must_report'] == True:
-            toBeReturned = toBeReturned + banLogin.routerName['definition'] + '\n' + banLogin.routerName['threatInfo']+ '\n\n' + banLogin.routerName['howtofix']
+        if banLogin.device_hostname['must_report'] == True:
+            toBeReturned = toBeReturned + banLogin.device_hostname['definition'] + '\n' + banLogin.device_hostname['threatInfo']+ '\n\n' + banLogin.device_hostname['howtofix']
 
     if bannerType == 2:
         if len(bannerMotd) == 0:
@@ -475,7 +478,7 @@ def analyzorBanner(bannerMotd, motd, bannerType):
             if search_string(bannerMotd, __builtin__.genericCfg.hostName) is not None :
                 items = search_xml('bannerEXEChostnameIncluded')
                 cvssMetrics = str(cvss_score(items[5]))
-                banExec.routerName = {
+                banExec.device_hostname = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -485,26 +488,26 @@ def analyzorBanner(bannerMotd, motd, bannerType):
 
         if banExec.configured['must_report'] == True:
             toBeReturned = toBeReturned + banExec.configured['definition'] + '\n' + banExec.configured['threatInfo'] + '\n\n' + banExec.configured['howtofix'] + '\n'
-        if banExec.routerName['must_report'] == True:
-            toBeReturned = toBeReturned + banExec.routerName['definition'] + '\n' + banExec.routerName['threatInfo'] + '\n\n' + banExec.routerName['howtofix'] + '\n'
+        if banExec.device_hostname['must_report'] == True:
+            toBeReturned = toBeReturned + banExec.device_hostname['definition'] + '\n' + banExec.device_hostname['threatInfo'] + '\n\n' + banExec.device_hostname['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorServices(lines, services):
+def engine_services(lines, services):
     """Generic services assessment: password recovery, tcp/udp small servers, finger, bootp, ..."""
     try:
-        services.pwdRecovery['cmdInCfg'] = search_string(lines, 'no service password-recovery')
+        services.pwd_recovery['cmdInCfg'] = search_string(lines, 'no service password-recovery')
     except AttributeError:
         pass
 
-    if services.pwdRecovery['cmdInCfg'] is not None:
+    if services.pwd_recovery['cmdInCfg'] is not None:
         # feature already configured
-        services.pwdRecovery['must_report'] = False
+        services.pwd_recovery['must_report'] = False
     else:
-        items = search_xml('pwdRecovery')
+        items = search_xml('pwd_recovery')
         if __builtin__.iosVersion >= 12.314:
             cvssMetrics = str(cvss_score(items[5]))
-            services.pwdRecovery = {
+            services.pwd_recovery = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -514,7 +517,7 @@ def analyzorServices(lines, services):
         else:
             # upgrade to >= 12.314 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            services.pwdRecovery = {
+            services.pwd_recovery = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -523,17 +526,17 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
 
     try:
-        services.tcpSmallServers['cmdInCfg'] = search_string(lines, 'no service tcp-small-servers')
+        services.tcp_small_servers['cmdInCfg'] = search_string(lines, 'no service tcp-small-servers')
     except AttributeError:
         pass
 
-    if services.tcpSmallServers['cmdInCfg'] is not None:
-        services.tcpSmallServers['must_report'] = False
+    if services.tcp_small_servers['cmdInCfg'] is not None:
+        services.tcp_small_servers['must_report'] = False
     else:
-        items = search_xml('tcpSmallServers')
+        items = search_xml('tcp_small_servers')
         if __builtin__.iosVersion <= 12.0:
             cvssMetrics = str(cvss_score(items[5]))
-            services.tcpSmallServers = {
+            services.tcp_small_servers = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -542,7 +545,7 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
         else:
             cvssMetrics = str(cvss_score(items[5]))
-            services.tcpSmallServers = {
+            services.tcp_small_servers = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -551,17 +554,17 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
 
     try:
-        services.udpSmallServers['cmdInCfg'] = search_string(lines, 'no service udp-small-servers')
+        services.udp_small_servers['cmdInCfg'] = search_string(lines, 'no service udp-small-servers')
     except AttributeError:
         pass
 
-    if services.udpSmallServers['cmdInCfg'] is not None:
-        services.udpSmallServers['must_report'] = False
+    if services.udp_small_servers['cmdInCfg'] is not None:
+        services.udp_small_servers['must_report'] = False
     else:
-        items = search_xml('udpSmallServers')
+        items = search_xml('udp_small_servers')
         if __builtin__.iosVersion <= 12.0:
             cvssMetrics = str(cvss_score(items[5]))
-            services.udpSmallServers = {
+            services.udp_small_servers = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -570,7 +573,7 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
         else:
             cvssMetrics = str(cvss_score(items[5]))
-            services.udpSmallServers = {
+            services.udp_small_servers = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -579,17 +582,17 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
 
     try:
-        services.serviceFinger['cmdInCfg'] = search_string(lines, 'no service finger')
+        services.service_finger['cmdInCfg'] = search_string(lines, 'no service finger')
     except AttributeError:
         pass
 
-    if services.serviceFinger['cmdInCfg'] is not None:
-        services.serviceFinger['must_report'] = False
+    if services.service_finger['cmdInCfg'] is not None:
+        services.service_finger['must_report'] = False
     else:
-        items = search_xml('serviceFinger')
+        items = search_xml('service_finger')
         if __builtin__.iosVersion <= 12.15:
             cvssMetrics = str(cvss_score(items[5]))
-            services.serviceFinger = {
+            services.service_finger = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -598,7 +601,7 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
         else:
             cvssMetrics = str(cvss_score(items[5]))
-            services.serviceFinger = {
+            services.service_finger = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -607,16 +610,16 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
 
     try:
-        services.serviceBootpServer['cmdInCfg'] = search_string(lines, 'no ip bootp server')
+        services.service_bootps['cmdInCfg'] = search_string(lines, 'no ip bootp server')
     except AttributeError:
         pass
 
-    if services.serviceBootpServer['cmdInCfg'] is not None:
-        services.serviceBootpServer['must_report'] = False
+    if services.service_bootps['cmdInCfg'] is not None:
+        services.service_bootps['must_report'] = False
     else:
-        items = search_xml('serviceBootpServer')
+        items = search_xml('service_bootps')
         cvssMetrics = str(cvss_score(items[5]))
-        services.serviceBootpServer = {
+        services.service_bootps = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -625,16 +628,16 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.serviceTcpKeepAliveIn['cmdInCfg'] = search_string(lines, 'service tcp-keepalive-in')
+        services.service_tcpkeepalive_in['cmdInCfg'] = search_string(lines, 'service tcp-keepalive-in')
     except AttributeError:
         pass
 
-    if services.serviceTcpKeepAliveIn['cmdInCfg'] is not None:
-        services.serviceTcpKeepAliveIn['must_report'] = False
+    if services.service_tcpkeepalive_in['cmdInCfg'] is not None:
+        services.service_tcpkeepalive_in['must_report'] = False
     else:
-        items = search_xml('serviceTcpKeepAliveIn')
+        items = search_xml('service_tcpkeepalive_in')
         cvssMetrics = str(cvss_score(items[5]))
-        services.serviceTcpKeepAliveIn = {
+        services.service_tcpkeepalive_in = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -643,16 +646,16 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.serviceTcpKeepAliveOut['cmdInCfg'] = search_string(lines, 'service tcp-keepalive-out')
+        services.service_tcpkeepalive_out['cmdInCfg'] = search_string(lines, 'service tcp-keepalive-out')
     except AttributeError:
         pass
 
-    if services.serviceTcpKeepAliveOut['cmdInCfg'] is not None:
-        services.serviceTcpKeepAliveOut['must_report'] = False
+    if services.service_tcpkeepalive_out['cmdInCfg'] is not None:
+        services.service_tcpkeepalive_out['must_report'] = False
     else:
-        items = search_xml('serviceTcpKeepAliveOut')
+        items = search_xml('service_tcpkeepalive_out')
         cvssMetrics = str(cvss_score(items[5]))
-        services.serviceTcpKeepAliveOut = {
+        services.service_tcpkeepalive_out = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -661,17 +664,17 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.serviceIpDhcpBootIgnore['cmdInCfg'] = search_string(lines, 'ip dhcp bootp ignore')
+        services.service_ipdhcpboot_ignore['cmdInCfg'] = search_string(lines, 'ip dhcp bootp ignore')
     except AttributeError:
         pass
 
-    if services.serviceIpDhcpBootIgnore['cmdInCfg'] is not None:
-        services.serviceIpDhcpBootIgnore['must_report'] = False
+    if services.service_ipdhcpboot_ignore['cmdInCfg'] is not None:
+        services.service_ipdhcpboot_ignore['must_report'] = False
     else:
-        items = search_xml('serviceIpDhcpBootIgnore')
+        items = search_xml('service_ipdhcpboot_ignore')
         if __builtin__.iosVersion <= 12.228:
             cvssMetrics = str(cvss_score(items[5]))
-            services.serviceIpDhcpBootIgnore = {
+            services.service_ipdhcpboot_ignore = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -680,7 +683,7 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
         else:
             cvssMetrics = str(cvss_score(items[5]))
-            services.serviceIpDhcpBootIgnore = {
+            services.service_ipdhcpboot_ignore = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -689,16 +692,16 @@ def analyzorServices(lines, services):
             "cvss": (cvssMetrics)}
 
     try:
-        services.serviceDhcp['cmdInCfg'] = search_string(lines, 'no service dhcp')
+        services.service_dhcp['cmdInCfg'] = search_string(lines, 'no service dhcp')
     except AttributeError:
         pass
 
-    if services.serviceDhcp['cmdInCfg'] is not None:
-        services.serviceDhcp['must_report'] = False
+    if services.service_dhcp['cmdInCfg'] is not None:
+        services.service_dhcp['must_report'] = False
     else:
-        items = search_xml('serviceDhcp')
+        items = search_xml('service_dhcp')
         cvssMetrics = str(cvss_score(items[5]))
-        services.serviceDhcp = {
+        services.service_dhcp = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -707,16 +710,16 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.Mop['cmdInCfg'] = search_string(lines, 'no mop enabled')
+        services.service_mop['cmdInCfg'] = search_string(lines, 'no service_mop enabled')
     except AttributeError:
         pass
 
-    if services.Mop['cmdInCfg'] is not None:
-        services.Mop['must_report'] = False
+    if services.service_mop['cmdInCfg'] is not None:
+        services.service_mop['must_report'] = False
     else:
-        items = search_xml('Mop')
+        items = search_xml('service_mop')
         cvssMetrics = str(cvss_score(items[5]))
-        services.Mop = {
+        services.service_mop = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -725,16 +728,16 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.ipDomainLookup['cmdInCfg'] = search_string(lines, 'no ip domain-lookup')
+        services.ip_domain_lookup['cmdInCfg'] = search_string(lines, 'no ip domain-lookup')
     except AttributeError:
         pass
 
-    if services.ipDomainLookup['cmdInCfg'] is not None:
-        services.ipDomainLookup['must_report'] = False
+    if services.ip_domain_lookup['cmdInCfg'] is not None:
+        services.ip_domain_lookup['must_report'] = False
     else:
-        items = search_xml('ipDomainLookup')
+        items = search_xml('ip_domain_lookup')
         cvssMetrics = str(cvss_score(items[5]))
-        services.ipDomainLookup = {
+        services.ip_domain_lookup = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -743,16 +746,16 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.servicePad['cmdInCfg'] = search_string(lines, 'no service pad')
+        services.service_pad['cmdInCfg'] = search_string(lines, 'no service pad')
     except AttributeError:
         pass
 
-    if services.servicePad['cmdInCfg'] is not None:
-        services.servicePad['must_report'] = False
+    if services.service_pad['cmdInCfg'] is not None:
+        services.service_pad['must_report'] = False
     else:
-        items = search_xml('servicePad')
+        items = search_xml('service_pad')
         cvssMetrics = str(cvss_score(items[5]))
-        services.servicePad = {
+        services.service_pad = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -761,16 +764,16 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.serviceHttpServer['cmdInCfg'] = search_string(lines, 'no ip http server')
+        services.service_http_server['cmdInCfg'] = search_string(lines, 'no ip http server')
     except AttributeError:
         pass
 
-    if services.serviceHttpServer['cmdInCfg'] is not None:
-        services.serviceHttpServer['must_report'] = False
+    if services.service_http_server['cmdInCfg'] is not None:
+        services.service_http_server['must_report'] = False
     else:
-        items = search_xml('serviceHttpServer')
+        items = search_xml('service_http_server')
         cvssMetrics = str(cvss_score(items[5]))
-        services.serviceHttpServer = {
+        services.service_http_server = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -779,16 +782,16 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.serviceHttpsServer['cmdInCfg'] = search_string(lines, 'no ip http secure-server')
+        services.service_https_server['cmdInCfg'] = search_string(lines, 'no ip http secure-server')
     except AttributeError:
         pass
 
-    if services.serviceHttpsServer['cmdInCfg'] is not None:
-        services.serviceHttpsServer['must_report'] = False
+    if services.service_https_server['cmdInCfg'] is not None:
+        services.service_https_server['must_report'] = False
     else:
-        items = search_xml('serviceHttpsServer')
+        items = search_xml('service_https_server')
         cvssMetrics = str(cvss_score(items[5]))
-        services.serviceHttpsServer = {
+        services.service_https_server = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -797,16 +800,16 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     try:
-        services.serviceConfig['cmdInCfg'] = search_string(lines, 'no service config')
+        services.service_config['cmdInCfg'] = search_string(lines, 'no service config')
     except AttributeError:
         pass
 
-    items = search_xml('serviceConfig')
-    if services.serviceConfig['cmdInCfg'] is not None:
-        services.serviceConfig['must_report'] = False
+    items = search_xml('service_config')
+    if services.service_config['cmdInCfg'] is not None:
+        services.service_config['must_report'] = False
     else:
         cvssMetrics = str(cvss_score(items[5]))
-        services.serviceConfig = {
+        services.service_config = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -815,62 +818,62 @@ def analyzorServices(lines, services):
         "cvss": (cvssMetrics)}
 
     toBeReturned = ''
-    if services.pwdRecovery['must_report'] == True:
-        toBeReturned = services.pwdRecovery['definition'] + '\n' + services.pwdRecovery['threatInfo'] + '\n\n' + services.pwdRecovery['howtofix'] + '\n'
-    if services.tcpSmallServers['must_report'] == True:
-        toBeReturned = toBeReturned + services.tcpSmallServers['definition'] + '\n' + services.tcpSmallServers['threatInfo'] + '\n\n' + services.tcpSmallServers['howtofix'] + '\n'
-    if services.udpSmallServers['must_report'] == True:
-        toBeReturned = toBeReturned + services.udpSmallServers['definition'] + '\n' + services.udpSmallServers['threatInfo'] + '\n\n' + services.udpSmallServers['howtofix'] + '\n'
-    if services.serviceFinger['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceFinger['definition'] + '\n' + services.serviceFinger['threatInfo'] + '\n\n' + services.serviceFinger['howtofix'] + '\n'
-    if services.serviceBootpServer['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceBootpServer['definition'] + '\n' + services.serviceBootpServer['threatInfo'] + '\n\n' + services.serviceBootpServer['howtofix'] + '\n'
-    if services.serviceTcpKeepAliveIn['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceTcpKeepAliveIn['definition'] + '\n' + services.serviceTcpKeepAliveIn['threatInfo'] + '\n\n' + services.serviceTcpKeepAliveIn['howtofix'] + '\n'
-    if services.serviceTcpKeepAliveOut['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceTcpKeepAliveOut['definition'] + '\n' + services.serviceTcpKeepAliveOut['threatInfo'] + '\n\n' + services.serviceTcpKeepAliveOut['howtofix'] + '\n'
-    if services.serviceIpDhcpBootIgnore['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceIpDhcpBootIgnore['definition'] + '\n' + services.serviceIpDhcpBootIgnore['threatInfo'] + '\n\n' + services.serviceIpDhcpBootIgnore['howtofix'] + '\n'
-    if services.serviceDhcp['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceDhcp['definition'] + '\n' + services.serviceDhcp['threatInfo'] + '\n\n' + services.serviceDhcp['howtofix'] + '\n'
-    if services.Mop['must_report'] == True:
-        toBeReturned = toBeReturned + services.Mop['definition'] + '\n' + services.Mop['threatInfo'] + '\n\n' + services.Mop['howtofix'] + '\n'
-    if services.ipDomainLookup['must_report'] == True:
-        toBeReturned = toBeReturned + services.ipDomainLookup['definition'] + '\n' + services.ipDomainLookup['threatInfo'] + '\n\n' + services.ipDomainLookup['howtofix'] + '\n'
-    if services.servicePad['must_report'] == True:
-        toBeReturned = toBeReturned + services.servicePad['definition'] + '\n' + services.servicePad['threatInfo'] + '\n\n' + services.servicePad['howtofix'] + '\n'
-    if services.serviceHttpServer['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceHttpServer['definition'] + '\n' + services.serviceHttpServer['threatInfo'] + '\n\n' + services.serviceHttpServer['howtofix'] + '\n'
-    if services.serviceHttpsServer['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceHttpsServer['definition'] + '\n' + services.serviceHttpsServer['threatInfo'] + '\n\n' + services.serviceHttpsServer['howtofix'] + '\n'
-    if services.serviceConfig['must_report'] == True:
-        toBeReturned = toBeReturned + services.serviceConfig['definition'] + '\n' + services.serviceConfig['threatInfo'] + '\n\n' + services.serviceConfig['howtofix'] + '\n'
+    if services.pwd_recovery['must_report'] == True:
+        toBeReturned = services.pwd_recovery['definition'] + '\n' + services.pwd_recovery['threatInfo'] + '\n\n' + services.pwd_recovery['howtofix'] + '\n'
+    if services.tcp_small_servers['must_report'] == True:
+        toBeReturned = toBeReturned + services.tcp_small_servers['definition'] + '\n' + services.tcp_small_servers['threatInfo'] + '\n\n' + services.tcp_small_servers['howtofix'] + '\n'
+    if services.udp_small_servers['must_report'] == True:
+        toBeReturned = toBeReturned + services.udp_small_servers['definition'] + '\n' + services.udp_small_servers['threatInfo'] + '\n\n' + services.udp_small_servers['howtofix'] + '\n'
+    if services.service_finger['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_finger['definition'] + '\n' + services.service_finger['threatInfo'] + '\n\n' + services.service_finger['howtofix'] + '\n'
+    if services.service_bootps['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_bootps['definition'] + '\n' + services.service_bootps['threatInfo'] + '\n\n' + services.service_bootps['howtofix'] + '\n'
+    if services.service_tcpkeepalive_in['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_tcpkeepalive_in['definition'] + '\n' + services.service_tcpkeepalive_in['threatInfo'] + '\n\n' + services.service_tcpkeepalive_in['howtofix'] + '\n'
+    if services.service_tcpkeepalive_out['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_tcpkeepalive_out['definition'] + '\n' + services.service_tcpkeepalive_out['threatInfo'] + '\n\n' + services.service_tcpkeepalive_out['howtofix'] + '\n'
+    if services.service_ipdhcpboot_ignore['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_ipdhcpboot_ignore['definition'] + '\n' + services.service_ipdhcpboot_ignore['threatInfo'] + '\n\n' + services.service_ipdhcpboot_ignore['howtofix'] + '\n'
+    if services.service_dhcp['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_dhcp['definition'] + '\n' + services.service_dhcp['threatInfo'] + '\n\n' + services.service_dhcp['howtofix'] + '\n'
+    if services.service_mop['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_mop['definition'] + '\n' + services.service_mop['threatInfo'] + '\n\n' + services.service_mop['howtofix'] + '\n'
+    if services.ip_domain_lookup['must_report'] == True:
+        toBeReturned = toBeReturned + services.ip_domain_lookup['definition'] + '\n' + services.ip_domain_lookup['threatInfo'] + '\n\n' + services.ip_domain_lookup['howtofix'] + '\n'
+    if services.service_pad['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_pad['definition'] + '\n' + services.service_pad['threatInfo'] + '\n\n' + services.service_pad['howtofix'] + '\n'
+    if services.service_http_server['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_http_server['definition'] + '\n' + services.service_http_server['threatInfo'] + '\n\n' + services.service_http_server['howtofix'] + '\n'
+    if services.service_https_server['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_https_server['definition'] + '\n' + services.service_https_server['threatInfo'] + '\n\n' + services.service_https_server['howtofix'] + '\n'
+    if services.service_config['must_report'] == True:
+        toBeReturned = toBeReturned + services.service_config['definition'] + '\n' + services.service_config['threatInfo'] + '\n\n' + services.service_config['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorMemCpu(lines, memCpu):
+def engine_mem_cpu(lines, memCpu):
     """Memory and CPU configuration assessment."""
 
     try:
-        memCpu.schedulerallocate['cmdInCfg'] = search_string(lines, 'scheduler allocate 4000 400')
+        memCpu.scheduler_allocate['cmdInCfg'] = search_string(lines, 'scheduler allocate 4000 400')
     except AttributeError:
         pass
 
-    if memCpu.schedulerallocate['cmdInCfg'] is None:
-        memCpu.schedulerallocate['must_report'] = True
+    if memCpu.scheduler_allocate['cmdInCfg'] is None:
+        memCpu.scheduler_allocate['must_report'] = True
 
     try:
-        memCpu.schedulerinterval['cmdInCfg'] = search_string(lines, 'scheduler interval 500')
+        memCpu.scheduler_interval['cmdInCfg'] = search_string(lines, 'scheduler interval 500')
     except AttributeError:
         pass
 
-    if memCpu.schedulerinterval['cmdInCfg'] is None:
-        memCpu.schedulerinterval['must_report'] = True
+    if memCpu.scheduler_interval['cmdInCfg'] is None:
+        memCpu.scheduler_interval['must_report'] = True
 
-    if memCpu.schedulerallocate['must_report'] == True:
-        items = search_xml('schedulerallocate')
+    if memCpu.scheduler_allocate['must_report'] == True:
+        items = search_xml('scheduler_allocate')
         cvssMetrics = str(cvss_score(items[5]))
-        memCpu.schedulerallocate = {
+        memCpu.scheduler_allocate = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -878,10 +881,10 @@ def analyzorMemCpu(lines, memCpu):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if memCpu.schedulerinterval['must_report'] == True:
-        items = search_xml('schedulerinterval')
+    if memCpu.scheduler_interval['must_report'] == True:
+        items = search_xml('scheduler_interval')
         cvssMetrics = str(cvss_score(items[5]))
-        memCpu.schedulerinterval = {
+        memCpu.scheduler_interval = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -891,18 +894,18 @@ def analyzorMemCpu(lines, memCpu):
 
 
     try:
-        memCpu.lowWatermarkProcessor['cmdInCfg'] = search_string(lines, 'memory free low-watermark processor')
+        memCpu.low_watermark_processor['cmdInCfg'] = search_string(lines, 'memory free low-watermark processor')
     except AttributeError:
         pass
 
-    if memCpu.lowWatermarkProcessor['cmdInCfg'] is not None:
+    if memCpu.low_watermark_processor['cmdInCfg'] is not None:
         # feature already configured
-        memCpu.lowWatermarkProcessor['must_report'] = False
+        memCpu.low_watermark_processor['must_report'] = False
     else:
-        items = search_xml('lowWatermarkProcessor')
+        items = search_xml('low_watermark_processor')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.lowWatermarkProcessor = {
+            memCpu.low_watermark_processor = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -912,7 +915,7 @@ def analyzorMemCpu(lines, memCpu):
         else:
             # upgrade to >= 12.34 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.lowWatermarkProcessor = {
+            memCpu.low_watermark_processor = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -921,17 +924,17 @@ def analyzorMemCpu(lines, memCpu):
             "cvss": (cvssMetrics)}
 
     try:
-        memCpu.lowWatermarkIo['cmdInCfg'] = search_string(lines, 'memory free low-watermark io')
+        memCpu.low_watermark_io['cmdInCfg'] = search_string(lines, 'memory free low-watermark io')
     except AttributeError:
         pass
-    if memCpu.lowWatermarkIo['cmdInCfg'] is not None:
+    if memCpu.low_watermark_io['cmdInCfg'] is not None:
         # feature already configured
-        memCpu.lowWatermarkIo['must_report'] = False
+        memCpu.low_watermark_io['must_report'] = False
     else:
-        items = search_xml('lowWatermarkIo')
+        items = search_xml('low_watermark_io')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.lowWatermarkIo = {
+            memCpu.low_watermark_io = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -941,7 +944,7 @@ def analyzorMemCpu(lines, memCpu):
         else:
             # upgrade to >= 12.34 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.lowWatermarkIo = {
+            memCpu.low_watermark_io = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -950,17 +953,17 @@ def analyzorMemCpu(lines, memCpu):
             "cvss": (cvssMetrics)}
 
     try:
-        memCpu.memReserveCritical['cmdInCfg'] = search_string(lines, 'memory reserve critical')
+        memCpu.mem_reserve_critical['cmdInCfg'] = search_string(lines, 'memory reserve critical')
     except AttributeError:
         pass
-    if memCpu.memReserveCritical['cmdInCfg'] is not None:
+    if memCpu.mem_reserve_critical['cmdInCfg'] is not None:
         # feature already configured
-        memCpu.memReserveCritical['must_report'] = False
+        memCpu.mem_reserve_critical['must_report'] = False
     else:
-        items = search_xml('memReserveCritical')
+        items = search_xml('mem_reserve_critical')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.memReserveCritical = {
+            memCpu.mem_reserve_critical = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -970,7 +973,7 @@ def analyzorMemCpu(lines, memCpu):
         else:
             # upgrade to >= 12.34 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.memReserveCritical = {
+            memCpu.mem_reserve_critical = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -979,17 +982,17 @@ def analyzorMemCpu(lines, memCpu):
             "cvss": (cvssMetrics)}
 
     try:
-        memCpu.memReserveConsole['cmdInCfg'] = search_string(lines, 'memory reserve console')
+        memCpu.mem_reserve_console['cmdInCfg'] = search_string(lines, 'memory reserve console')
     except AttributeError:
         pass
-    if memCpu.memReserveConsole['cmdInCfg'] is not None:
+    if memCpu.mem_reserve_console['cmdInCfg'] is not None:
         # feature already configured
-        memCpu.memReserveConsole['must_report'] = False
+        memCpu.mem_reserve_console['must_report'] = False
     else:
-        items = search_xml('memReserveConsole')
+        items = search_xml('mem_reserve_console')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.memReserveConsole = {
+            memCpu.mem_reserve_console = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -999,7 +1002,7 @@ def analyzorMemCpu(lines, memCpu):
         else:
             # upgrade to >= 12.34 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.memReserveConsole = {
+            memCpu.mem_reserve_console = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1009,17 +1012,17 @@ def analyzorMemCpu(lines, memCpu):
 
 
     try:
-        memCpu.memIgnoreOverflowIo['cmdInCfg'] = search_string(lines, 'exception memory ignore overflow io')
+        memCpu.mem_ignore_overflow_io['cmdInCfg'] = search_string(lines, 'exception memory ignore overflow io')
     except AttributeError:
         pass
-    if memCpu.memIgnoreOverflowIo['cmdInCfg'] is not None:
+    if memCpu.mem_ignore_overflow_io['cmdInCfg'] is not None:
         # feature already configured
-        memCpu.memIgnoreOverflowIo['must_report'] = False
+        memCpu.mem_ignore_overflow_io['must_report'] = False
     else:
         items = search_xml('memOverflowIo')
         if __builtin__.iosVersion >= 12.38:
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.memIgnoreOverflowIo = {
+            memCpu.mem_ignore_overflow_io = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1029,7 +1032,7 @@ def analyzorMemCpu(lines, memCpu):
         else:
             # upgrade to >= 12.38 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.memIgnoreOverflowIo = {
+            memCpu.mem_ignore_overflow_io = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1038,17 +1041,17 @@ def analyzorMemCpu(lines, memCpu):
             "cvss": (cvssMetrics)}
 
     try:
-        memCpu.memIgnoreOverflowCpu['cmdInCfg'] = search_string(lines, 'exception memory ignore overflow processor')
+        memCpu.mem_ignore_overflow_cpu['cmdInCfg'] = search_string(lines, 'exception memory ignore overflow processor')
     except AttributeError:
         pass
-    if memCpu.memIgnoreOverflowCpu['cmdInCfg'] is not None:
+    if memCpu.mem_ignore_overflow_cpu['cmdInCfg'] is not None:
         # feature already configured
-        memCpu.memIgnoreOverflowCpu['must_report'] = False
+        memCpu.mem_ignore_overflow_cpu['must_report'] = False
     else:
         items = search_xml('memOverflowProcessor')
         if __builtin__.iosVersion >= 12.38:
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.memIgnoreOverflowCpu = {
+            memCpu.mem_ignore_overflow_cpu = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1058,7 +1061,7 @@ def analyzorMemCpu(lines, memCpu):
         else:
             # upgrade to >= 12.38 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.memIgnoreOverflowCpu = {
+            memCpu.mem_ignore_overflow_cpu = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1068,29 +1071,29 @@ def analyzorMemCpu(lines, memCpu):
 
 
     try:
-        memCpu.cpuThresholdNotice['cmdSnmpServerTraps'] = search_string(lines, 'snmp-server enable traps cpu threshold')
+        memCpu.cpu_threshold_notice['cmdSnmpserverTraps'] = search_string(lines, 'snmp-server enable traps cpu threshold')
     except AttributeError:
         pass
     try:
-        memCpu.cpuThresholdNotice['cmdSnmpServerHost'] = search_re_string(lines, 'snmp-server host .* .* cpu')
+        memCpu.cpu_threshold_notice['cmdSnmpserverHost'] = search_re_string(lines, 'snmp-server host .* .* cpu')
     except AttributeError:
         pass
     try:
-        memCpu.cpuThresholdNotice['cmdCpuThreshold'] = search_re_string(lines, 'process cpu threshold type .* rising .* interval')
+        memCpu.cpu_threshold_notice['cmdCpuThreshold'] = search_re_string(lines, 'process cpu threshold type .* rising .* interval')
     except AttributeError:
         pass
     try:
-        memCpu.cpuThresholdNotice['cmdCpuStats'] = search_re_string(lines, 'process cpu statistics limit entry-percentage .*')
+        memCpu.cpu_threshold_notice['cmdCpuStats'] = search_re_string(lines, 'process cpu statistics limit entry-percentage .*')
     except AttributeError:
         pass
 
-    if ((memCpu.cpuThresholdNotice['cmdSnmpServerTraps'] is not None) and (memCpu.cpuThresholdNotice['cmdSnmpServerHost'] is not None) and (memCpu.cpuThresholdNotice['cmdCpuThreshold'] is not None) and (memCpu.cpuThresholdNotice['cmdCpuStats'] is not None) ):
-        memCpu.cpuThresholdNotice['must_report'] = False
+    if ((memCpu.cpu_threshold_notice['cmdSnmpserverTraps'] is not None) and (memCpu.cpu_threshold_notice['cmdSnmpserverHost'] is not None) and (memCpu.cpu_threshold_notice['cmdCpuThreshold'] is not None) and (memCpu.cpu_threshold_notice['cmdCpuStats'] is not None) ):
+        memCpu.cpu_threshold_notice['must_report'] = False
     else:
         items = search_xml('cpuThresholdNotification')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.cpuThresholdNotice = {
+            memCpu.cpu_threshold_notice = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1100,7 +1103,7 @@ def analyzorMemCpu(lines, memCpu):
         else:
             # upgrade to >= 12.34 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            memCpu.cpuThresholdNotice = {
+            memCpu.cpu_threshold_notice = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1109,40 +1112,40 @@ def analyzorMemCpu(lines, memCpu):
             "cvss": (cvssMetrics)}
 
     toBeReturned = ''
-    if memCpu.schedulerallocate['must_report'] == True:
-        toBeReturned = toBeReturned + memCpu.schedulerallocate['definition'] + '\n' + memCpu.schedulerallocate['threatInfo'] + '\n\n' + memCpu.schedulerallocate['howtofix'] + '\n'
-    if memCpu.schedulerinterval['must_report'] == True:
-        toBeReturned = toBeReturned + memCpu.schedulerinterval['definition'] + '\n' + memCpu.schedulerinterval['threatInfo'] + '\n\n' + memCpu.schedulerinterval['howtofix'] + '\n'
-    if memCpu.lowWatermarkProcessor['must_report'] == True:
-        toBeReturned = memCpu.lowWatermarkProcessor['definition'] + '\n' + memCpu.lowWatermarkProcessor['threatInfo'] + '\n\n' + memCpu.lowWatermarkProcessor['howtofix'] + '\n'
-    if memCpu.lowWatermarkIo['must_report'] == True:
-        toBeReturned = toBeReturned + memCpu.lowWatermarkIo['definition'] + '\n' + memCpu.lowWatermarkIo['threatInfo'] + '\n\n' + memCpu.lowWatermarkIo['howtofix'] + '\n'
-    if memCpu.memReserveCritical['must_report'] == True:
-        toBeReturned = toBeReturned + memCpu.memReserveCritical['definition'] + '\n' + memCpu.memReserveCritical['threatInfo'] + '\n\n' + memCpu.memReserveCritical['howtofix'] + '\n'
-    if memCpu.memReserveConsole['must_report'] == True:
-        toBeReturned = toBeReturned + memCpu.memReserveConsole['definition'] + '\n' + memCpu.memReserveConsole['threatInfo'] + '\n\n' + memCpu.memReserveConsole['howtofix'] + '\n'
-    if memCpu.memIgnoreOverflowIo['must_report'] == True:
-        toBeReturned = toBeReturned + memCpu.memIgnoreOverflowIo['definition'] + '\n' + memCpu.memIgnoreOverflowIo['threatInfo'] + '\n\n' + memCpu.memIgnoreOverflowIo['howtofix'] + '\n'
-    if memCpu.memIgnoreOverflowCpu['must_report'] == True:
-        toBeReturned = toBeReturned + memCpu.memIgnoreOverflowCpu['definition'] + '\n' + memCpu.memIgnoreOverflowCpu['threatInfo'] + '\n\n' + memCpu.memIgnoreOverflowCpu['howtofix'] + '\n'
-    if memCpu.cpuThresholdNotice['must_report'] == True:
-        toBeReturned = toBeReturned + memCpu.cpuThresholdNotice['definition'] + '\n' + memCpu.cpuThresholdNotice['threatInfo'] + '\n\n' + memCpu.cpuThresholdNotice['howtofix'] + '\n'
+    if memCpu.scheduler_allocate['must_report'] == True:
+        toBeReturned = toBeReturned + memCpu.scheduler_allocate['definition'] + '\n' + memCpu.scheduler_allocate['threatInfo'] + '\n\n' + memCpu.scheduler_allocate['howtofix'] + '\n'
+    if memCpu.scheduler_interval['must_report'] == True:
+        toBeReturned = toBeReturned + memCpu.scheduler_interval['definition'] + '\n' + memCpu.scheduler_interval['threatInfo'] + '\n\n' + memCpu.scheduler_interval['howtofix'] + '\n'
+    if memCpu.low_watermark_processor['must_report'] == True:
+        toBeReturned = memCpu.low_watermark_processor['definition'] + '\n' + memCpu.low_watermark_processor['threatInfo'] + '\n\n' + memCpu.low_watermark_processor['howtofix'] + '\n'
+    if memCpu.low_watermark_io['must_report'] == True:
+        toBeReturned = toBeReturned + memCpu.low_watermark_io['definition'] + '\n' + memCpu.low_watermark_io['threatInfo'] + '\n\n' + memCpu.low_watermark_io['howtofix'] + '\n'
+    if memCpu.mem_reserve_critical['must_report'] == True:
+        toBeReturned = toBeReturned + memCpu.mem_reserve_critical['definition'] + '\n' + memCpu.mem_reserve_critical['threatInfo'] + '\n\n' + memCpu.mem_reserve_critical['howtofix'] + '\n'
+    if memCpu.mem_reserve_console['must_report'] == True:
+        toBeReturned = toBeReturned + memCpu.mem_reserve_console['definition'] + '\n' + memCpu.mem_reserve_console['threatInfo'] + '\n\n' + memCpu.mem_reserve_console['howtofix'] + '\n'
+    if memCpu.mem_ignore_overflow_io['must_report'] == True:
+        toBeReturned = toBeReturned + memCpu.mem_ignore_overflow_io['definition'] + '\n' + memCpu.mem_ignore_overflow_io['threatInfo'] + '\n\n' + memCpu.mem_ignore_overflow_io['howtofix'] + '\n'
+    if memCpu.mem_ignore_overflow_cpu['must_report'] == True:
+        toBeReturned = toBeReturned + memCpu.mem_ignore_overflow_cpu['definition'] + '\n' + memCpu.mem_ignore_overflow_cpu['threatInfo'] + '\n\n' + memCpu.mem_ignore_overflow_cpu['howtofix'] + '\n'
+    if memCpu.cpu_threshold_notice['must_report'] == True:
+        toBeReturned = toBeReturned + memCpu.cpu_threshold_notice['definition'] + '\n' + memCpu.cpu_threshold_notice['threatInfo'] + '\n\n' + memCpu.cpu_threshold_notice['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorCrashinfo(lines, crashinfo):
+def engine_crashinfo(lines, crashinfo):
     """Crashinfo generation configuration assessment."""
     try:
-        crashinfo.crashinfoMaxFiles['cmdInCfg'] = search_string(lines, 'exception crashinfo maximum files')
+        crashinfo.crashinfo_max_files['cmdInCfg'] = search_string(lines, 'exception crashinfo maximum files')
     except AttributeError:
         pass
-    if crashinfo.crashinfoMaxFiles['cmdInCfg'] is not None:
+    if crashinfo.crashinfo_max_files['cmdInCfg'] is not None:
         # feature already configured
-        crashinfo.crashinfoMaxFiles['must_report'] = False
+        crashinfo.crashinfo_max_files['must_report'] = False
     else:
         items = search_xml('ExceptionMaximumFiles')
         cvssMetrics = str(cvss_score(items[5]))
-        crashinfo.crashinfoMaxFiles = {
+        crashinfo.crashinfo_max_files = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -1151,45 +1154,45 @@ def analyzorCrashinfo(lines, crashinfo):
         "cvss": (cvssMetrics)}
 
     toBeReturned = ''
-    if crashinfo.crashinfoMaxFiles['must_report'] == True:
-        toBeReturned = crashinfo.crashinfoMaxFiles['definition'] + '\n' + crashinfo.crashinfoMaxFiles['threatInfo'] + '\n\n' + crashinfo.crashinfoMaxFiles['howtofix'] + '\n'
+    if crashinfo.crashinfo_max_files['must_report'] == True:
+        toBeReturned = crashinfo.crashinfo_max_files['definition'] + '\n' + crashinfo.crashinfo_max_files['threatInfo'] + '\n\n' + crashinfo.crashinfo_max_files['howtofix'] + '\n'
     return toBeReturned
 
-def analyzorMPP(lines, vtyList, vtyCfg, mpp):
-    """Management plane protection assessment.""" 
+def engine_mpp(lines, vtyList, vtyCfg, mpp):
+    """Management plane protection assessment."""
 
     if len(vtyList) == 0:
         # if all vty are removed
-        mpp.managementInterface['must_report'] = False
-        mpp.sshServer['must_report'] = False
-        mpp.scpServer['must_report'] = False
+        mpp.mgmt_interfaces['must_report'] = False
+        mpp.sshserver['must_report'] = False
+        mpp.scp_server['must_report'] = False
         return
 
     for i in range(0, len(vtyCfg)):
         for k in range (0, len(vtyCfg[i])):
             if search_string(vtyCfg[i][k], 'transport input none') is not None:
-                mpp.managementInterface['must_report'] = False
-                mpp.sshServer['must_report'] = False
-                mpp.scpServer['must_report'] = False
+                mpp.mgmt_interfaces['must_report'] = False
+                mpp.sshserver['must_report'] = False
+                mpp.scp_server['must_report'] = False
                 return
     if __builtin__.deviceType == 'router':
         try:
-            mpp.managementInterface['cpHostCfg'] = search_string(lines, 'control-plane host')
+            mpp.mgmt_interfaces['cpHostCfg'] = search_string(lines, 'control-plane host')
         except AttributeError:
             pass
         try:
-            mpp.managementInterface['mgmtIfaceCfg'] = search_re_string(lines, 'management-interface .* allow .*')
+            mpp.mgmt_interfaces['mgmtIfaceCfg'] = search_re_string(lines, 'management-interface .* allow .*')
         except AttributeError:
             pass
 
-        if mpp.managementInterface['cpHostCfg'] is not None:
-            if mpp.managementInterface['mgmtIfaceCfg'] is not None:
-                mpp.managementInterface['must_report'] = False
+        if mpp.mgmt_interfaces['cpHostCfg'] is not None:
+            if mpp.mgmt_interfaces['mgmtIfaceCfg'] is not None:
+                mpp.mgmt_interfaces['must_report'] = False
             else:
                 if __builtin__.iosVersion >= 12.46:
                     items = search_xml('ManagementPlaneProtection')
                     cvssMetrics = str(cvss_score(items[5]))
-                    mpp.managementInterface = {
+                    mpp.mgmt_interfaces = {
                     "must_report": True,
                     "fixImpact": (items[0]),
                     "definition": (items[1]),
@@ -1199,7 +1202,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
                 else:
                     items = search_xml('ManagementPlaneProtection')
                     cvssMetrics = str(cvss_score(items[5]))
-                    mpp.managementInterface = {
+                    mpp.mgmt_interfaces = {
                     "must_report": True,
                     "fixImpact": (items[0]),
                     "definition": (items[1]),
@@ -1210,7 +1213,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
             if __builtin__.iosVersion >= 12.46:
                 items = search_xml('ManagementPlaneProtection')
                 cvssMetrics = str(cvss_score(items[5]))
-                mpp.managementInterface = {
+                mpp.mgmt_interfaces = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -1220,7 +1223,7 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
             else:
                 items = search_xml('ManagementPlaneProtection')
                 cvssMetrics = str(cvss_score(items[5]))
-                mpp.managementInterface = {
+                mpp.mgmt_interfaces = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -1229,22 +1232,22 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
                 "cvss": (cvssMetrics)}
 
     try:
-        mpp.sshServerTimeout['timeout'] = search_string(lines, 'ip ssh time-out')
+        mpp.ssh_server_timeout['timeout'] = search_string(lines, 'ip ssh time-out')
     except AttributeError:
         pass
     try:
-        mpp.sshServerAuthRetries['authRetries'] = search_string(lines, 'ip ssh authentication-retries')
+        mpp.ssh_server_auth_retries['authRetries'] = search_string(lines, 'ip ssh authentication-retries')
     except AttributeError:
         pass
     try:
-        mpp.sshServerSourceInterface['sourceInterface'] = search_string(lines, 'ip ssh source-interface')
+        mpp.ssh_server_src_interface['sourceinterface'] = search_string(lines, 'ip ssh source-interface')
     except AttributeError:
         pass
 
-    if mpp.sshServerTimeout['timeout'] is None:
-        items = search_xml('sshServerTimeout')
+    if mpp.ssh_server_timeout['timeout'] is None:
+        items = search_xml('ssh_server_timeout')
         cvssMetrics = str(cvss_score(items[5]))
-        mpp.sshServerTimeout = {
+        mpp.ssh_server_timeout = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -1252,12 +1255,12 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        mpp.sshServerTimeout['must_report'] = False
+        mpp.ssh_server_timeout['must_report'] = False
 
-    if mpp.sshServerAuthRetries['authRetries'] is None:
-        items = search_xml('sshServerAuthretries')
+    if mpp.ssh_server_auth_retries['authRetries'] is None:
+        items = search_xml('ssh_server_auth_retries')
         cvssMetrics = str(cvss_score(items[5]))
-        mpp.sshServerAuthRetries = {
+        mpp.ssh_server_auth_retries = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -1265,12 +1268,12 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        mpp.sshServerAuthRetries['must_report'] = False
+        mpp.ssh_server_auth_retries['must_report'] = False
 
-    if mpp.sshServerSourceInterface['sourceInterface'] is None:
-        items = search_xml('sshServerSourceIf')
+    if mpp.ssh_server_src_interface['sourceinterface'] is None:
+        items = search_xml('sshserverSourceIf')
         cvssMetrics = str(cvss_score(items[5]))
-        mpp.sshServerSourceInterface = {
+        mpp.ssh_server_src_interface = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -1278,17 +1281,17 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        mpp.sshServerSourceInterface['must_report'] = False
+        mpp.ssh_server_src_interface['must_report'] = False
 
     try:
-        mpp.scpServer['cmdIncfg'] = search_string(lines, 'ip scp server enable')
+        mpp.scp_server['cmdIncfg'] = search_string(lines, 'ip scp server enable')
     except AttributeError:
         pass
 
-    if mpp.scpServer['cmdIncfg'] is None:
-        items = search_xml('sshSCPServer')
+    if mpp.scp_server['cmdIncfg'] is None:
+        items = search_xml('sshscp_server')
         cvssMetrics = str(cvss_score(items[5]))
-        mpp.scpServer = {
+        mpp.scp_server = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -1296,17 +1299,17 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        mpp.scpServer['must_report'] = False
+        mpp.scp_server['must_report'] = False
 
     try:
-        mpp.httpSecureServer['cmdIncfg'] = search_string(lines, 'ip http server')
+        mpp.http_secure_server['cmdIncfg'] = search_string(lines, 'ip http server')
     except AttributeError:
         pass
 
-    if mpp.httpSecureServer['cmdIncfg'] is not None:
-        items = search_xml('HTTPServer')
+    if mpp.http_secure_server['cmdIncfg'] is not None:
+        items = search_xml('HTTPserver')
         cvssMetrics = str(cvss_score(items[5]))
-        mpp.httpSecureServer = {
+        mpp.http_secure_server = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -1314,45 +1317,45 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        mpp.httpSecureServer['must_report'] = False
+        mpp.http_secure_server['must_report'] = False
 
     try:
-        mpp.loginbruteforce['blockfor'] = search_string(lines, 'login block-for')
+        mpp.login_bruteforce['blockfor'] = search_string(lines, 'login block-for')
     except AttributeError:
         pass
     try:
-        mpp.loginbruteforce['delay'] = search_string(lines, 'login delay')
+        mpp.login_bruteforce['delay'] = search_string(lines, 'login delay')
     except AttributeError:
         pass
     try:
-        mpp.loginbruteforce['quietacl'] = search_string(lines, 'login quiet access-class')
+        mpp.login_bruteforce['quietacl'] = search_string(lines, 'login quiet access-class')
     except AttributeError:
         pass
     try:
-        mpp.loginbruteforce['faillog'] = search_string(lines, 'login on-failure log every')
+        mpp.login_bruteforce['faillog'] = search_string(lines, 'login on-failure log every')
     except AttributeError:
         pass
     try:
-        mpp.loginbruteforce['successlog'] = search_string(lines, 'login on-success log every')
+        mpp.login_bruteforce['successlog'] = search_string(lines, 'login on-success log every')
     except AttributeError:
         pass
-    loginbruteforceCount = 0
-    if mpp.loginbruteforce['blockfor'] is not None:
-        loginbruteforceCount = loginbruteforceCount + 1
-    if mpp.loginbruteforce['delay'] is not None:
-        loginbruteforceCount = loginbruteforceCount + 1
-    if mpp.loginbruteforce['quietacl'] is not None:
-        loginbruteforceCount = loginbruteforceCount + 1
-    if mpp.loginbruteforce['faillog'] is not None:
-        loginbruteforceCount = loginbruteforceCount + 1
-    if mpp.loginbruteforce['successlog'] is not None:
-        loginbruteforceCount = loginbruteforceCount + 1
+    login_bruteforceCount = 0
+    if mpp.login_bruteforce['blockfor'] is not None:
+        login_bruteforceCount = login_bruteforceCount + 1
+    if mpp.login_bruteforce['delay'] is not None:
+        login_bruteforceCount = login_bruteforceCount + 1
+    if mpp.login_bruteforce['quietacl'] is not None:
+        login_bruteforceCount = login_bruteforceCount + 1
+    if mpp.login_bruteforce['faillog'] is not None:
+        login_bruteforceCount = login_bruteforceCount + 1
+    if mpp.login_bruteforce['successlog'] is not None:
+        login_bruteforceCount = login_bruteforceCount + 1
 
-    if loginbruteforceCount < 5:
+    if login_bruteforceCount < 5:
         if __builtin__.iosVersion >= 12.34:
-            items = search_xml('loginBruteforce')
+            items = search_xml('login_bruteforce')
             cvssMetrics = str(cvss_score(items[5]))
-            mpp.loginbruteforce = {
+            mpp.login_bruteforce = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1361,9 +1364,9 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
             "cvss": (cvssMetrics)}
         else:
             # upgrade to >= 12.3.4 to get the feature
-            items = search_xml('loginBruteforce')
+            items = search_xml('login_bruteforce')
             cvssMetrics = str(cvss_score(items[5]))
-            mpp.loginbruteforce = {
+            mpp.login_bruteforce = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1371,39 +1374,39 @@ def analyzorMPP(lines, vtyList, vtyCfg, mpp):
             "howtofix": (items[4]),
             "cvss": (cvssMetrics)}
     else:
-        mpp.loginbruteforce['must_report'] = False
+        mpp.login_bruteforce['must_report'] = False
 
     toBeReturned = ''
-    if mpp.managementInterface['must_report'] == True:
-        toBeReturned = mpp.managementInterface['definition'] + '\n' + mpp.managementInterface['threatInfo'] + '\n\n' + mpp.managementInterface['howtofix'] + '\n'
-    if mpp.sshServerTimeout['must_report'] == True:
-        toBeReturned = toBeReturned + mpp.sshServerTimeout['definition'] + '\n' + mpp.sshServerTimeout['threatInfo'] + '\n\n' + mpp.sshServerTimeout['howtofix'] + '\n'
-    if mpp.sshServerAuthRetries['must_report'] == True:
-        toBeReturned = toBeReturned + mpp.sshServerAuthRetries['definition'] + '\n' + mpp.sshServerAuthRetries['threatInfo'] + '\n\n' + mpp.sshServerAuthRetries['howtofix'] + '\n'
-    if mpp.sshServerSourceInterface['must_report'] == True:
-        toBeReturned = toBeReturned + mpp.sshServerSourceInterface['definition'] + '\n' + mpp.sshServerSourceInterface['threatInfo'] + '\n\n' + mpp.sshServerSourceInterface['howtofix'] + '\n'
-    if mpp.scpServer['must_report'] == True:
-        toBeReturned = toBeReturned + mpp.scpServer['definition'] + '\n' + mpp.scpServer['threatInfo'] + '\n\n' + mpp.scpServer['howtofix'] + '\n'
-    if mpp.httpSecureServer['must_report'] == True:
-        toBeReturned = toBeReturned + mpp.httpSecureServer['definition'] + '\n' + mpp.httpSecureServer['threatInfo'] + '\n\n' + mpp.httpSecureServer['howtofix'] + '\n'
-    if mpp.loginbruteforce['must_report'] == True:
-        toBeReturned = toBeReturned + mpp.loginbruteforce['definition'] + '\n' + mpp.loginbruteforce['threatInfo'] + '\n\n' + mpp.loginbruteforce['howtofix'] + '\n'
+    if mpp.mgmt_interfaces['must_report'] == True:
+        toBeReturned = mpp.mgmt_interfaces['definition'] + '\n' + mpp.mgmt_interfaces['threatInfo'] + '\n\n' + mpp.mgmt_interfaces['howtofix'] + '\n'
+    if mpp.ssh_server_timeout['must_report'] == True:
+        toBeReturned = toBeReturned + mpp.ssh_server_timeout['definition'] + '\n' + mpp.ssh_server_timeout['threatInfo'] + '\n\n' + mpp.ssh_server_timeout['howtofix'] + '\n'
+    if mpp.ssh_server_auth_retries['must_report'] == True:
+        toBeReturned = toBeReturned + mpp.ssh_server_auth_retries['definition'] + '\n' + mpp.ssh_server_auth_retries['threatInfo'] + '\n\n' + mpp.ssh_server_auth_retries['howtofix'] + '\n'
+    if mpp.ssh_server_src_interface['must_report'] == True:
+        toBeReturned = toBeReturned + mpp.ssh_server_src_interface['definition'] + '\n' + mpp.ssh_server_src_interface['threatInfo'] + '\n\n' + mpp.ssh_server_src_interface['howtofix'] + '\n'
+    if mpp.scp_server['must_report'] == True:
+        toBeReturned = toBeReturned + mpp.scp_server['definition'] + '\n' + mpp.scp_server['threatInfo'] + '\n\n' + mpp.scp_server['howtofix'] + '\n'
+    if mpp.http_secure_server['must_report'] == True:
+        toBeReturned = toBeReturned + mpp.http_secure_server['definition'] + '\n' + mpp.http_secure_server['threatInfo'] + '\n\n' + mpp.http_secure_server['howtofix'] + '\n'
+    if mpp.login_bruteforce['must_report'] == True:
+        toBeReturned = toBeReturned + mpp.login_bruteforce['definition'] + '\n' + mpp.login_bruteforce['threatInfo'] + '\n\n' + mpp.login_bruteforce['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorPasswordManagement(lines, pwdManagement):
+def engine_password_management(lines, pwdManagement):
     """Access management assessment."""
     try:
-        pwdManagement.enableSecret['cmdInCfg'] = search_string(lines, 'enable secret')
+        pwdManagement.enable_secret['cmdInCfg'] = search_string(lines, 'enable secret')
     except AttributeError:
         pass
-    if pwdManagement.enableSecret['cmdInCfg'] is not None:
+    if pwdManagement.enable_secret['cmdInCfg'] is not None:
         # feature already configured
-        pwdManagement.enableSecret['must_report'] = False
+        pwdManagement.enable_secret['must_report'] = False
     else:
-        items = search_xml('enableSecret')
+        items = search_xml('enable_secret')
         cvssMetrics = str(cvss_score(items[5]))
-        pwdManagement.enableSecret = {
+        pwdManagement.enable_secret = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -1412,16 +1415,16 @@ def analyzorPasswordManagement(lines, pwdManagement):
         "cvss": (cvssMetrics)}
 
     try:
-        pwdManagement.svcPwdEncryption['cmdInCfg'] = search_re_string(lines, '^service password-encryption')
+        pwdManagement.service_password_encryption['cmdInCfg'] = search_re_string(lines, '^service password-encryption')
     except AttributeError:
         pass
-    if pwdManagement.svcPwdEncryption['cmdInCfg'] is not None:
+    if pwdManagement.service_password_encryption['cmdInCfg'] is not None:
         # feature already configured
-        pwdManagement.svcPwdEncryption['must_report'] = False
+        pwdManagement.service_password_encryption['must_report'] = False
     else:
         items = search_xml('servicePasswordEncryption')
         cvssMetrics = str(cvss_score(items[5]))
-        pwdManagement.svcPwdEncryption = {
+        pwdManagement.service_password_encryption = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -1430,17 +1433,17 @@ def analyzorPasswordManagement(lines, pwdManagement):
         "cvss": (cvssMetrics)}
 
     try:
-        pwdManagement.usernameSecret['cmdInCfg'] = search_re_string(lines, '^username .* password .*')
+        pwdManagement.username_secret['cmdInCfg'] = search_re_string(lines, '^username .* password .*')
     except AttributeError:
         pass
-    if pwdManagement.usernameSecret['cmdInCfg'] is None:
+    if pwdManagement.username_secret['cmdInCfg'] is None:
         # feature already configured or not used
-        pwdManagement.usernameSecret['must_report'] = False
+        pwdManagement.username_secret['must_report'] = False
     else:
-        items = search_xml('usernameSecret')
+        items = search_xml('username_secret')
         if __builtin__.iosVersion >= 12.28:
             cvssMetrics = str(cvss_score(items[5]))
-            pwdManagement.usernameSecret = {
+            pwdManagement.username_secret = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1449,7 +1452,7 @@ def analyzorPasswordManagement(lines, pwdManagement):
             "cvss": (cvssMetrics)}
         else:
             cvssMetrics = str(cvss_score(items[5]))
-            pwdManagement.usernameSecret = {
+            pwdManagement.username_secret = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1458,31 +1461,31 @@ def analyzorPasswordManagement(lines, pwdManagement):
             "cvss": (cvssMetrics)}
 
     try:
-        pwdManagement.retryLockout['aaaNewModel'] = search_re_string(lines, '^aaa new-model')
+        pwdManagement.retry_lockout['aaa_new_model'] = search_re_string(lines, '^aaa new-model')
     except AttributeError:
         pass
     try:
-        pwdManagement.retryLockout['usernames'] = search_re_string(lines, '^username .*')
+        pwdManagement.retry_lockout['usernames'] = search_re_string(lines, '^username .*')
     except AttributeError:
         pass
     try:
-        pwdManagement.retryLockout['maxFail'] = search_string(lines, 'aaa local authentication attempts max-fail')
+        pwdManagement.retry_lockout['maxFail'] = search_string(lines, 'aaa local authentication attempts max-fail')
     except AttributeError:
         pass
     try:
-        pwdManagement.retryLockout['aaaAuthLoginLocal'] = search_re_string(lines, 'aaa authentication login default (local|.*) ?local')
+        pwdManagement.retry_lockout['aaaAuthLoginLocal'] = search_re_string(lines, 'aaa authentication login default (local|.*) ?local')
     except AttributeError:
         pass
 
-    if ((pwdManagement.retryLockout['aaaNewModel'] is not None) and (pwdManagement.retryLockout['maxFail'] is not None) and (pwdManagement.retryLockout['aaaAuthLoginLocal'] is not None) ):
-        pwdManagement.retryLockout['must_report'] = False
-    elif pwdManagement.retryLockout['usernames'] is None:
-        pwdManagement.retryLockout['must_report'] = False
+    if ((pwdManagement.retry_lockout['aaa_new_model'] is not None) and (pwdManagement.retry_lockout['maxFail'] is not None) and (pwdManagement.retry_lockout['aaaAuthLoginLocal'] is not None) ):
+        pwdManagement.retry_lockout['must_report'] = False
+    elif pwdManagement.retry_lockout['usernames'] is None:
+        pwdManagement.retry_lockout['must_report'] = False
     else:
-        items = search_xml('retryLockout')
+        items = search_xml('retry_lockout')
         if __builtin__.iosVersion >= 12.314:
             cvssMetrics = str(cvss_score(items[5]))
-            pwdManagement.retryLockout = {
+            pwdManagement.retry_lockout = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1492,7 +1495,7 @@ def analyzorPasswordManagement(lines, pwdManagement):
         else:
             # upgrade to >= 12.314 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            pwdManagement.retryLockout = {
+            pwdManagement.retry_lockout = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1501,41 +1504,41 @@ def analyzorPasswordManagement(lines, pwdManagement):
             "cvss": (cvssMetrics)}
 
     toBeReturned = ''
-    if pwdManagement.enableSecret['must_report'] == True:
-        toBeReturned = pwdManagement.enableSecret['definition'] + '\n' + pwdManagement.enableSecret['threatInfo'] + '\n\n' + pwdManagement.enableSecret['howtofix'] + '\n'
-    if pwdManagement.svcPwdEncryption['must_report'] == True:
-        toBeReturned = toBeReturned + pwdManagement.svcPwdEncryption['definition'] + '\n' + pwdManagement.svcPwdEncryption['threatInfo'] + '\n\n' + pwdManagement.svcPwdEncryption['howtofix'] + '\n'
-    if pwdManagement.usernameSecret['must_report'] == True:
-        toBeReturned = toBeReturned + pwdManagement.usernameSecret['definition'] + '\n' + pwdManagement.usernameSecret['threatInfo'] + '\n\n' + pwdManagement.usernameSecret['howtofix'] + '\n'
-    if pwdManagement.retryLockout['must_report'] == True:
-        toBeReturned = toBeReturned + pwdManagement.retryLockout['definition'] + '\n' + pwdManagement.retryLockout['threatInfo'] + '\n\n' + pwdManagement.retryLockout['howtofix'] + '\n'
+    if pwdManagement.enable_secret['must_report'] == True:
+        toBeReturned = pwdManagement.enable_secret['definition'] + '\n' + pwdManagement.enable_secret['threatInfo'] + '\n\n' + pwdManagement.enable_secret['howtofix'] + '\n'
+    if pwdManagement.service_password_encryption['must_report'] == True:
+        toBeReturned = toBeReturned + pwdManagement.service_password_encryption['definition'] + '\n' + pwdManagement.service_password_encryption['threatInfo'] + '\n\n' + pwdManagement.service_password_encryption['howtofix'] + '\n'
+    if pwdManagement.username_secret['must_report'] == True:
+        toBeReturned = toBeReturned + pwdManagement.username_secret['definition'] + '\n' + pwdManagement.username_secret['threatInfo'] + '\n\n' + pwdManagement.username_secret['howtofix'] + '\n'
+    if pwdManagement.retry_lockout['must_report'] == True:
+        toBeReturned = toBeReturned + pwdManagement.retry_lockout['definition'] + '\n' + pwdManagement.retry_lockout['threatInfo'] + '\n\n' + pwdManagement.retry_lockout['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorTacacs(lines, tacacs, mode):
+def engine_tacacs(lines, tacacs, mode):
     """Tacacs+ assessment."""
     toBeReturned = ''
     try:
-        tacacs.aaaNewModel['cmdInCfg'] = search_string(lines, 'aaa new-model')
+        tacacs.aaa_new_model['cmdInCfg'] = search_string(lines, 'aaa new-model')
     except AttributeError:
         pass
 
     if mode == 'Authentication':
 
         try:
-            tacacs.authTacacs['cmdInCfg'] = search_re_string(lines, 'aaa authentication login default (group tacacs\+|.*) ?tacacs\+')
+            tacacs.auth_tacacs['cmdInCfg'] = search_re_string(lines, 'aaa authentication login default (group tacacs\+|.*) ?tacacs\+')
         except AttributeError:
             pass
 
         try:
-            tacacs.authFallback['cmdInCfg'] = search_re_string(lines, 'aaa authentication login default (group tacacs\+|.*) (enable|local)')
+            tacacs.auth_fallback['cmdInCfg'] = search_re_string(lines, 'aaa authentication login default (group tacacs\+|.*) (enable|local)')
         except AttributeError:
             pass
 
-        if tacacs.aaaNewModel['cmdInCfg'] is None:
-            items = search_xml('aaaNewModel')
+        if tacacs.aaa_new_model['cmdInCfg'] is None:
+            items = search_xml('aaa_new_model')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.aaaNewmodel = {
+            tacacs.aaa_new_model = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1543,12 +1546,12 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.aaaNewModel['must_report'] = False
+            tacacs.aaa_new_model['must_report'] = False
 
-        if tacacs.authTacacs['cmdInCfg'] is None:
-            items = search_xml('aaaAuthTacacs')
+        if tacacs.auth_tacacs['cmdInCfg'] is None:
+            items = search_xml('aaaauth_tacacs')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.authTacacs = {
+            tacacs.auth_tacacs = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1556,12 +1559,12 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.authTacacs['must_report'] = False
+            tacacs.auth_tacacs['must_report'] = False
 
-        if tacacs.authFallback['cmdInCfg'] is None:
-            items = search_xml('aaaAuthTacacsFallback')
+        if tacacs.auth_fallback['cmdInCfg'] is None:
+            items = search_xml('aaaauth_tacacsFallback')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.authFallback = {
+            tacacs.auth_fallback = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1569,34 +1572,34 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.authFallback['must_report'] = False
+            tacacs.auth_fallback['must_report'] = False
 
     elif mode == 'Authorization':
 
         try:
-            tacacs.authExec['cmdInCfg'] = search_string(lines, 'aaa authorization exec default group tacacs none')
+            tacacs.auth_exec['cmdInCfg'] = search_string(lines, 'aaa authorization exec default group tacacs none')
         except AttributeError:
             pass
 
         try:
-            tacacs.level0['cmdInCfg'] = search_string(lines, 'aaa authorization commands 0 default group tacacs none')
+            tacacs.level_0['cmdInCfg'] = search_string(lines, 'aaa authorization commands 0 default group tacacs none')
         except AttributeError:
             pass
 
         try:
-            tacacs.level1['cmdInCfg'] = search_string(lines, 'aaa authorization commands 1 default group tacacs none')
+            tacacs.level_1['cmdInCfg'] = search_string(lines, 'aaa authorization commands 1 default group tacacs none')
         except AttributeError:
             pass
 
         try:
-            tacacs.level15['cmdInCfg'] = search_string(lines, 'aaa authorization commands 15 default group tacacs none')
+            tacacs.level_15['cmdInCfg'] = search_string(lines, 'aaa authorization commands 15 default group tacacs none')
         except AttributeError:
             pass
 
-        if tacacs.authExec['cmdInCfg'] is None:
-            items = search_xml('aaaAuthTacacsExec')
+        if tacacs.auth_exec['cmdInCfg'] is None:
+            items = search_xml('aaaauth_tacacsExec')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.authExec = {
+            tacacs.auth_exec = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1604,12 +1607,12 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.authExec['must_report'] = False
+            tacacs.auth_exec['must_report'] = False
 
-        if tacacs.level0['cmdInCfg'] is None:
-            items = search_xml('aaaAuthTacacsLevel0')
+        if tacacs.level_0['cmdInCfg'] is None:
+            items = search_xml('aaaauth_tacacslevel_0')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.level0 = {
+            tacacs.level_0 = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1617,12 +1620,12 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.level0['must_report'] = False
+            tacacs.level_0['must_report'] = False
 
-        if tacacs.level1['cmdInCfg'] is None:
-            items = search_xml('aaaAuthTacacsLevel1')
+        if tacacs.level_1['cmdInCfg'] is None:
+            items = search_xml('aaaauth_tacacslevel_1')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.level1 = {
+            tacacs.level_1 = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1630,12 +1633,12 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.level1['must_report'] = False
+            tacacs.level_1['must_report'] = False
 
-        if tacacs.level15['cmdInCfg'] is None:
-            items = search_xml('aaaAuthTacacsLevel15')
+        if tacacs.level_15['cmdInCfg'] is None:
+            items = search_xml('aaaauth_tacacslevel_15')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.level15 = {
+            tacacs.level_15 = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1643,34 +1646,34 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.level15['must_report'] = False
+            tacacs.level_15['must_report'] = False
 
     elif mode == 'Accounting':
 
         try:
-            tacacs.authAccounting['cmdInCfg'] = search_string(lines, 'aaa accounting exec default start-stop group tacacs')
+            tacacs.aaa_accounting['cmdInCfg'] = search_string(lines, 'aaa accounting exec default start-stop group tacacs')
         except AttributeError:
             pass
 
         try:
-            tacacs.level0['cmdInCfg'] = search_string(lines, 'aaa accounting commands 0 default start-stop group tacacs')
+            tacacs.level_0['cmdInCfg'] = search_string(lines, 'aaa accounting commands 0 default start-stop group tacacs')
         except AttributeError:
             pass
 
         try:
-            tacacs.level1['cmdInCfg'] = search_string(lines, 'aaa accounting commands 1 default start-stop group tacacs')
+            tacacs.level_1['cmdInCfg'] = search_string(lines, 'aaa accounting commands 1 default start-stop group tacacs')
         except AttributeError:
             pass
 
         try:
-            tacacs.level15['cmdInCfg'] = search_string(lines, 'aaa accounting commands 15 default start-stop group tacacs')
+            tacacs.level_15['cmdInCfg'] = search_string(lines, 'aaa accounting commands 15 default start-stop group tacacs')
         except AttributeError:
             pass
 
-        if tacacs.authAccounting['cmdInCfg'] is None:
+        if tacacs.aaa_accounting['cmdInCfg'] is None:
             items = search_xml('aaaAccountingTacacsExec')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.authAccounting = {
+            tacacs.aaa_accounting = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1678,12 +1681,12 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.authAccounting['must_report'] = False
+            tacacs.aaa_accounting['must_report'] = False
 
-        if tacacs.level0['cmdInCfg'] is None:
-            items = search_xml('aaaAccountingTacacsLevel0')
+        if tacacs.level_0['cmdInCfg'] is None:
+            items = search_xml('aaaAccountingTacacslevel_0')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.level0 = {
+            tacacs.level_0 = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1691,12 +1694,12 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.level0['must_report'] = False
+            tacacs.level_0['must_report'] = False
 
-        if tacacs.level1['cmdInCfg'] is None:
-            items = search_xml('aaaAccountingTacacsLevel1')
+        if tacacs.level_1['cmdInCfg'] is None:
+            items = search_xml('aaaAccountingTacacslevel_1')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.level1 = {
+            tacacs.level_1 = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1704,12 +1707,12 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.level1['must_report'] = False
+            tacacs.level_1['must_report'] = False
 
-        if tacacs.level15['cmdInCfg'] is None:
-            items = search_xml('aaaAccountingTacacsLevel15')
+        if tacacs.level_15['cmdInCfg'] is None:
+            items = search_xml('aaaAccountingTacacslevel_15')
             cvssMetrics = str(cvss_score(items[5]))
-            tacacs.level15 = {
+            tacacs.level_15 = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1717,16 +1720,16 @@ def analyzorTacacs(lines, tacacs, mode):
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
         else:
-            tacacs.level15['must_report'] = False
+            tacacs.level_15['must_report'] = False
 
     elif mode == 'RedundantAAA':
 
-        countServers = 0
+        countservers = 0
         for line in lines:
             if search_string(lines, 'tacacs-server host') is not None:
-                countServers = countServers +1
+                countservers = countservers +1
 
-        if countServers >= 2:
+        if countservers >= 2:
             tacacs.redundant['must_report'] = False
         else:
             items = search_xml('aaaTacacsRedundant')
@@ -1743,82 +1746,82 @@ def analyzorTacacs(lines, tacacs, mode):
         if tacacs.redundant['must_report'] == True:
             toBeReturned = tacacs.redundant['definition'] + '\n' + tacacs.redundant['threatInfo'] + '\n\n' + tacacs.redundant['howtofix'] + '\n'
     elif mode == 'Authentication':
-        if tacacs.aaaNewModel['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.aaaNewModel['definition'] + '\n' + tacacs.aaaNewModel['threatInfo'] + '\n\n' + tacacs.aaaNewModel['howtofix'] + '\n'
-        if tacacs.authTacacs['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.authTacacs['definition'] + '\n' + tacacs.authTacacs['threatInfo'] + '\n\n' + tacacs.authTacacs['howtofix'] + '\n'
-        if tacacs.authFallback['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.authFallback['definition'] + '\n' + tacacs.authFallback['threatInfo'] + '\n\n' + tacacs.authFallback['howtofix'] + '\n'
+        if tacacs.aaa_new_model['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.aaa_new_model['definition'] + '\n' + tacacs.aaa_new_model['threatInfo'] + '\n\n' + tacacs.aaa_new_model['howtofix'] + '\n'
+        if tacacs.auth_tacacs['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.auth_tacacs['definition'] + '\n' + tacacs.auth_tacacs['threatInfo'] + '\n\n' + tacacs.auth_tacacs['howtofix'] + '\n'
+        if tacacs.auth_fallback['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.auth_fallback['definition'] + '\n' + tacacs.auth_fallback['threatInfo'] + '\n\n' + tacacs.auth_fallback['howtofix'] + '\n'
     elif mode == 'Authorization':
-        if tacacs.authExec['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.authExec['definition'] + '\n' + tacacs.authExec['threatInfo'] + '\n\n' + tacacs.authExec['howtofix'] + '\n'
-        if tacacs.level0['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.level0['definition'] + '\n' + tacacs.level0['threatInfo'] + '\n\n' + tacacs.level0['howtofix'] + '\n'
-        if tacacs.level1['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.level1['definition'] + '\n' + tacacs.level1['threatInfo'] + '\n\n' + tacacs.level1['howtofix'] + '\n'
-        if tacacs.level15['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.level15['definition'] + '\n' + tacacs.level15['threatInfo'] + '\n\n' + tacacs.level15['howtofix'] + '\n'
+        if tacacs.auth_exec['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.auth_exec['definition'] + '\n' + tacacs.auth_exec['threatInfo'] + '\n\n' + tacacs.auth_exec['howtofix'] + '\n'
+        if tacacs.level_0['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.level_0['definition'] + '\n' + tacacs.level_0['threatInfo'] + '\n\n' + tacacs.level_0['howtofix'] + '\n'
+        if tacacs.level_1['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.level_1['definition'] + '\n' + tacacs.level_1['threatInfo'] + '\n\n' + tacacs.level_1['howtofix'] + '\n'
+        if tacacs.level_15['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.level_15['definition'] + '\n' + tacacs.level_15['threatInfo'] + '\n\n' + tacacs.level_15['howtofix'] + '\n'
     elif mode == 'Accounting':
-        if tacacs.authAccounting['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.authAccounting['definition'] + '\n' + tacacs.authAccounting['threatInfo'] + '\n\n' + tacacs.authAccounting['howtofix'] + '\n'
-        if tacacs.level0['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.level0['definition'] + '\n' + tacacs.level0['threatInfo'] + '\n\n' + tacacs.level0['howtofix'] + '\n'
-        if tacacs.level1['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.level1['definition'] + '\n' + tacacs.level1['threatInfo'] + '\n\n' + tacacs.level1['howtofix'] + '\n'
-        if tacacs.level15['must_report'] == True:
-            toBeReturned = toBeReturned + tacacs.level15['definition'] + '\n' + tacacs.level15['threatInfo'] + '\n\n' + tacacs.level15['howtofix'] + '\n'
+        if tacacs.aaa_accounting['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.aaa_accounting['definition'] + '\n' + tacacs.aaa_accounting['threatInfo'] + '\n\n' + tacacs.aaa_accounting['howtofix'] + '\n'
+        if tacacs.level_0['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.level_0['definition'] + '\n' + tacacs.level_0['threatInfo'] + '\n\n' + tacacs.level_0['howtofix'] + '\n'
+        if tacacs.level_1['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.level_1['definition'] + '\n' + tacacs.level_1['threatInfo'] + '\n\n' + tacacs.level_1['howtofix'] + '\n'
+        if tacacs.level_15['must_report'] == True:
+            toBeReturned = toBeReturned + tacacs.level_15['definition'] + '\n' + tacacs.level_15['threatInfo'] + '\n\n' + tacacs.level_15['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorSNMP(lines, snmp):
+def engine_snmp(lines, snmp):
     """SNMP configuration assessment."""
     try:
-        snmp.ROcommunity['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* (RO|ro)')
+        snmp.ro_community['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* (RO|ro)')
     except AttributeError:
         pass
 
     try:
-        snmp.RWcommunity['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* (RW|rw)')
+        snmp.rw_community['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* (RW|rw)')
     except AttributeError:
         pass
 
     try:
-        snmp.ViewROcommunity['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* view .* (RO|ro)')
+        snmp.view_ro_community['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* view .* (RO|ro)')
     except AttributeError:
         pass
 
     try:
-        snmp.ViewRWcommunity['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* view .* (RW|rw)')
+        snmp.view_rw_community['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* view .* (RW|rw)')
     except AttributeError:
         pass
 
     try:
-        snmp.snmpV3['cmdInCfg'] = search_re_string(lines, 'snmp-server group .* v3 (auth|priv)')
+        snmp.snmp_v3['cmdInCfg'] = search_re_string(lines, 'snmp-server group .* v3 (auth|priv)')
     except AttributeError:
         pass
 
     try:
-        mgmtSubnet = __builtin__.IPv4trustedNetManagementServers[0][0]
-    except:
+        mgmtSubnet = __builtin__.ipv4_mgmt_outbound[0][0]
+    except TypeError:
         mgmtSubnet = ""
         pass
     try:
-        mgmtWildcardMask = __builtin__.IPv4trustedNetManagementServers[0][3]
-    except:
+        mgmtWildcardMask = __builtin__.ipv4_mgmt_outbound[0][3]
+    except TypeError:
         mgmtWildcardMask = ""
         pass
 
-    if snmp.ROcommunity['cmdInCfg'] is None:
+    if snmp.ro_community['cmdInCfg'] is None:
         # feature not configured
-        snmp.ROcommunity['must_report'] = False
-        snmp.ROcommunityACL['must_report'] = False
+        snmp.ro_community['must_report'] = False
+        snmp.ro_community_acl['must_report'] = False
     else:
-        SNMPcommunity = snmp.ROcommunity['cmdInCfg'].split(' ')
+        SNMPcommunity = snmp.ro_community['cmdInCfg'].split(' ')
         ROsecure = snmp_community_complexity(SNMPcommunity[2])
         if ROsecure == False:
-            items = search_xml('snmpROcommunityHardened')
+            items = search_xml('snmpro_communityHardened')
             cvssMetrics = str(cvss_score(items[5]))
-            snmp.ROcommunity = {
+            snmp.ro_community = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1828,14 +1831,14 @@ def analyzorSNMP(lines, snmp):
                 .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         try:
-            snmp.ROcommunityACL['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* (RO|ro) \d')
+            snmp.ro_community_acl['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* (RO|ro) \d')
         except AttributeError:
             pass
 
-        if snmp.ROcommunityACL['cmdInCfg'] is None:
-            items = search_xml('snmpROcommunityHardenedACL')
+        if snmp.ro_community_acl['cmdInCfg'] is None:
+            items = search_xml('snmpro_communityHardenedACL')
             cvssMetrics = str(cvss_score(items[5]))
-            snmp.ROcommunityACL = {
+            snmp.ro_community_acl = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1845,13 +1848,13 @@ def analyzorSNMP(lines, snmp):
                 .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         else:
-            accessListNumber = snmp.ROcommunityACL['cmdInCfg'].split(' ')[4]
+            accessListNumber = snmp.ro_community_acl['cmdInCfg'].split(' ')[4]
             if check_std_acl(lines, accessListNumber) == True:
-                snmp.ROcommunityACL['must_report'] = False
+                snmp.ro_community_acl['must_report'] = False
             else:
-                items = search_xml('snmpROcommunityHardenedACL')
+                items = search_xml('snmpro_communityHardenedACL')
                 cvssMetrics = str(cvss_score(items[5]))
-                snmp.ROcommunityACL = {
+                snmp.ro_community_acl = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -1861,17 +1864,17 @@ def analyzorSNMP(lines, snmp):
                     .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    if snmp.RWcommunity['cmdInCfg'] is None:
+    if snmp.rw_community['cmdInCfg'] is None:
         # feature not configured
-        snmp.RWcommunity['must_report'] = False
-        snmp.RWcommunityACL['must_report'] = False
+        snmp.rw_community['must_report'] = False
+        snmp.rw_community_acl['must_report'] = False
     else:
-        SNMPcommunity = snmp.RWcommunity['cmdInCfg'].split(' ')
+        SNMPcommunity = snmp.rw_community['cmdInCfg'].split(' ')
         RWsecure = snmp_community_complexity(SNMPcommunity[2])
         if RWsecure == False:
-            items = search_xml('snmpRWcommunityHardened')
+            items = search_xml('snmprw_communityHardened')
             cvssMetrics = str(cvss_score(items[5]))
-            snmp.RWcommunity = {
+            snmp.rw_community = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1881,14 +1884,14 @@ def analyzorSNMP(lines, snmp):
                 .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         try:
-            snmp.RWcommunityACL['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* (RW|rw) \d')
+            snmp.rw_community_acl['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* (RW|rw) \d')
         except AttributeError:
             pass
 
-        if snmp.RWcommunityACL['cmdInCfg'] is None:
-            items = search_xml('snmpRWcommunityHardenedACL')
+        if snmp.rw_community_acl['cmdInCfg'] is None:
+            items = search_xml('snmprw_communityHardenedACL')
             cvssMetrics = str(cvss_score(items[5]))
-            snmp.RWcommunityACL = {
+            snmp.rw_community_acl = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1898,13 +1901,13 @@ def analyzorSNMP(lines, snmp):
                 .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         else:
-            accessListNumber = snmp.RWcommunityACL['cmdInCfg'].split(' ')[4]
+            accessListNumber = snmp.rw_community_acl['cmdInCfg'].split(' ')[4]
             if check_std_acl(lines, accessListNumber) == True:
-                snmp.RWcommunityACL['must_report'] = False
+                snmp.rw_community_acl['must_report'] = False
             else:
-                items = search_xml('snmpRWcommunityHardenedACL')
+                items = search_xml('snmprw_communityHardenedACL')
                 cvssMetrics = str(cvss_score(items[5]))
-                snmp.RWcommunityACL = {
+                snmp.rw_community_acl = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -1914,17 +1917,17 @@ def analyzorSNMP(lines, snmp):
                     .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    if snmp.ViewROcommunity['cmdInCfg'] is None:
+    if snmp.view_ro_community['cmdInCfg'] is None:
         # feature not configured
-        snmp.ViewROcommunity['must_report'] = False
-        snmp.ViewROcommunityACL['must_report'] = False
+        snmp.view_ro_community['must_report'] = False
+        snmp.view_ro_community_acl['must_report'] = False
     else:
-        SNMPcommunity = snmp.ViewROcommunity['cmdInCfg'].split(' ')
+        SNMPcommunity = snmp.view_ro_community['cmdInCfg'].split(' ')
         ROsecure = snmp_community_complexity(SNMPcommunity[2])
         if ROsecure == False:
-            items = search_xml('ViewsnmpROcommunityHardened')
+            items = search_xml('Viewsnmpro_communityHardened')
             cvssMetrics = str(cvss_score(items[5]))
-            snmp.ViewROcommunity = {
+            snmp.view_ro_community = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1934,14 +1937,14 @@ def analyzorSNMP(lines, snmp):
                 .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         try:
-            snmp.ViewROcommunityACL['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* view .* (RO|ro) \d')
+            snmp.view_ro_community_acl['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* view .* (RO|ro) \d')
         except AttributeError:
             pass
 
-        if snmp.ViewROcommunityACL['cmdInCfg'] is None:
-            items = search_xml('ViewsnmpROcommunityHardenedACL')
+        if snmp.view_ro_community_acl['cmdInCfg'] is None:
+            items = search_xml('Viewsnmpro_communityHardenedACL')
             cvssMetrics = str(cvss_score(items[5]))
-            snmp.ViewROcommunityACL = {
+            snmp.view_ro_community_acl = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1951,13 +1954,13 @@ def analyzorSNMP(lines, snmp):
                 .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         else:
-            accessListNumber = snmp.ViewROcommunityACL['cmdInCfg'].split(' ')[4]
+            accessListNumber = snmp.view_ro_community_acl['cmdInCfg'].split(' ')[4]
             if check_std_acl(lines, accessListNumber) == True:
-                snmp.ViewROcommunityACL['must_report'] = False
+                snmp.view_ro_community_acl['must_report'] = False
             else:
-                items = search_xml('ViewsnmpROcommunityHardenedACL')
+                items = search_xml('Viewsnmpro_communityHardenedACL')
                 cvssMetrics = str(cvss_score(items[5]))
-                snmp.ViewROcommunityACL = {
+                snmp.view_ro_community_acl = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -1967,17 +1970,17 @@ def analyzorSNMP(lines, snmp):
                     .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    if snmp.ViewRWcommunity['cmdInCfg'] is None:
+    if snmp.view_rw_community['cmdInCfg'] is None:
         # feature not configured
-        snmp.ViewRWcommunity['must_report'] = False
-        snmp.ViewRWcommunityACL['must_report'] = False
+        snmp.view_rw_community['must_report'] = False
+        snmp.view_rw_community_acl['must_report'] = False
     else:
-        SNMPcommunity = snmp.ViewRWcommunity['cmdInCfg'].split(' ')
+        SNMPcommunity = snmp.view_rw_community['cmdInCfg'].split(' ')
         RWsecure = snmp_community_complexity(SNMPcommunity[2])
         if RWsecure == False:
-            items = search_xml('ViewsnmpRWcommunityHardened')
+            items = search_xml('Viewsnmprw_communityHardened')
             cvssMetrics = str(cvss_score(items[5]))
-            snmp.ViewRWcommunity = {
+            snmp.view_rw_community = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -1987,14 +1990,14 @@ def analyzorSNMP(lines, snmp):
                 .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         try:
-            snmp.ViewRWcommunityACL['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* view .* (RW|rw) \d')
+            snmp.view_rw_community_acl['cmdInCfg'] = search_re_string(lines, 'snmp-server community .* view .* (RW|rw) \d')
         except AttributeError:
             pass
 
-        if snmp.ViewRWcommunityACL['cmdInCfg'] is None:
-            items = search_xml('snmpRWcommunityHardenedACL')
+        if snmp.view_rw_community_acl['cmdInCfg'] is None:
+            items = search_xml('snmprw_communityHardenedACL')
             cvssMetrics = str(cvss_score(items[5]))
-            snmp.ViewRWcommunityACL = {
+            snmp.view_rw_community_acl = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2004,13 +2007,13 @@ def analyzorSNMP(lines, snmp):
             .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
             "cvss": (cvssMetrics)}
         else:
-            accessListNumber = snmp.ViewRWcommunityACL['cmdInCfg'].split(' ')[4]
+            accessListNumber = snmp.view_rw_community_acl['cmdInCfg'].split(' ')[4]
             if check_std_acl(lines, accessListNumber) == True:
-                snmp.ViewRWcommunityACL['must_report'] = False
+                snmp.view_rw_community_acl['must_report'] = False
             else:
-                items = search_xml('ViewsnmpRWcommunityHardenedACL')
+                items = search_xml('Viewsnmprw_communityHardenedACL')
                 cvssMetrics = str(cvss_score(items[5]))
-                snmp.ViewRWcommunityACL = {
+                snmp.view_rw_community_acl = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -2020,11 +2023,11 @@ def analyzorSNMP(lines, snmp):
                     .replace('[%ManagementWildcardMask]', mgmtWildcardMask, 1)),
                 "cvss": (cvssMetrics)}
 
-    if snmp.snmpV3['cmdInCfg'] is None:
+    if snmp.snmp_v3['cmdInCfg'] is None:
         # feature not configured
         items = search_xml('snmpVersion3')
         cvssMetrics = str(cvss_score(items[5]))
-        snmp.snmpV3 = {
+        snmp.snmp_v3 = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -2035,56 +2038,56 @@ def analyzorSNMP(lines, snmp):
         "cvss": (cvssMetrics)}
 
     else:
-        snmp.snmpV3['must_report'] = False
+        snmp.snmp_v3['must_report'] = False
 
     toBeReturned = ''
-    if snmp.ROcommunity['must_report'] == True:
-        toBeReturned = snmp.ROcommunity['definition'] + '\n' + snmp.ROcommunity['threatInfo'] + '\n\n' + snmp.ROcommunity['howtofix'] + '\n'
-    if snmp.ROcommunityACL['must_report'] == True:
-        toBeReturned = toBeReturned + snmp.ROcommunityACL['definition'] + '\n' + snmp.ROcommunityACL['threatInfo'] + '\n\n' + snmp.ROcommunityACL['howtofix'] + '\n'
-    if snmp.RWcommunity['must_report'] == True:
-        toBeReturned = toBeReturned + snmp.RWcommunity['definition'] + '\n' + snmp.RWcommunity['threatInfo'] + '\n\n' + snmp.RWcommunity['howtofix'] + '\n'
-    if snmp.RWcommunityACL['must_report'] == True:
-        toBeReturned = toBeReturned + snmp.RWcommunityACL['definition'] + '\n' + snmp.RWcommunityACL['threatInfo'] + '\n\n' + snmp.RWcommunityACL['howtofix'] + '\n'
-    if snmp.ViewROcommunity['must_report'] == True:
-        toBeReturned = toBeReturned + snmp.ViewROcommunity['definition'] + '\n' + snmp.ViewROcommunity['threatInfo'] + '\n\n' + snmp.ViewROcommunity['howtofix'] + '\n'
-    if snmp.ViewROcommunityACL['must_report'] == True:
-        toBeReturned = toBeReturned + snmp.ViewROcommunityACL['definition'] + '\n' + snmp.ViewROcommunityACL['threatInfo'] + '\n\n' + snmp.ViewROcommunityACL['howtofix'] + '\n'
-    if snmp.ViewRWcommunity['must_report'] == True:
-        toBeReturned = toBeReturned + snmp.ViewRWcommunity['definition'] + '\n' + snmp.ViewRWcommunity['threatInfo'] + '\n\n' + snmp.ViewRWcommunity['howtofix'] + '\n'
-    if snmp.ViewRWcommunityACL['must_report'] == True:
-        toBeReturned = toBeReturned + snmp.ViewRWcommunityACL['definition'] + '\n' + snmp.ViewRWcommunityACL['threatInfo'] + '\n\n' + snmp.ViewRWcommunityACL['howtofix'] + '\n'
-    if snmp.snmpV3['must_report'] == True:
-        toBeReturned = toBeReturned + snmp.snmpV3['definition'] + '\n' + snmp.snmpV3['threatInfo'] + '\n\n' + snmp.snmpV3['howtofix'] + '\n'
+    if snmp.ro_community['must_report'] == True:
+        toBeReturned = snmp.ro_community['definition'] + '\n' + snmp.ro_community['threatInfo'] + '\n\n' + snmp.ro_community['howtofix'] + '\n'
+    if snmp.ro_community_acl['must_report'] == True:
+        toBeReturned = toBeReturned + snmp.ro_community_acl['definition'] + '\n' + snmp.ro_community_acl['threatInfo'] + '\n\n' + snmp.ro_community_acl['howtofix'] + '\n'
+    if snmp.rw_community['must_report'] == True:
+        toBeReturned = toBeReturned + snmp.rw_community['definition'] + '\n' + snmp.rw_community['threatInfo'] + '\n\n' + snmp.rw_community['howtofix'] + '\n'
+    if snmp.rw_community_acl['must_report'] == True:
+        toBeReturned = toBeReturned + snmp.rw_community_acl['definition'] + '\n' + snmp.rw_community_acl['threatInfo'] + '\n\n' + snmp.rw_community_acl['howtofix'] + '\n'
+    if snmp.view_ro_community['must_report'] == True:
+        toBeReturned = toBeReturned + snmp.view_ro_community['definition'] + '\n' + snmp.view_ro_community['threatInfo'] + '\n\n' + snmp.view_ro_community['howtofix'] + '\n'
+    if snmp.view_ro_community_acl['must_report'] == True:
+        toBeReturned = toBeReturned + snmp.view_ro_community_acl['definition'] + '\n' + snmp.view_ro_community_acl['threatInfo'] + '\n\n' + snmp.view_ro_community_acl['howtofix'] + '\n'
+    if snmp.view_rw_community['must_report'] == True:
+        toBeReturned = toBeReturned + snmp.view_rw_community['definition'] + '\n' + snmp.view_rw_community['threatInfo'] + '\n\n' + snmp.view_rw_community['howtofix'] + '\n'
+    if snmp.view_rw_community_acl['must_report'] == True:
+        toBeReturned = toBeReturned + snmp.view_rw_community_acl['definition'] + '\n' + snmp.view_rw_community_acl['threatInfo'] + '\n\n' + snmp.view_rw_community_acl['howtofix'] + '\n'
+    if snmp.snmp_v3['must_report'] == True:
+        toBeReturned = toBeReturned + snmp.snmp_v3['definition'] + '\n' + snmp.snmp_v3['threatInfo'] + '\n\n' + snmp.snmp_v3['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorSyslog(lines, syslog):
+def engine_syslog(lines, syslog):
     """Syslog assessment."""
     try:
-        syslog.Server['cmdInCfg'] = search_string(lines, 'logging host')
+        syslog.server['cmdInCfg'] = search_string(lines, 'logging host')
     except AttributeError:
         pass
 
-    if syslog.Server['cmdInCfg'] is None:
+    if syslog.server['cmdInCfg'] is None:
         # feature not configured
         try:
-            mgmtSubnet = __builtin__.IPv4trustedNetManagementServers[0][0]
-        except:
+            mgmtSubnet = __builtin__.ipv4_mgmt_outbound[0][0]
+        except TypeError:
             mgmtSubnet = ""
             pass
         try:
-            mgmtWildcardMask = __builtin__.IPv4trustedNetManagementServers[0][3]
-        except:
+            mgmtWildcardMask = __builtin__.ipv4_mgmt_outbound[0][3]
+        except TypeError:
             mgmtWildcardMask = ""
             pass
 
 
-        items = search_xml('syslogServer')
+        items = search_xml('syslogserver')
         cvssMetrics = str(cvss_score(items[5]))
 
         if len(mgmtSubnet) > 0:
-            syslog.Server = {
+            syslog.server = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2093,7 +2096,7 @@ def analyzorSyslog(lines, syslog):
                 .replace('[%ManagementSyslog]', mgmtSubnet, 1)),
             "cvss": (cvssMetrics)}
         else:
-            syslog.Server = {
+            syslog.server = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2103,17 +2106,17 @@ def analyzorSyslog(lines, syslog):
             "cvss": (cvssMetrics)}
 
     else:
-        syslog.Server['must_report'] = False
+        syslog.server['must_report'] = False
 
     try:
-        syslog.levelTrap['cmdInCfg'] = search_string(lines, 'logging trap')
+        syslog.level_trap['cmdInCfg'] = search_string(lines, 'logging trap')
     except AttributeError:
         pass
-    if syslog.levelTrap['cmdInCfg'] is None:
+    if syslog.level_trap['cmdInCfg'] is None:
         # feature not configured
-        items = search_xml('syslogLevelTrap')
+        items = search_xml('sysloglevel_trap')
         cvssMetrics = str(cvss_score(items[5]))
-        syslog.levelTrap = {
+        syslog.level_trap = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -2121,7 +2124,7 @@ def analyzorSyslog(lines, syslog):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        level = syslog.levelTrap['cmdInCfg'].split(' ')[2]
+        level = syslog.level_trap['cmdInCfg'].split(' ')[2]
         if level.isdigit() == False:
             if level.strip().lower() == "emergencies":
                 level = 0
@@ -2141,11 +2144,11 @@ def analyzorSyslog(lines, syslog):
                 level = 7
 
         if int(level) <= 6:
-            syslog.levelTrap['must_report'] = False
+            syslog.level_trap['must_report'] = False
         else:
-            items = search_xml('syslogLevelTrap')
+            items = search_xml('sysloglevel_trap')
             cvssMetrics = str(cvss_score(items[5]))
-            syslog.levelTrap = {
+            syslog.level_trap = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2154,14 +2157,14 @@ def analyzorSyslog(lines, syslog):
             "cvss": (cvssMetrics)}
 
     try:
-        syslog.levelBuffered['cmdInCfg'] = search_re_string(lines, 'logging buffered \d')
+        syslog.level_buffered['cmdInCfg'] = search_re_string(lines, 'logging buffered \d')
     except AttributeError:
         pass
-    if syslog.levelBuffered['cmdInCfg'] is None:
+    if syslog.level_buffered['cmdInCfg'] is None:
         # feature not configured
-        items = search_xml('syslogLevelBuffered')
+        items = search_xml('sysloglevel_buffered')
         cvssMetrics = str(cvss_score(items[5]))
-        syslog.levelBuffered = {
+        syslog.level_buffered = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -2169,13 +2172,13 @@ def analyzorSyslog(lines, syslog):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        level = syslog.levelBuffered['cmdInCfg'].split(' ')[2]
+        level = syslog.level_buffered['cmdInCfg'].split(' ')[2]
         if int(level) == 6:
-            syslog.levelBuffered['must_report'] = False
+            syslog.level_buffered['must_report'] = False
         else:
-            items = search_xml('syslogLevelBuffered')
+            items = search_xml('sysloglevel_buffered')
             cvssMetrics = str(cvss_score(items[5]))
-            syslog.levelBuffered = {
+            syslog.level_buffered = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2184,14 +2187,14 @@ def analyzorSyslog(lines, syslog):
             "cvss": (cvssMetrics)}
 
     try:
-        syslog.loggingConsole['cmdInCfg'] = search_string(lines, 'no logging console')
+        syslog.logging_console['cmdInCfg'] = search_string(lines, 'no logging console')
     except AttributeError:
         pass
-    if syslog.loggingConsole['cmdInCfg'] is None:
+    if syslog.logging_console['cmdInCfg'] is None:
         # feature not configured
         items = search_xml('syslogConsole')
         cvssMetrics = str(cvss_score(items[5]))
-        syslog.loggingConsole = {
+        syslog.logging_console = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -2199,17 +2202,17 @@ def analyzorSyslog(lines, syslog):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        syslog.loggingConsole['must_report'] = False
+        syslog.logging_console['must_report'] = False
 
     try:
-        syslog.loggingMonitor['cmdInCfg'] = search_string(lines, 'no logging monitor')
+        syslog.logging_monitor['cmdInCfg'] = search_string(lines, 'no logging monitor')
     except AttributeError:
         pass
-    if syslog.loggingMonitor['cmdInCfg'] is None:
+    if syslog.logging_monitor['cmdInCfg'] is None:
         # feature not configured
         items = search_xml('syslogMonitor')
         cvssMetrics = str(cvss_score(items[5]))
-        syslog.loggingMonitor = {
+        syslog.logging_monitor = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -2217,17 +2220,17 @@ def analyzorSyslog(lines, syslog):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        syslog.loggingMonitor['must_report'] = False
+        syslog.logging_monitor['must_report'] = False
 
     try:
-        syslog.loggingBuffered['cmdInCfg'] = search_re_string(lines, 'logging buffered .* .*')
+        syslog.logging_buffered['cmdInCfg'] = search_re_string(lines, 'logging buffered .* .*')
     except AttributeError:
         pass
-    if syslog.loggingBuffered['cmdInCfg'] is None:
+    if syslog.logging_buffered['cmdInCfg'] is None:
         # feature not configured
         items = search_xml('syslogBuffered')
         cvssMetrics = str(cvss_score(items[5]))
-        syslog.loggingBuffered = {
+        syslog.logging_buffered = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -2235,8 +2238,8 @@ def analyzorSyslog(lines, syslog):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        size = syslog.loggingBuffered['cmdInCfg'].split(' ')[2]
-        level = syslog.loggingBuffered['cmdInCfg'].split(' ')[3]
+        size = syslog.logging_buffered['cmdInCfg'].split(' ')[2]
+        level = syslog.logging_buffered['cmdInCfg'].split(' ')[3]
         if level.isdigit() == False:
             if level.strip().lower() == "emergencies":
                 level = 0
@@ -2255,11 +2258,11 @@ def analyzorSyslog(lines, syslog):
             if level.strip().lower() == "debugging":
                 level = 7
         if ( (int(size) >= 16000) and (int(level) == 6) ):
-            syslog.loggingBuffered['must_report'] = False
+            syslog.logging_buffered['must_report'] = False
         else:
             items = search_xml('syslogBuffered')
             cvssMetrics = str(cvss_score(items[5]))
-            syslog.loggingBuffered = {
+            syslog.logging_buffered = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2268,14 +2271,14 @@ def analyzorSyslog(lines, syslog):
             "cvss": (cvssMetrics)}
 
     try:
-        syslog.Interface['cmdInCfg'] = search_string(lines, 'logging source-interface loopback')
+        syslog.interface['cmdInCfg'] = search_string(lines, 'logging source-interface loopback')
     except AttributeError:
         pass
-    if syslog.Interface['cmdInCfg'] is None:
+    if syslog.interface['cmdInCfg'] is None:
         # feature not configured
-        items = search_xml('syslogInterface')
+        items = search_xml('sysloginterface')
         cvssMetrics = str(cvss_score(items[5]))
-        syslog.Interface = {
+        syslog.interface = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -2283,7 +2286,7 @@ def analyzorSyslog(lines, syslog):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
     else:
-        syslog.Interface['must_report'] = False
+        syslog.interface['must_report'] = False
 
     try:
         syslog.timestamp['cmdInCfg'] = search_string(lines, 'service timestamps log datetime msec show-timezone')
@@ -2305,15 +2308,15 @@ def analyzorSyslog(lines, syslog):
 
     if __builtin__.deviceType == 'router':
         try:
-            syslog.serverarp['cmdInCfg'] = search_string(lines, 'logging server-arp')
+            syslog.server_arp['cmdInCfg'] = search_string(lines, 'logging server-arp')
         except AttributeError:
             pass
-        if syslog.serverarp['cmdInCfg'] is None:
+        if syslog.server_arp['cmdInCfg'] is None:
             # feature not configured
             if __builtin__.iosVersion >= 12.3:
-                items = search_xml('syslogServerArp')
+                items = search_xml('syslogserver_arp')
                 cvssMetrics = str(cvss_score(items[5]))
-                syslog.serverarp = {
+                syslog.server_arp = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -2322,9 +2325,9 @@ def analyzorSyslog(lines, syslog):
                 "cvss": (cvssMetrics)}
             else:
                 # upgrade to >= 12.3 to get the feature
-                items = search_xml('syslogServerArp')
+                items = search_xml('syslogserver_arp')
                 cvssMetrics = str(cvss_score(items[5]))
-                syslog.serverarp = {
+                syslog.server_arp = {
                 "must_report": True,
                 "fixImpact": (items[0]),
                 "definition": (items[1]),
@@ -2332,32 +2335,32 @@ def analyzorSyslog(lines, syslog):
                 "howtofix": (items[4]),
                 "cvss": (cvssMetrics)}
         else:
-            syslog.serverarp['must_report'] = False
+            syslog.server_arp['must_report'] = False
 
     toBeReturned = ''
-    if syslog.Server['must_report'] == True:
-        toBeReturned = syslog.Server['definition'] + '\n' + syslog.Server['threatInfo'] + '\n\n' + syslog.Server['howtofix'] + '\n'
-    if syslog.levelTrap['must_report'] == True:
-        toBeReturned = toBeReturned + syslog.levelTrap['definition'] + '\n' + syslog.levelTrap['threatInfo'] + '\n\n' + syslog.levelTrap['howtofix'] + '\n'
-    if syslog.levelBuffered['must_report'] == True:
-        toBeReturned = toBeReturned + syslog.levelBuffered['definition'] + '\n' + syslog.levelBuffered['threatInfo'] + '\n\n' + syslog.levelBuffered['howtofix'] + '\n'
-    if syslog.loggingConsole['must_report'] == True:
-        toBeReturned = toBeReturned + syslog.loggingConsole['definition'] + '\n' + syslog.loggingConsole['threatInfo'] + '\n\n' + syslog.loggingConsole['howtofix'] + '\n'
-    if syslog.loggingMonitor['must_report'] == True:
-        toBeReturned = toBeReturned + syslog.loggingMonitor['definition'] + '\n' + syslog.loggingMonitor['threatInfo'] + '\n\n' + syslog.loggingMonitor['howtofix'] + '\n'
-    if syslog.loggingBuffered['must_report'] == True:
-        toBeReturned = toBeReturned + syslog.loggingBuffered['definition'] + '\n' + syslog.loggingBuffered['threatInfo'] + '\n\n' + syslog.loggingBuffered['howtofix'] + '\n'
-    if syslog.Interface['must_report'] == True:
-        toBeReturned = toBeReturned + syslog.Interface['definition'] + '\n' + syslog.Interface['threatInfo'] + '\n\n' + syslog.Interface['howtofix'] + '\n'
+    if syslog.server['must_report'] == True:
+        toBeReturned = syslog.server['definition'] + '\n' + syslog.server['threatInfo'] + '\n\n' + syslog.server['howtofix'] + '\n'
+    if syslog.level_trap['must_report'] == True:
+        toBeReturned = toBeReturned + syslog.level_trap['definition'] + '\n' + syslog.level_trap['threatInfo'] + '\n\n' + syslog.level_trap['howtofix'] + '\n'
+    if syslog.level_buffered['must_report'] == True:
+        toBeReturned = toBeReturned + syslog.level_buffered['definition'] + '\n' + syslog.level_buffered['threatInfo'] + '\n\n' + syslog.level_buffered['howtofix'] + '\n'
+    if syslog.logging_console['must_report'] == True:
+        toBeReturned = toBeReturned + syslog.logging_console['definition'] + '\n' + syslog.logging_console['threatInfo'] + '\n\n' + syslog.logging_console['howtofix'] + '\n'
+    if syslog.logging_monitor['must_report'] == True:
+        toBeReturned = toBeReturned + syslog.logging_monitor['definition'] + '\n' + syslog.logging_monitor['threatInfo'] + '\n\n' + syslog.logging_monitor['howtofix'] + '\n'
+    if syslog.logging_buffered['must_report'] == True:
+        toBeReturned = toBeReturned + syslog.logging_buffered['definition'] + '\n' + syslog.logging_buffered['threatInfo'] + '\n\n' + syslog.logging_buffered['howtofix'] + '\n'
+    if syslog.interface['must_report'] == True:
+        toBeReturned = toBeReturned + syslog.interface['definition'] + '\n' + syslog.interface['threatInfo'] + '\n\n' + syslog.interface['howtofix'] + '\n'
     if syslog.timestamp['must_report'] == True:
         toBeReturned = toBeReturned + syslog.timestamp['definition'] + '\n' + syslog.timestamp['threatInfo'] + '\n\n' + syslog.timestamp['howtofix'] + '\n'
-    if syslog.serverarp['must_report'] == True:
-        toBeReturned = toBeReturned + syslog.serverarp['definition'] + '\n' + syslog.serverarp['threatInfo'] + '\n\n' + syslog.serverarp['howtofix'] + '\n'
+    if syslog.server_arp['must_report'] == True:
+        toBeReturned = toBeReturned + syslog.server_arp['definition'] + '\n' + syslog.server_arp['threatInfo'] + '\n\n' + syslog.server_arp['howtofix'] + '\n'
 
     return toBeReturned
 
 
-def analyzorArchive(lines, archive):
+def engine_archive(lines, archive):
     """Archive configuration assessment."""
     try:
         archive.configuration['cmdInCfg'] = search_re_string(lines, '^archive$')
@@ -2419,17 +2422,17 @@ def analyzorArchive(lines, archive):
             "cvss": (cvssMetrics)}
 
     try:
-        archive.secureBoot['cmdInCfg'] = search_string(lines, 'secure boot-image')
+        archive.secure_boot['cmdInCfg'] = search_string(lines, 'secure boot-image')
     except AttributeError:
         pass
-    if archive.secureBoot['cmdInCfg'] is not None:
+    if archive.secure_boot['cmdInCfg'] is not None:
         # feature already configured
-        archive.secureBoot['must_report'] = False
+        archive.secure_boot['must_report'] = False
     else:
         items = search_xml('archiveSecureImage')
         if __builtin__.iosVersion >= 12.38:
             cvssMetrics = str(cvss_score(items[5]))
-            archive.secureBoot = {
+            archive.secure_boot = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2439,7 +2442,7 @@ def analyzorArchive(lines, archive):
         else:
             # upgrade to >= 12.38 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            archive.secureBoot = {
+            archive.secure_boot = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2448,17 +2451,17 @@ def analyzorArchive(lines, archive):
             "cvss": (cvssMetrics)}
 
     try:
-        archive.secureConfig['cmdInCfg'] = search_string(lines, 'secure boot-config')
+        archive.secure_config['cmdInCfg'] = search_string(lines, 'secure boot-config')
     except AttributeError:
         pass
-    if archive.secureConfig['cmdInCfg'] is not None:
+    if archive.secure_config['cmdInCfg'] is not None:
         # feature already configured
-        archive.secureConfig['must_report'] = False
+        archive.secure_config['must_report'] = False
     else:
-        items = search_xml('archiveSecureConfig')
+        items = search_xml('archivesecure_config')
         if __builtin__.iosVersion >= 12.38:
             cvssMetrics = str(cvss_score(items[5]))
-            archive.secureConfig = {
+            archive.secure_config = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2468,7 +2471,7 @@ def analyzorArchive(lines, archive):
         else:
             # upgrade to >= 12.38 to get the feature
             cvssMetrics = str(cvss_score(items[5]))
-            archive.secureConfig = {
+            archive.secure_config = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -2511,16 +2514,16 @@ def analyzorArchive(lines, archive):
         toBeReturned = archive.configuration['definition'] + '\n' + archive.configuration['threatInfo'] + '\n\n' + archive.configuration['howtofix'] + '\n'
     if archive.exclusive['must_report'] == True:
         toBeReturned = toBeReturned + archive.exclusive['definition'] + '\n' + archive.exclusive['threatInfo'] + '\n\n' + archive.exclusive['howtofix'] + '\n'
-    if archive.secureBoot['must_report'] == True:
-        toBeReturned = toBeReturned + archive.secureBoot['definition'] + '\n' + archive.secureBoot['threatInfo'] + '\n\n' + archive.secureBoot['howtofix'] + '\n'
-    if archive.secureConfig['must_report'] == True:
-        toBeReturned = toBeReturned + archive.secureConfig['definition'] + '\n' + archive.secureConfig['threatInfo'] + '\n\n' + archive.secureConfig['howtofix'] + '\n'
+    if archive.secure_boot['must_report'] == True:
+        toBeReturned = toBeReturned + archive.secure_boot['definition'] + '\n' + archive.secure_boot['threatInfo'] + '\n\n' + archive.secure_boot['howtofix'] + '\n'
+    if archive.secure_config['must_report'] == True:
+        toBeReturned = toBeReturned + archive.secure_config['definition'] + '\n' + archive.secure_config['threatInfo'] + '\n\n' + archive.secure_config['howtofix'] + '\n'
     if archive.logs['must_report'] == True:
         toBeReturned = toBeReturned + archive.logs['definition'] + '\n' + archive.logs['threatInfo'] + '\n\n' + archive.logs['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorICMPRedirects(icmpRedirects, fullConfig, ifaceCfg):
+def engine_icmp_redirects(icmpRedirects, fullConfig, ifaceCfg):
     """ICMP redirects assessments."""
     for i in range(0, len(ifaceCfg)):
         ipIcmpRedirectsFound = False
@@ -2580,7 +2583,7 @@ def analyzorICMPRedirects(icmpRedirects, fullConfig, ifaceCfg):
     return toBeReturned
 
 
-def analyzorICMPUnreachable(icmpUnreachable, fullConfig, ifaceCfg):
+def engine_icmp_unreach(icmpUnreachable, fullConfig, ifaceCfg):
     """ICMP unreachable configuration."""
     for i in range(0, len(ifaceCfg)):
         for line in ifaceCfg[i].configuration:
@@ -2630,7 +2633,7 @@ def analyzorICMPUnreachable(icmpUnreachable, fullConfig, ifaceCfg):
 
     return toBeReturned
 
-def analyzorARPproxy(proxyArp, fullConfig, ifaceCfg):
+def engine_arp_proxy(proxyArp, fullConfig, ifaceCfg):
     """ARP proxy configuration."""
     for i in range(0, len(ifaceCfg)):
         for line in ifaceCfg[i].configuration:
@@ -2672,7 +2675,7 @@ def analyzorARPproxy(proxyArp, fullConfig, ifaceCfg):
 
     return toBeReturned
 
-def analyzorNtp(lines, ntp):
+def engine_ntp(lines, ntp):
     """NTP configuration."""
     try:
         ntp.authentication['authenticate'] = search_string(lines, 'ntp authenticate')
@@ -2703,96 +2706,7 @@ def analyzorNtp(lines, ntp):
 
     return toBeReturned
 
-def analyzorGlbp(lines, glbp, ifaceCfg):
-    """GLBP configuration assessment."""
-
-    glbpConfigured = []
-    for index in ifaceCfg:
-        glbpConfigured = search_re_multi_string(index.configuration,'glbp .* ip .*')
-        if len(glbpConfigured) >= 1:
-            for indexInstance in glbpConfigured:
-                glbpInstance = indexInstance.split(' ')[1]
-                authentication = 'glbp ' + glbpInstance + ' authentication md5 key-string .*'
-                if search_re_string(index.configuration,authentication) is None:
-                    glbp.auth_md5['must_report'] = True
-
-    if glbp.auth_md5['must_report'] == True:
-        items = search_xml('glbpMD5')
-        cvssMetrics = str(cvss_score(items[5]))
-        glbp.auth_md5 = {
-        "must_report": True,
-        "fixImpact": (items[0]),
-        "definition": (items[1]),
-        "threatInfo": (items[2]),
-        "howtofix": (items[3]),
-        "cvss": (cvssMetrics)}
-
-    toBeReturned = ''
-    if glbp.auth_md5['must_report'] == True:
-        toBeReturned = glbp.auth_md5['definition'] + '\n' + glbp.auth_md5['threatInfo'] + '\n\n' + glbp.auth_md5['howtofix'] + '\n'
-
-    return toBeReturned
-
-
-def analyzorHsrp(lines, hsrp, ifaceCfg):
-    hsrpConfigured = []
-    for index in ifaceCfg:
-        hsrpConfigured = search_re_multi_string(index.configuration,'hsrp .* ip .*')
-        if len(hsrpConfigured) >= 1:
-            for indexInstance in hsrpConfigured:
-                hsrpInstance = indexInstance.split(' ')[1]
-                authentication = 'hsrp ' + hsrpInstance + ' authentication md5 key-string .*'
-                if search_re_string(index.configuration,authentication) is None:
-                    hsrp.auth_md5['must_report'] = True
-
-    if hsrp.auth_md5['must_report'] == True:
-        items = search_xml('hsrpMD5')
-        cvssMetrics = str(cvss_score(items[5]))
-        hsrp.auth_md5 = {
-        "must_report": True,
-        "fixImpact": (items[0]),
-        "definition": (items[1]),
-        "threatInfo": (items[2]),
-        "howtofix": (items[3]),
-        "cvss": (cvssMetrics)}
-
-    toBeReturned = ''
-    if hsrp.auth_md5['must_report'] == True:
-        toBeReturned = hsrp.auth_md5['definition'] + '\n' + hsrp.auth_md5['threatInfo'] + '\n\n' + hsrp.auth_md5['howtofix'] + '\n'
-
-    return toBeReturned
-
-def analyzorVrrp(lines, vrrp, ifaceCfg):
-    """VRRP configuration assessment."""
-
-    vrrpConfigured = []
-    for index in ifaceCfg:
-        vrrpConfigured = search_re_multi_string(index.configuration,'vrrp .* ip .*')
-        if len(vrrpConfigured) >= 1:
-            for indexInstance in vrrpConfigured:
-                vrrpInstance = indexInstance.split(' ')[1]
-                authentication = 'vrrp ' + vrrpInstance + ' authentication md5 key-string .*'
-                if search_re_string(index.configuration,authentication) is None:
-                    vrrp.auth_md5['must_report'] = True
-
-    if vrrp.auth_md5['must_report'] == True:
-        items = search_xml('vrrpMD5')
-        cvssMetrics = str(cvss_score(items[5]))
-        vrrp.auth_md5 = {
-        "must_report": True,
-        "fixImpact": (items[0]),
-        "definition": (items[1]),
-        "threatInfo": (items[2]),
-        "howtofix": (items[3]),
-        "cvss": (cvssMetrics)}
-
-    toBeReturned = ''
-    if vrrp.auth_md5['must_report'] == True:
-        toBeReturned = vrrp.auth_md5['definition'] + '\n' + vrrp.auth_md5['threatInfo'] + '\n\n' + vrrp.auth_md5['howtofix'] + '\n'
-
-    return toBeReturned
-
-def analyzorIPoptions(lines, ipoptions):
+def engine_ip_options(lines, ipoptions):
     """IP options configuration."""
 
     try:
@@ -2819,7 +2733,7 @@ def analyzorIPoptions(lines, ipoptions):
 
     return toBeReturned
 
-def analyzorIPsrcRoute(lines, ipsrcroute):
+def engine_ip_src_route(lines, ipsrcroute):
     """IPv4 source-routing configuration."""
 
     try:
@@ -2846,7 +2760,7 @@ def analyzorIPsrcRoute(lines, ipsrcroute):
 
     return toBeReturned
 
-def analyzorICMPdeny(lines, denyicmp):
+def engine_icmp_deny(lines, denyicmp):
     """ICMP deny configuration."""
 
     try:
@@ -2873,7 +2787,7 @@ def analyzorICMPdeny(lines, denyicmp):
 
     return toBeReturned
 
-def analyzorIPfragments(lines, ipfrags):
+def engine_ipfrags(lines, ipfrags):
     """IPv4 fragments configuration."""
 
     try:
@@ -2919,7 +2833,7 @@ def analyzorIPfragments(lines, ipfrags):
 
     return toBeReturned
 
-def analyzorURPF(lines, urpf, ifaceCfg):
+def engine_urpf(lines, urpf, ifaceCfg):
     """URPF IPv4 configuration."""
     for i in range(0, len(ifaceCfg)):
         routedPort = 0
@@ -2952,7 +2866,7 @@ def analyzorURPF(lines, urpf, ifaceCfg):
     else:
         return "URPF configuration is OK."
 
-def analyzorURPFv6(lines, urpfv6, ifaceCfg):
+def engine_urpfv6(lines, urpfv6, ifaceCfg):
     "URPF IPv6 configuration."""
     for j in range(0, len(ifaceCfg)):
         ipv6enable = False
@@ -2982,7 +2896,7 @@ def analyzorURPFv6(lines, urpfv6, ifaceCfg):
     else:
         return "URPFv6 configuration is OK."
 
-def analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg):
+def engine_ipv6(lines, ipv6, aclIPv6, ifaceCfg):
     """IPv6 configuration assessment: RH0, traffic filter."""
     denyRH0 = (None)
     ACLv6name = (None)
@@ -3024,28 +2938,28 @@ def analyzorIPv6(lines, ipv6, aclIPv6, ifaceCfg):
 
     return toBeReturned
 
-def analyzorIPSEC(lines, ipsec):
+def engine_ipsec(lines, ipsec):
     """IPSec configuration assessment: call admission."""
 
     try:
-        ipsec.cacIKE['cmdInCfg'] = search_re_string(lines, '^crypto call admission limit ike sa .*$')
+        ipsec.cac_ike['cmdInCfg'] = search_re_string(lines, '^crypto call admission limit ike sa .*$')
     except AttributeError:
         pass
     try:
-        ipsec.cacRSC['cmdInCfg'] = search_re_string(lines, '^call admission limit .*$')
+        ipsec.cac_rsc['cmdInCfg'] = search_re_string(lines, '^call admission limit .*$')
     except AttributeError:
         pass
 
-    if ipsec.cacIKE['cmdInCfg'] is None:
-            ipsec.cacIKE['must_report'] = True
+    if ipsec.cac_ike['cmdInCfg'] is None:
+            ipsec.cac_ike['must_report'] = True
 
-    if ipsec.cacRSC['cmdInCfg'] is None:
-        ipsec.cacRSC['must_report'] = True
+    if ipsec.cac_rsc['cmdInCfg'] is None:
+        ipsec.cac_rsc['must_report'] = True
 
-    if ipsec.cacIKE['must_report'] == True:
-        items = search_xml('IPSECcacIKE')
+    if ipsec.cac_ike['must_report'] == True:
+        items = search_xml('IPSECcac_ike')
         cvssMetrics = str(cvss_score(items[5]))
-        ipsec.cacIKE = {
+        ipsec.cac_ike = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -3053,10 +2967,10 @@ def analyzorIPSEC(lines, ipsec):
         "howtofix": (items[3]),
         "cvss": (cvssMetrics)}
 
-    if ipsec.cacRSC['must_report'] == True:
-        items = search_xml('IPSECcacRSC')
+    if ipsec.cac_rsc['must_report'] == True:
+        items = search_xml('IPSECcac_rsc')
         cvssMetrics = str(cvss_score(items[5]))
-        ipsec.cacRSC = {
+        ipsec.cac_rsc = {
         "must_report": True,
         "fixImpact": (items[0]),
         "definition": (items[1]),
@@ -3065,14 +2979,14 @@ def analyzorIPSEC(lines, ipsec):
         "cvss": (cvssMetrics)}
 
     toBeReturned = ''
-    if ipsec.cacIKE['must_report'] == True:
-        toBeReturned = ipsec.cacIKE['definition'] + '\n' + ipsec.cacIKE['threatInfo'] + '\n\n' + ipsec.cacIKE['howtofix'] + '\n'
-    if ipsec.cacRSC['must_report'] == True:
-        toBeReturned = toBeReturned + ipsec.cacRSC['definition'] + '\n' + ipsec.cacRSC['threatInfo'] + '\n\n' + ipsec.cacRSC['howtofix'] + '\n'
+    if ipsec.cac_ike['must_report'] == True:
+        toBeReturned = ipsec.cac_ike['definition'] + '\n' + ipsec.cac_ike['threatInfo'] + '\n\n' + ipsec.cac_ike['howtofix'] + '\n'
+    if ipsec.cac_rsc['must_report'] == True:
+        toBeReturned = toBeReturned + ipsec.cac_rsc['definition'] + '\n' + ipsec.cac_rsc['threatInfo'] + '\n\n' + ipsec.cac_rsc['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorTclSH(lines, tclsh):
+def engine_tclsh(lines, tclsh):
     """TCLShell configuration assessment."""
 
     try:
@@ -3100,7 +3014,7 @@ def analyzorTclSH(lines, tclsh):
     return toBeReturned
 
 
-def analyzorTcp(lines, tcp):
+def engine_tcp(lines, tcp):
     """TCP synwait configuration."""
 
     try:
@@ -3133,51 +3047,51 @@ def analyzorTcp(lines, tcp):
 
     return toBeReturned
 
-def analyzorNetflow(lines, netflow, ifaceCfg):
+def engine_netflow(lines, netflow, ifaceCfg):
     """Netflow configuration assessment."""
 
     for j in range(0, len(ifaceCfg)):
         if search_re_string(ifaceCfg[j].configuration, '^ip flow (ingress|egress)$') is not None:
-            netflow.V9securityL2['interfacegress'] = True
+            netflow.v9_security['interfacegress'] = True
 
-    if netflow.V9securityL2['interfacegress'] == True:
+    if netflow.v9_security['interfacegress'] == True:
         try:
-            netflow.V9securityL2['fragoffset'] = search_re_string(lines, '^ip flow-capture fragment-offset$')
+            netflow.v9_security['fragoffset'] = search_re_string(lines, '^ip flow-capture fragment-offset$')
         except AttributeError:
             pass
         try:
-            netflow.V9securityL2['icmp'] = search_re_string(lines, '^ip flow-capture icmp$')
+            netflow.v9_security['icmp'] = search_re_string(lines, '^ip flow-capture icmp$')
         except AttributeError:
             pass
         try:
-            netflow.V9securityL2['ipid'] = search_re_string(lines, '^ip flow-capture ip-id$')
+            netflow.v9_security['ipid'] = search_re_string(lines, '^ip flow-capture ip-id$')
         except AttributeError:
             pass
         try:
-            netflow.V9securityL2['macaddr'] = search_re_string(lines, '^ip flow-capture mac-addresses$')
+            netflow.v9_security['macaddr'] = search_re_string(lines, '^ip flow-capture mac-addresses$')
         except AttributeError:
             pass
         try:
-            netflow.V9securityL2['packetlen'] = search_re_string(lines, '^ip flow-capture packet-length$')
+            netflow.v9_security['packetlen'] = search_re_string(lines, '^ip flow-capture packet-length$')
         except AttributeError:
             pass
         try:
-            netflow.V9securityL2['ttl'] = search_re_string(lines, '^ip flow-capture ttl$')
+            netflow.v9_security['ttl'] = search_re_string(lines, '^ip flow-capture ttl$')
         except AttributeError:
             pass
         try:
-            netflow.V9securityL2['vlid'] = search_re_string(lines, '^ip flow-capture vlan-id$')
+            netflow.v9_security['vlid'] = search_re_string(lines, '^ip flow-capture vlan-id$')
         except AttributeError:
             pass
 
-    if ( (netflow.V9securityL2['fragoffset'] is None) or (netflow.V9securityL2['icmp'] is None) or (netflow.V9securityL2['ipid'] is None) or (netflow.V9securityL2['macaddr'] is None) or (netflow.V9securityL2['packetlen'] is None) or (netflow.V9securityL2['ttl'] is None) or (netflow.V9securityL2['vlid'] is None) ):
-        netflow.V9securityL2['must_report'] = True
+    if ( (netflow.v9_security['fragoffset'] is None) or (netflow.v9_security['icmp'] is None) or (netflow.v9_security['ipid'] is None) or (netflow.v9_security['macaddr'] is None) or (netflow.v9_security['packetlen'] is None) or (netflow.v9_security['ttl'] is None) or (netflow.v9_security['vlid'] is None) ):
+        netflow.v9_security['must_report'] = True
 
-    if netflow.V9securityL2['must_report'] == True:
+    if netflow.v9_security['must_report'] == True:
         items = search_xml('netflowV9')
         if __builtin__.iosVersion >= 12.42:
             cvssMetrics = str(cvss_score(items[5]))
-            netflow.V9securityL2 = {
+            netflow.v9_security = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -3187,7 +3101,7 @@ def analyzorNetflow(lines, netflow, ifaceCfg):
         else:
             # upgrade to >= 12.42 to get the feature (including L3 fragment-offset)
             cvssMetrics = str(cvss_score(items[5]))
-            netflow.V9securityL2 = {
+            netflow.v9_security = {
             "must_report": True,
             "fixImpact": (items[0]),
             "definition": (items[1]),
@@ -3196,12 +3110,12 @@ def analyzorNetflow(lines, netflow, ifaceCfg):
             "cvss": (cvssMetrics)}
 
     toBeReturned = ''
-    if netflow.V9securityL2['must_report'] == True:
-        toBeReturned = netflow.V9securityL2['definition'] + '\n' + netflow.V9securityL2['threatInfo'] + '\n\n' + netflow.V9securityL2['howtofix'] + '\n'
+    if netflow.v9_security['must_report'] == True:
+        toBeReturned = netflow.v9_security['definition'] + '\n' + netflow.v9_security['threatInfo'] + '\n\n' + netflow.v9_security['howtofix'] + '\n'
 
     return toBeReturned
 
-def analyzorQos(lines, qos, ifaceCfg):
+def engine_qos(lines, qos, ifaceCfg):
     """QoS configuration assessment. Not ready."""
     toBeReturned = ''
     return toBeReturned

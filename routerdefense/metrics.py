@@ -1,5 +1,8 @@
 # -*- coding: iso-8859-1 -*-
 
+__docformat__ = 'restructuredtext'
+__version__ = '$Id$'
+
 from common import *
 import __builtin__
 
@@ -228,7 +231,7 @@ class lineConsole:
         self.metric_name = 'Console'
         self.long_name = 'Console port'
         self.password = None
-        self.execTimeout = {
+        self.exec_timeout = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -258,7 +261,7 @@ class lineAux:
         self.password = None
         self.metric_name = 'Aux'
         self.long_name = 'Aux port'
-        self.execTimeout = {
+        self.exec_timeout = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -269,7 +272,7 @@ class lineAux:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.transportInput = {
+        self.transport_input = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -280,7 +283,7 @@ class lineAux:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.transportOutput = {
+        self.transport_output = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -309,7 +312,7 @@ class lineVty:
         self.long_name = 'Vty lines'
         self.password = None
         self.sessionNumbers = None
-        self.execTimeout = {
+        self.exec_timeout = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -320,7 +323,7 @@ class lineVty:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.transportInput = {
+        self.transport_input = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -331,7 +334,7 @@ class lineVty:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.transportOutput = {
+        self.transport_output = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -342,7 +345,7 @@ class lineVty:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.IPv4accessClass = {
+        self.ipv4_access_class = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -353,7 +356,7 @@ class lineVty:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.IPv6accessClass = {
+        self.ipv6_access_class = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -380,7 +383,7 @@ class motdBanner:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.routerName = {
+        self.device_hostname = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -407,7 +410,7 @@ class execBanner:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.routerName = {
+        self.device_hostname = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -434,7 +437,7 @@ class loginBanner:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.routerName = {
+        self.device_hostname = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -450,7 +453,7 @@ class globalServices:
     def __init__(self):
         self.metric_name = 'globalServices'
         self.long_name = 'IOS TCP/UDP services'
-        self.pwdRecovery = {
+        self.pwd_recovery = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -461,7 +464,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.tcpSmallServers = {
+        self.tcp_small_servers = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -472,7 +475,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.udpSmallServers = {
+        self.udp_small_servers = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -483,7 +486,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceFinger = {
+        self.service_finger = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -493,7 +496,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceBootpServer = {
+        self.service_bootps = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -503,7 +506,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceTcpKeepAliveIn = {
+        self.service_tcpkeepalive_in = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -513,7 +516,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceTcpKeepAliveOut = {
+        self.service_tcpkeepalive_out = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -523,7 +526,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceIpDhcpBootIgnore = {
+        self.service_ipdhcpboot_ignore = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -533,7 +536,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceDhcp = {
+        self.service_dhcp = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -543,7 +546,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.Mop = {
+        self.service_mop = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -553,7 +556,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.ipDomainLookup = {
+        self.ip_domain_lookup = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -563,7 +566,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.servicePad = {
+        self.service_pad = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -573,7 +576,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceHttpServer = {
+        self.service_http_server = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -583,7 +586,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceHttpsServer = {
+        self.service_https_server = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -593,7 +596,7 @@ class globalServices:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serviceConfig = {
+        self.service_config = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -608,7 +611,7 @@ class memCpu:
     def __init__(self):
         self.metric_name = 'memCpu'
         self.long_name = 'CPU/Memory'
-        self.schedulerallocate = {
+        self.scheduler_allocate = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -619,7 +622,7 @@ class memCpu:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.schedulerinterval = {
+        self.scheduler_interval = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -630,7 +633,7 @@ class memCpu:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.lowWatermarkProcessor = {
+        self.low_watermark_processor = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -641,7 +644,7 @@ class memCpu:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.lowWatermarkIo = {
+        self.low_watermark_io = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -652,7 +655,7 @@ class memCpu:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.memReserveCritical = {
+        self.mem_reserve_critical = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -663,7 +666,7 @@ class memCpu:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.memReserveConsole = {
+        self.mem_reserve_console = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -674,7 +677,7 @@ class memCpu:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.memIgnoreOverflowIo = {
+        self.mem_ignore_overflow_io = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -686,7 +689,7 @@ class memCpu:
         "cvss": (None)
         }
 
-        self.memIgnoreOverflowCpu = {
+        self.mem_ignore_overflow_cpu = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -697,9 +700,9 @@ class memCpu:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.cpuThresholdNotice = {
-        "cmdSnmpServerTraps": (None),
-        "cmdSnmpServerHost": (None),
+        self.cpu_threshold_notice = {
+        "cmdSnmpserverTraps": (None),
+        "cmdSnmpserverHost": (None),
         "cmdCpuThreshold": (None),
         "cmdCpuStats": (None),
         "must_report": False,
@@ -716,7 +719,7 @@ class exceptionCrash:
     def __init__(self):
         self.metric_name = 'exceptionCrash'
         self.long_name = 'Exceptions/crashes'
-        self.crashinfoMaxFiles = {
+        self.crashinfo_max_files = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -732,7 +735,7 @@ class managementProtection:
     def __init__(self):
         self.metric_name = 'managementProtection'
         self.long_name = 'Management protection'
-        self.managementInterface = {
+        self.mgmt_interfaces = {
         "cpHostCfg": (None),
         "mgmtIfaceCfg": (None),
         "must_report": False,
@@ -744,7 +747,7 @@ class managementProtection:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.sshServerTimeout = {
+        self.ssh_server_timeout = {
         "timeout": (None),
         "must_report": False,
         "desc": (None),
@@ -755,9 +758,9 @@ class managementProtection:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.sshServerAuthRetries = {
+        self.ssh_server_auth_retries = {
         "authRetries": (None),
-        "sourceInterface": (None),
+        "sourceinterface": (None),
         "must_report": False,
         "desc": (None),
         "fixImpact": (None),
@@ -767,8 +770,8 @@ class managementProtection:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.sshServerSourceInterface = {
-        "sourceInterface": (None),
+        self.ssh_server_src_interface = {
+        "sourceinterface": (None),
         "must_report": False,
         "desc": (None),
         "fixImpact": (None),
@@ -779,7 +782,7 @@ class managementProtection:
         "cvss": (None)
         }
 
-        self.scpServer = {
+        self.scp_server = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -790,7 +793,7 @@ class managementProtection:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.httpSecureServer = {
+        self.http_secure_server = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -801,7 +804,7 @@ class managementProtection:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.loginbruteforce = {
+        self.login_bruteforce = {
         "blockfor": (None),
         "delay": (None),
         "quietacl": (None),
@@ -836,7 +839,7 @@ class tacacsAuth:
     def __init__(self):
         self.metric_name = 'tacacsAuthentication'
         self.long_name = 'Tacacs+ authentication'
-        self.aaaNewModel = {
+        self.aaa_new_model = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -847,7 +850,7 @@ class tacacsAuth:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.authTacacs = {
+        self.auth_tacacs = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -858,7 +861,7 @@ class tacacsAuth:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.authFallback = {
+        self.auth_fallback = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -874,7 +877,7 @@ class tacacsAuthorization:
     def __init__(self):
         self.metric_name = 'tacacsAuthorization'
         self.long_name = 'Tacacs+ authorization'
-        self.aaaNewModel = {
+        self.aaa_new_model = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -885,7 +888,7 @@ class tacacsAuthorization:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.authExec = {
+        self.auth_exec = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -896,7 +899,7 @@ class tacacsAuthorization:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.level0 = {
+        self.level_0 = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -907,7 +910,7 @@ class tacacsAuthorization:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.level1 = {
+        self.level_1 = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -918,7 +921,7 @@ class tacacsAuthorization:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.level15 = {
+        self.level_15 = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -934,7 +937,7 @@ class tacacsAccounting:
     def __init__(self):
         self.metric_name = 'tacacsAccounting'
         self.long_name = 'Tacacs+ accounting'
-        self.aaaNewModel = {
+        self.aaa_new_model = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -945,7 +948,7 @@ class tacacsAccounting:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.authAccounting = {
+        self.aaa_accounting = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -956,7 +959,7 @@ class tacacsAccounting:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.level0 = {
+        self.level_0 = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -967,7 +970,7 @@ class tacacsAccounting:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.level1 = {
+        self.level_1 = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -978,7 +981,7 @@ class tacacsAccounting:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.level15 = {
+        self.level_15 = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -995,7 +998,7 @@ class passwordManagement:
     def __init__(self):
         self.metric_name = 'passwordManagement'
         self.long_name = 'Passwords and authentication management'
-        self.enableSecret = {
+        self.enable_secret = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -1006,7 +1009,7 @@ class passwordManagement:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.svcPwdEncryption = {
+        self.service_password_encryption = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -1017,7 +1020,7 @@ class passwordManagement:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.usernameSecret = {
+        self.username_secret = {
         "cmdInCfg": (None),
         "must_report": False,
         "desc": (None),
@@ -1028,8 +1031,8 @@ class passwordManagement:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.retryLockout = {
-        "aaaNewModel": (None),
+        self.retry_lockout = {
+        "aaa_new_model": (None),
         "usernames": (None),
         "maxFail": (None),
         "aaaAuthLoginLocal": (None),
@@ -1079,7 +1082,7 @@ class Snmp:
     def __init__(self):
         self.metric_name = 'snmp'
         self.long_name = 'SNMP'
-        self.ROcommunity = {
+        self.ro_community = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1090,52 +1093,7 @@ class Snmp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.ROcommunityACL = {
-        "cmdInCfg": (None),
-        "must_report": False,
-        "fixImpact": (None),
-        "definition": (None),
-        "desc": (None),
-        "threatInfo": (None),
-        "howtofix": (None),
-        "upgrade": (None),
-        "cvss": (None)
-        }
-
-        self.RWcommunity = {
-        "cmdInCfg": (None),
-        "must_report": False,
-        "fixImpact": (None),
-        "definition": (None),
-        "desc": (None),
-        "threatInfo": (None),
-        "howtofix": (None),
-        "upgrade": (None),
-        "cvss": (None)
-        }
-        self.RWcommunityACL = {
-        "cmdInCfg": (None),
-        "must_report": False,
-        "fixImpact": (None),
-        "definition": (None),
-        "desc": (None),
-        "threatInfo": (None),
-        "howtofix": (None),
-        "upgrade": (None),
-        "cvss": (None)
-        }
-        self.ViewROcommunity = {
-        "cmdInCfg": (None),
-        "must_report": False,
-        "fixImpact": (None),
-        "definition": (None),
-        "desc": (None),
-        "threatInfo": (None),
-        "howtofix": (None),
-        "upgrade": (None),
-        "cvss": (None)
-        }
-        self.ViewROcommunityACL = {
+        self.ro_community_acl = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1147,7 +1105,7 @@ class Snmp:
         "cvss": (None)
         }
 
-        self.ViewRWcommunity = {
+        self.rw_community = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1158,7 +1116,7 @@ class Snmp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.ViewRWcommunityACL = {
+        self.rw_community_acl = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1169,7 +1127,52 @@ class Snmp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.snmpV3 = {
+        self.view_ro_community = {
+        "cmdInCfg": (None),
+        "must_report": False,
+        "fixImpact": (None),
+        "definition": (None),
+        "desc": (None),
+        "threatInfo": (None),
+        "howtofix": (None),
+        "upgrade": (None),
+        "cvss": (None)
+        }
+        self.view_ro_community_acl = {
+        "cmdInCfg": (None),
+        "must_report": False,
+        "fixImpact": (None),
+        "definition": (None),
+        "desc": (None),
+        "threatInfo": (None),
+        "howtofix": (None),
+        "upgrade": (None),
+        "cvss": (None)
+        }
+
+        self.view_rw_community = {
+        "cmdInCfg": (None),
+        "must_report": False,
+        "fixImpact": (None),
+        "definition": (None),
+        "desc": (None),
+        "threatInfo": (None),
+        "howtofix": (None),
+        "upgrade": (None),
+        "cvss": (None)
+        }
+        self.view_rw_community_acl = {
+        "cmdInCfg": (None),
+        "must_report": False,
+        "fixImpact": (None),
+        "definition": (None),
+        "desc": (None),
+        "threatInfo": (None),
+        "howtofix": (None),
+        "upgrade": (None),
+        "cvss": (None)
+        }
+        self.snmp_v3 = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1185,7 +1188,7 @@ class Syslog:
     def __init__(self):
         self.metric_name = 'syslog'
         self.long_name = 'Syslog'
-        self.Server = {
+        self.server = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1196,7 +1199,7 @@ class Syslog:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.levelTrap = {
+        self.level_trap = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1207,7 +1210,7 @@ class Syslog:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.levelBuffered = {
+        self.level_buffered = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1218,7 +1221,7 @@ class Syslog:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.loggingConsole = {
+        self.logging_console = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1229,7 +1232,7 @@ class Syslog:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.loggingMonitor = {
+        self.logging_monitor = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1240,7 +1243,7 @@ class Syslog:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.loggingBuffered = {
+        self.logging_buffered = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1251,7 +1254,7 @@ class Syslog:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.Interface = {
+        self.interface = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1273,7 +1276,7 @@ class Syslog:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.serverarp = {
+        self.server_arp = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1311,7 +1314,7 @@ class ArchiveConfiguration:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.secureBoot = {
+        self.secure_boot = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1322,7 +1325,7 @@ class ArchiveConfiguration:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.secureConfig = {
+        self.secure_config = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1411,7 +1414,7 @@ class Bgp:
     def __init__(self):
         self.metric_name = 'bgp'
         self.long_name = 'BGP'
-        self.ttlSecurity = {
+        self.ttl_security = {
         "must_report": False,
         "fixImpact": (None),
         "definition": (None),
@@ -1421,7 +1424,7 @@ class Bgp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.sessionPassword = {
+        self.session_password = {
         "must_report": False,
         "fixImpact": (None),
         "definition": (None),
@@ -1431,7 +1434,7 @@ class Bgp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.maxPrefixes = {
+        self.max_prefixes = {
         "must_report": False,
         "fixImpact": (None),
         "definition": (None),
@@ -1441,7 +1444,7 @@ class Bgp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.prefixList = {
+        self.prefix_list = {
         "must_report": False,
         "fixImpact": (None),
         "definition": (None),
@@ -1451,7 +1454,7 @@ class Bgp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.aspathList = {
+        self.aspath_list = {
         "must_report": False,
         "fixImpact": (None),
         "definition": (None),
@@ -1461,7 +1464,7 @@ class Bgp:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.maxpathlimit = {
+        self.maxpath_limit = {
         "must_report": False,
         "fixImpact": (None),
         "definition": (None),
@@ -1789,7 +1792,7 @@ class PortSecurity:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.maximumTotal = {
+        self.maximum_total = {
         "candidates": [],
         "cmdInCfg": (None),
         "must_report": False,
@@ -1801,7 +1804,7 @@ class PortSecurity:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.maximumAccess = {
+        self.maximum_access = {
         "candidates": [],
         "cmdInCfg": (None),
         "must_report": False,
@@ -1813,7 +1816,7 @@ class PortSecurity:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.maximumVoice = {
+        self.maximum_voice = {
         "candidates": [],
         "cmdInCfg": (None),
         "must_report": False,
@@ -1847,7 +1850,7 @@ class IPSEC:
     def __init__(self):
         self.metric_name = 'ipsec'
         self.long_name = 'IPSEC'
-        self.cacIKE = {
+        self.cac_ike = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1858,7 +1861,7 @@ class IPSEC:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.cacRSC = {
+        self.cac_rsc = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1942,7 +1945,7 @@ class dtpstpvlan:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.vlan1 = {
+        self.vlan_1 = {
         "candidates": [],
         "cmdInCfg": (None),
         "must_report": False,
@@ -1954,7 +1957,7 @@ class dtpstpvlan:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.unusedports = {
+        self.unused_ports = {
         "candidates": [],
         "cmdInCfg": (None),
         "must_report": False,
@@ -1966,7 +1969,7 @@ class dtpstpvlan:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.vtpsecure = {
+        self.vtp_secure = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1977,7 +1980,7 @@ class dtpstpvlan:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.bpduguard = {
+        self.bpdu_guard = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -1988,7 +1991,7 @@ class dtpstpvlan:
         "upgrade": (None),
         "cvss": (None)
         }
-        self.stproot = {
+        self.stp_root = {
         "cmdInCfg": (None),
         "must_report": False,
         "fixImpact": (None),
@@ -2015,7 +2018,7 @@ class Netflow:
     def __init__(self):
         self.metric_name = 'Netflow'
         self.long_name = 'Netflow'
-        self.V9securityL2 = {
+        self.v9_security = {
         "fragoffset": (None),
         "icmp": (None),
         "ipid": (None),
