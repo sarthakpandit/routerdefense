@@ -126,7 +126,7 @@ def engine_console(consoleCfg,con0,lines):
         else:
             con0.exec_timeout['must_report'] = False
     else:
-        items = search_xml('consoleexec_timeout')
+        items = search_xml('consoleExecTimeout')
         cvssMetrics = str(cvss_score(items[5]))
         con0.exec_timeout = {
         "must_report": True,
@@ -170,7 +170,7 @@ def engine_aux(auxCfg,aux0):
     except AttributeError:
         aux0.noExec['cmdInCfg'] = None
 
-    items = search_xml('auxexec_timeout')
+    items = search_xml('auxExecTimeout')
     if aux0.exec_timeout['cmdInCfg'] is not None:
         if Checkexec_timeout(aux0.exec_timeout) == False:
             cvssMetrics = str(cvss_score(items[5]))
@@ -197,7 +197,7 @@ def engine_aux(auxCfg,aux0):
     if aux0.transport_input['cmdInCfg'] is not None:
         aux0.transport_input['must_report'] = False
     else:
-        items = search_xml('auxtransport_input')
+        items = search_xml('auxTransportInput')
         cvssMetrics = str(cvss_score(items[5]))
         aux0.transport_input = {
             "must_report": True,
@@ -210,7 +210,7 @@ def engine_aux(auxCfg,aux0):
     if aux0.transport_output['cmdInCfg'] is not None:
         aux0.transport_output['must_report'] = False
     else:
-        items = search_xml('auxtransport_output')
+        items = search_xml('auxTransportOutput')
         cvssMetrics = str(cvss_score(items[5]))
         aux0.transport_output = {
         "must_report": True,
@@ -279,7 +279,7 @@ def engine_vty(vtyCfg,vty):
             vty.ipv6_access_class['cmdInCfg'] = None
 
     if vty.exec_timeout['cmdInCfg'] is not None:
-        items = search_xml('vtyexec_timeout')
+        items = search_xml('vtyExecTimeout')
         if Checkexec_timeout(vty.exec_timeout) == False:
             cvssMetrics = str(cvss_score(items[5]))
             vty.exec_timeout = {
@@ -293,7 +293,7 @@ def engine_vty(vtyCfg,vty):
         else:
             vty.exec_timeout['must_report'] = False
     else:
-        items = search_xml('vtyexec_timeout')
+        items = search_xml('vtyExecTimeout')
         cvssMetrics = str(cvss_score(items[5]))
         vty.exec_timeout = {
         "must_report": True,
@@ -306,7 +306,7 @@ def engine_vty(vtyCfg,vty):
     if vty.transport_input['cmdInCfg'] is not None:
         vty.transport_input['must_report'] = False
     else:
-        items = search_xml('vtytransport_input')
+        items = search_xml('vtyTransportInput')
         cvssMetrics = str(cvss_score(items[5]))
         vty.transport_input = {
         "must_report": True,
@@ -319,7 +319,7 @@ def engine_vty(vtyCfg,vty):
     if vty.transport_output['cmdInCfg'] is not None:
         vty.transport_output['must_report'] = False
     else:
-        items = search_xml('vtytransport_output')
+        items = search_xml('vtyTransportOutput')
         cvssMetrics = str(cvss_score(items[5]))
         vty.transport_output = {
         "must_report": True,
@@ -330,7 +330,7 @@ def engine_vty(vtyCfg,vty):
         "cvss": (cvssMetrics)}
 
     if vty.ipv4_access_class['cmdInCfg'] is None:
-        items = search_xml('vtyipv4_access_class')
+        items = search_xml('vtyIPv4AccessClass')
         cvssMetrics = str(cvss_score(items[5]))
         vty.ipv4_access_class = {
         "must_report": True,
@@ -362,7 +362,7 @@ def engine_vty(vtyCfg,vty):
                 mgmtWildcardMask = ""
                 pass
 
-            items = search_xml('vtyipv4_access_class')
+            items = search_xml('vtyIPv4AccessClass')
             cvssMetrics = str(cvss_score(items[5]))
             vty.ipv4_access_class = {
             "must_report": True,
@@ -377,7 +377,7 @@ def engine_vty(vtyCfg,vty):
     if vty.ipv6_access_class['cmdInCfg'] is None:
         vty.ipv6_access_class['must_report'] = False
     else:
-        items = search_xml('vtyipv6_access_class')
+        items = search_xml('vtyIPv6AccessClass')
         cvssMetrics = str(cvss_score(items[5]))
         vty.ipv6_access_class = {
         "must_report": True,
@@ -504,7 +504,7 @@ def engine_services(lines, services):
         # feature already configured
         services.pwd_recovery['must_report'] = False
     else:
-        items = search_xml('pwd_recovery')
+        items = search_xml('pwdRecovery')
         if __builtin__.iosVersion >= 12.314:
             cvssMetrics = str(cvss_score(items[5]))
             services.pwd_recovery = {
@@ -533,7 +533,7 @@ def engine_services(lines, services):
     if services.tcp_small_servers['cmdInCfg'] is not None:
         services.tcp_small_servers['must_report'] = False
     else:
-        items = search_xml('tcp_small_servers')
+        items = search_xml('tcpSmallServers')
         if __builtin__.iosVersion <= 12.0:
             cvssMetrics = str(cvss_score(items[5]))
             services.tcp_small_servers = {
@@ -561,7 +561,7 @@ def engine_services(lines, services):
     if services.udp_small_servers['cmdInCfg'] is not None:
         services.udp_small_servers['must_report'] = False
     else:
-        items = search_xml('udp_small_servers')
+        items = search_xml('udpSmallServers')
         if __builtin__.iosVersion <= 12.0:
             cvssMetrics = str(cvss_score(items[5]))
             services.udp_small_servers = {
@@ -589,7 +589,7 @@ def engine_services(lines, services):
     if services.service_finger['cmdInCfg'] is not None:
         services.service_finger['must_report'] = False
     else:
-        items = search_xml('service_finger')
+        items = search_xml('serviceFinger')
         if __builtin__.iosVersion <= 12.15:
             cvssMetrics = str(cvss_score(items[5]))
             services.service_finger = {
@@ -617,7 +617,7 @@ def engine_services(lines, services):
     if services.service_bootps['cmdInCfg'] is not None:
         services.service_bootps['must_report'] = False
     else:
-        items = search_xml('service_bootps')
+        items = search_xml('serviceBootpServer')
         cvssMetrics = str(cvss_score(items[5]))
         services.service_bootps = {
         "must_report": True,
@@ -635,7 +635,7 @@ def engine_services(lines, services):
     if services.service_tcpkeepalive_in['cmdInCfg'] is not None:
         services.service_tcpkeepalive_in['must_report'] = False
     else:
-        items = search_xml('service_tcpkeepalive_in')
+        items = search_xml('serviceTcpKeepAliveIn')
         cvssMetrics = str(cvss_score(items[5]))
         services.service_tcpkeepalive_in = {
         "must_report": True,
@@ -653,7 +653,7 @@ def engine_services(lines, services):
     if services.service_tcpkeepalive_out['cmdInCfg'] is not None:
         services.service_tcpkeepalive_out['must_report'] = False
     else:
-        items = search_xml('service_tcpkeepalive_out')
+        items = search_xml('serviceTcpKeepAliveOut')
         cvssMetrics = str(cvss_score(items[5]))
         services.service_tcpkeepalive_out = {
         "must_report": True,
@@ -671,7 +671,7 @@ def engine_services(lines, services):
     if services.service_ipdhcpboot_ignore['cmdInCfg'] is not None:
         services.service_ipdhcpboot_ignore['must_report'] = False
     else:
-        items = search_xml('service_ipdhcpboot_ignore')
+        items = search_xml('serviceIpDhcpBootIgnore')
         if __builtin__.iosVersion <= 12.228:
             cvssMetrics = str(cvss_score(items[5]))
             services.service_ipdhcpboot_ignore = {
@@ -699,7 +699,7 @@ def engine_services(lines, services):
     if services.service_dhcp['cmdInCfg'] is not None:
         services.service_dhcp['must_report'] = False
     else:
-        items = search_xml('service_dhcp')
+        items = search_xml('serviceDhcp')
         cvssMetrics = str(cvss_score(items[5]))
         services.service_dhcp = {
         "must_report": True,
@@ -717,7 +717,7 @@ def engine_services(lines, services):
     if services.service_mop['cmdInCfg'] is not None:
         services.service_mop['must_report'] = False
     else:
-        items = search_xml('service_mop')
+        items = search_xml('Mop')
         cvssMetrics = str(cvss_score(items[5]))
         services.service_mop = {
         "must_report": True,
@@ -735,7 +735,7 @@ def engine_services(lines, services):
     if services.ip_domain_lookup['cmdInCfg'] is not None:
         services.ip_domain_lookup['must_report'] = False
     else:
-        items = search_xml('ip_domain_lookup')
+        items = search_xml('ipDomainLookup')
         cvssMetrics = str(cvss_score(items[5]))
         services.ip_domain_lookup = {
         "must_report": True,
@@ -753,7 +753,7 @@ def engine_services(lines, services):
     if services.service_pad['cmdInCfg'] is not None:
         services.service_pad['must_report'] = False
     else:
-        items = search_xml('service_pad')
+        items = search_xml('servicePad')
         cvssMetrics = str(cvss_score(items[5]))
         services.service_pad = {
         "must_report": True,
@@ -771,7 +771,7 @@ def engine_services(lines, services):
     if services.service_http_server['cmdInCfg'] is not None:
         services.service_http_server['must_report'] = False
     else:
-        items = search_xml('service_http_server')
+        items = search_xml('serviceHttpServer')
         cvssMetrics = str(cvss_score(items[5]))
         services.service_http_server = {
         "must_report": True,
@@ -789,7 +789,7 @@ def engine_services(lines, services):
     if services.service_https_server['cmdInCfg'] is not None:
         services.service_https_server['must_report'] = False
     else:
-        items = search_xml('service_https_server')
+        items = search_xml('serviceHttpsServer')
         cvssMetrics = str(cvss_score(items[5]))
         services.service_https_server = {
         "must_report": True,
@@ -804,7 +804,7 @@ def engine_services(lines, services):
     except AttributeError:
         pass
 
-    items = search_xml('service_config')
+    items = search_xml('serviceConfig')
     if services.service_config['cmdInCfg'] is not None:
         services.service_config['must_report'] = False
     else:
@@ -871,7 +871,7 @@ def engine_mem_cpu(lines, memCpu):
         memCpu.scheduler_interval['must_report'] = True
 
     if memCpu.scheduler_allocate['must_report'] == True:
-        items = search_xml('scheduler_allocate')
+        items = search_xml('schedulerallocate')
         cvssMetrics = str(cvss_score(items[5]))
         memCpu.scheduler_allocate = {
         "must_report": True,
@@ -882,7 +882,7 @@ def engine_mem_cpu(lines, memCpu):
         "cvss": (cvssMetrics)}
 
     if memCpu.scheduler_interval['must_report'] == True:
-        items = search_xml('scheduler_interval')
+        items = search_xml('schedulerinterval')
         cvssMetrics = str(cvss_score(items[5]))
         memCpu.scheduler_interval = {
         "must_report": True,
@@ -902,7 +902,7 @@ def engine_mem_cpu(lines, memCpu):
         # feature already configured
         memCpu.low_watermark_processor['must_report'] = False
     else:
-        items = search_xml('low_watermark_processor')
+        items = search_xml('lowWatermarkProcessor')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
             memCpu.low_watermark_processor = {
@@ -931,7 +931,7 @@ def engine_mem_cpu(lines, memCpu):
         # feature already configured
         memCpu.low_watermark_io['must_report'] = False
     else:
-        items = search_xml('low_watermark_io')
+        items = search_xml('lowWatermarkIo')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
             memCpu.low_watermark_io = {
@@ -960,7 +960,7 @@ def engine_mem_cpu(lines, memCpu):
         # feature already configured
         memCpu.mem_reserve_critical['must_report'] = False
     else:
-        items = search_xml('mem_reserve_critical')
+        items = search_xml('memReserveCritical')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
             memCpu.mem_reserve_critical = {
@@ -989,7 +989,7 @@ def engine_mem_cpu(lines, memCpu):
         # feature already configured
         memCpu.mem_reserve_console['must_report'] = False
     else:
-        items = search_xml('mem_reserve_console')
+        items = search_xml('memReserveConsole')
         if __builtin__.iosVersion >= 12.34:
             cvssMetrics = str(cvss_score(items[5]))
             memCpu.mem_reserve_console = {
@@ -1245,7 +1245,7 @@ def engine_mpp(lines, vtyList, vtyCfg, mpp):
         pass
 
     if mpp.ssh_server_timeout['timeout'] is None:
-        items = search_xml('ssh_server_timeout')
+        items = search_xml('sshServerTimeout')
         cvssMetrics = str(cvss_score(items[5]))
         mpp.ssh_server_timeout = {
         "must_report": True,
@@ -1258,7 +1258,7 @@ def engine_mpp(lines, vtyList, vtyCfg, mpp):
         mpp.ssh_server_timeout['must_report'] = False
 
     if mpp.ssh_server_auth_retries['authRetries'] is None:
-        items = search_xml('ssh_server_auth_retries')
+        items = search_xml('sshServerAuthretries')
         cvssMetrics = str(cvss_score(items[5]))
         mpp.ssh_server_auth_retries = {
         "must_report": True,
@@ -1271,7 +1271,7 @@ def engine_mpp(lines, vtyList, vtyCfg, mpp):
         mpp.ssh_server_auth_retries['must_report'] = False
 
     if mpp.ssh_server_src_interface['sourceinterface'] is None:
-        items = search_xml('sshserverSourceIf')
+        items = search_xml('sshServerSourceIf')
         cvssMetrics = str(cvss_score(items[5]))
         mpp.ssh_server_src_interface = {
         "must_report": True,
@@ -1289,7 +1289,7 @@ def engine_mpp(lines, vtyList, vtyCfg, mpp):
         pass
 
     if mpp.scp_server['cmdIncfg'] is None:
-        items = search_xml('sshscp_server')
+        items = search_xml('sshSCPServer')
         cvssMetrics = str(cvss_score(items[5]))
         mpp.scp_server = {
         "must_report": True,
@@ -1307,7 +1307,7 @@ def engine_mpp(lines, vtyList, vtyCfg, mpp):
         pass
 
     if mpp.http_secure_server['cmdIncfg'] is not None:
-        items = search_xml('HTTPserver')
+        items = search_xml('HTTPServer')
         cvssMetrics = str(cvss_score(items[5]))
         mpp.http_secure_server = {
         "must_report": True,
@@ -1353,7 +1353,7 @@ def engine_mpp(lines, vtyList, vtyCfg, mpp):
 
     if login_bruteforceCount < 5:
         if __builtin__.iosVersion >= 12.34:
-            items = search_xml('login_bruteforce')
+            items = search_xml('loginBruteforce')
             cvssMetrics = str(cvss_score(items[5]))
             mpp.login_bruteforce = {
             "must_report": True,
@@ -1364,7 +1364,7 @@ def engine_mpp(lines, vtyList, vtyCfg, mpp):
             "cvss": (cvssMetrics)}
         else:
             # upgrade to >= 12.3.4 to get the feature
-            items = search_xml('login_bruteforce')
+            items = search_xml('loginBruteforce')
             cvssMetrics = str(cvss_score(items[5]))
             mpp.login_bruteforce = {
             "must_report": True,
@@ -1549,7 +1549,7 @@ def engine_tacacs(lines, tacacs, mode):
             tacacs.aaa_new_model['must_report'] = False
 
         if tacacs.auth_tacacs['cmdInCfg'] is None:
-            items = search_xml('aaaauth_tacacs')
+            items = search_xml('aaaAuthTacacs')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.auth_tacacs = {
             "must_report": True,
@@ -1562,7 +1562,7 @@ def engine_tacacs(lines, tacacs, mode):
             tacacs.auth_tacacs['must_report'] = False
 
         if tacacs.auth_fallback['cmdInCfg'] is None:
-            items = search_xml('aaaauth_tacacsFallback')
+            items = search_xml('aaaAuthTacacsFallback')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.auth_fallback = {
             "must_report": True,
@@ -1597,7 +1597,7 @@ def engine_tacacs(lines, tacacs, mode):
             pass
 
         if tacacs.auth_exec['cmdInCfg'] is None:
-            items = search_xml('aaaauth_tacacsExec')
+            items = search_xml('aaaAuthTacacsExec')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.auth_exec = {
             "must_report": True,
@@ -1610,7 +1610,7 @@ def engine_tacacs(lines, tacacs, mode):
             tacacs.auth_exec['must_report'] = False
 
         if tacacs.level_0['cmdInCfg'] is None:
-            items = search_xml('aaaauth_tacacslevel_0')
+            items = search_xml('aaaAuthTacacsLevel0')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.level_0 = {
             "must_report": True,
@@ -1623,7 +1623,7 @@ def engine_tacacs(lines, tacacs, mode):
             tacacs.level_0['must_report'] = False
 
         if tacacs.level_1['cmdInCfg'] is None:
-            items = search_xml('aaaauth_tacacslevel_1')
+            items = search_xml('aaaAuthTacacsLevel1')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.level_1 = {
             "must_report": True,
@@ -1636,7 +1636,7 @@ def engine_tacacs(lines, tacacs, mode):
             tacacs.level_1['must_report'] = False
 
         if tacacs.level_15['cmdInCfg'] is None:
-            items = search_xml('aaaauth_tacacslevel_15')
+            items = search_xml('aaaAuthTacacsLevel15')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.level_15 = {
             "must_report": True,
@@ -1684,7 +1684,7 @@ def engine_tacacs(lines, tacacs, mode):
             tacacs.aaa_accounting['must_report'] = False
 
         if tacacs.level_0['cmdInCfg'] is None:
-            items = search_xml('aaaAccountingTacacslevel_0')
+            items = search_xml('aaaAccountingTacacsLevel0')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.level_0 = {
             "must_report": True,
@@ -1697,7 +1697,7 @@ def engine_tacacs(lines, tacacs, mode):
             tacacs.level_0['must_report'] = False
 
         if tacacs.level_1['cmdInCfg'] is None:
-            items = search_xml('aaaAccountingTacacslevel_1')
+            items = search_xml('aaaAccountingTacacsLevel1')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.level_1 = {
             "must_report": True,
@@ -1710,7 +1710,7 @@ def engine_tacacs(lines, tacacs, mode):
             tacacs.level_1['must_report'] = False
 
         if tacacs.level_15['cmdInCfg'] is None:
-            items = search_xml('aaaAccountingTacacslevel_15')
+            items = search_xml('aaaAccountingTacacsLevel15')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.level_15 = {
             "must_report": True,
@@ -1819,7 +1819,7 @@ def engine_snmp(lines, snmp):
         SNMPcommunity = snmp.ro_community['cmdInCfg'].split(' ')
         ROsecure = snmp_community_complexity(SNMPcommunity[2])
         if ROsecure == False:
-            items = search_xml('snmpro_communityHardened')
+            items = search_xml('snmpROcommunityHardened')
             cvssMetrics = str(cvss_score(items[5]))
             snmp.ro_community = {
             "must_report": True,
@@ -1836,7 +1836,7 @@ def engine_snmp(lines, snmp):
             pass
 
         if snmp.ro_community_acl['cmdInCfg'] is None:
-            items = search_xml('snmpro_communityHardenedACL')
+            items = search_xml('snmpROcommunityHardenedACL')
             cvssMetrics = str(cvss_score(items[5]))
             snmp.ro_community_acl = {
             "must_report": True,
@@ -1852,7 +1852,7 @@ def engine_snmp(lines, snmp):
             if check_std_acl(lines, accessListNumber) == True:
                 snmp.ro_community_acl['must_report'] = False
             else:
-                items = search_xml('snmpro_communityHardenedACL')
+                items = search_xml('snmpROcommunityHardenedACL')
                 cvssMetrics = str(cvss_score(items[5]))
                 snmp.ro_community_acl = {
                 "must_report": True,
@@ -1872,7 +1872,7 @@ def engine_snmp(lines, snmp):
         SNMPcommunity = snmp.rw_community['cmdInCfg'].split(' ')
         RWsecure = snmp_community_complexity(SNMPcommunity[2])
         if RWsecure == False:
-            items = search_xml('snmprw_communityHardened')
+            items = search_xml('snmpRWcommunityHardened')
             cvssMetrics = str(cvss_score(items[5]))
             snmp.rw_community = {
             "must_report": True,
@@ -1889,7 +1889,7 @@ def engine_snmp(lines, snmp):
             pass
 
         if snmp.rw_community_acl['cmdInCfg'] is None:
-            items = search_xml('snmprw_communityHardenedACL')
+            items = search_xml('snmpRWcommunityHardenedACL')
             cvssMetrics = str(cvss_score(items[5]))
             snmp.rw_community_acl = {
             "must_report": True,
@@ -1905,7 +1905,7 @@ def engine_snmp(lines, snmp):
             if check_std_acl(lines, accessListNumber) == True:
                 snmp.rw_community_acl['must_report'] = False
             else:
-                items = search_xml('snmprw_communityHardenedACL')
+                items = search_xml('snmpRWcommunityHardenedACL')
                 cvssMetrics = str(cvss_score(items[5]))
                 snmp.rw_community_acl = {
                 "must_report": True,
@@ -1925,7 +1925,7 @@ def engine_snmp(lines, snmp):
         SNMPcommunity = snmp.view_ro_community['cmdInCfg'].split(' ')
         ROsecure = snmp_community_complexity(SNMPcommunity[2])
         if ROsecure == False:
-            items = search_xml('Viewsnmpro_communityHardened')
+            items = search_xml('ViewsnmpROcommunityHardened')
             cvssMetrics = str(cvss_score(items[5]))
             snmp.view_ro_community = {
             "must_report": True,
@@ -1942,7 +1942,7 @@ def engine_snmp(lines, snmp):
             pass
 
         if snmp.view_ro_community_acl['cmdInCfg'] is None:
-            items = search_xml('Viewsnmpro_communityHardenedACL')
+            items = search_xml('ViewsnmpROcommunityHardenedACL')
             cvssMetrics = str(cvss_score(items[5]))
             snmp.view_ro_community_acl = {
             "must_report": True,
@@ -1958,7 +1958,7 @@ def engine_snmp(lines, snmp):
             if check_std_acl(lines, accessListNumber) == True:
                 snmp.view_ro_community_acl['must_report'] = False
             else:
-                items = search_xml('Viewsnmpro_communityHardenedACL')
+                items = search_xml('ViewsnmpROcommunityHardenedACL')
                 cvssMetrics = str(cvss_score(items[5]))
                 snmp.view_ro_community_acl = {
                 "must_report": True,
@@ -1978,7 +1978,7 @@ def engine_snmp(lines, snmp):
         SNMPcommunity = snmp.view_rw_community['cmdInCfg'].split(' ')
         RWsecure = snmp_community_complexity(SNMPcommunity[2])
         if RWsecure == False:
-            items = search_xml('Viewsnmprw_communityHardened')
+            items = search_xml('ViewsnmpRWcommunityHardened')
             cvssMetrics = str(cvss_score(items[5]))
             snmp.view_rw_community = {
             "must_report": True,
@@ -1995,7 +1995,7 @@ def engine_snmp(lines, snmp):
             pass
 
         if snmp.view_rw_community_acl['cmdInCfg'] is None:
-            items = search_xml('snmprw_communityHardenedACL')
+            items = search_xml('snmpRWcommunityHardenedACL')
             cvssMetrics = str(cvss_score(items[5]))
             snmp.view_rw_community_acl = {
             "must_report": True,
@@ -2011,7 +2011,7 @@ def engine_snmp(lines, snmp):
             if check_std_acl(lines, accessListNumber) == True:
                 snmp.view_rw_community_acl['must_report'] = False
             else:
-                items = search_xml('Viewsnmprw_communityHardenedACL')
+                items = search_xml('ViewsnmpRWcommunityHardenedACL')
                 cvssMetrics = str(cvss_score(items[5]))
                 snmp.view_rw_community_acl = {
                 "must_report": True,
@@ -2083,7 +2083,7 @@ def engine_syslog(lines, syslog):
             pass
 
 
-        items = search_xml('syslogserver')
+        items = search_xml('syslogServer')
         cvssMetrics = str(cvss_score(items[5]))
 
         if len(mgmtSubnet) > 0:
@@ -2114,7 +2114,7 @@ def engine_syslog(lines, syslog):
         pass
     if syslog.level_trap['cmdInCfg'] is None:
         # feature not configured
-        items = search_xml('sysloglevel_trap')
+        items = search_xml('syslogLevelTrap')
         cvssMetrics = str(cvss_score(items[5]))
         syslog.level_trap = {
         "must_report": True,
@@ -2146,7 +2146,7 @@ def engine_syslog(lines, syslog):
         if int(level) <= 6:
             syslog.level_trap['must_report'] = False
         else:
-            items = search_xml('sysloglevel_trap')
+            items = search_xml('syslogLevelTrap')
             cvssMetrics = str(cvss_score(items[5]))
             syslog.level_trap = {
             "must_report": True,
@@ -2162,7 +2162,7 @@ def engine_syslog(lines, syslog):
         pass
     if syslog.level_buffered['cmdInCfg'] is None:
         # feature not configured
-        items = search_xml('sysloglevel_buffered')
+        items = search_xml('syslogLevelBuffered')
         cvssMetrics = str(cvss_score(items[5]))
         syslog.level_buffered = {
         "must_report": True,
@@ -2176,7 +2176,7 @@ def engine_syslog(lines, syslog):
         if int(level) == 6:
             syslog.level_buffered['must_report'] = False
         else:
-            items = search_xml('sysloglevel_buffered')
+            items = search_xml('syslogLevelBuffered')
             cvssMetrics = str(cvss_score(items[5]))
             syslog.level_buffered = {
             "must_report": True,
@@ -2276,7 +2276,7 @@ def engine_syslog(lines, syslog):
         pass
     if syslog.interface['cmdInCfg'] is None:
         # feature not configured
-        items = search_xml('sysloginterface')
+        items = search_xml('syslogInterface')
         cvssMetrics = str(cvss_score(items[5]))
         syslog.interface = {
         "must_report": True,
@@ -2458,7 +2458,7 @@ def engine_archive(lines, archive):
         # feature already configured
         archive.secure_config['must_report'] = False
     else:
-        items = search_xml('archivesecure_config')
+        items = search_xml('archiveSecureConfig')
         if __builtin__.iosVersion >= 12.38:
             cvssMetrics = str(cvss_score(items[5]))
             archive.secure_config = {

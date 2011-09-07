@@ -64,7 +64,7 @@ def engine_port_security(lines, portsecurity, ifaceCfg):
         "cvss": (cvssMetrics)}
 
     if portsecurity.maximum_total['must_report'] == True:
-        items = search_xml('portsecuritymaximum_total')
+        items = search_xml('portsecurityMaximumTotal')
         cvssMetrics = str(cvss_score(items[5]))
         portsecurity.maximum_total = {
         "candidates": portsecurity.maximum_total['candidates'],
@@ -76,7 +76,7 @@ def engine_port_security(lines, portsecurity, ifaceCfg):
         "cvss": (cvssMetrics)}
 
     if portsecurity.maximum_access['must_report'] == True:
-        items = search_xml('portsecuritymaximum_access')
+        items = search_xml('portsecurityMaximumAccess')
         cvssMetrics = str(cvss_score(items[5]))
         portsecurity.maximum_access = {
         "candidates": portsecurity.maximum_access['candidates'],
@@ -88,7 +88,7 @@ def engine_port_security(lines, portsecurity, ifaceCfg):
         "cvss": (cvssMetrics)}
 
     if portsecurity.maximum_voice['must_report'] == True:
-        items = search_xml('portsecuritymaximum_voice')
+        items = search_xml('portsecurityMaximumVoice')
         cvssMetrics = str(cvss_score(items[5]))
         portsecurity.maximum_voice = {
         "candidates": portsecurity.maximum_voice['candidates'],
@@ -226,7 +226,7 @@ def engine_layer2(lines, level2protocols, ifaceCfg):
         "cvss": (cvssMetrics)}
     """
     if level2protocols.bpdu_guard['must_report'] == True:
-        items = search_xml('bpdu_guard')
+        items = search_xml('bpduguard')
         cvssMetrics = str(cvss_score(items[5]))
         level2protocols.bpdu_guard = {
         "must_report": True,
@@ -237,7 +237,7 @@ def engine_layer2(lines, level2protocols, ifaceCfg):
         "cvss": (cvssMetrics)}
 
     if level2protocols.stp_root['must_report'] == True:
-        items = search_xml('stp_root')
+        items = search_xml('stproot')
         cvssMetrics = str(cvss_score(items[5]))
         level2protocols.stp_root = {
         "must_report": True,
