@@ -23,7 +23,7 @@ The simplest method is to use the run_routerdefense script.
 $ more run_routerdefense
 #! /bin/sh
 DIR=$(dirname $0)
-PYTHONPATH=$DIR exec python -B main.py -c show_run.txt -t routerdefense.conf
+PYTHONPATH=$DIR exec python -B -m routerdefense.__init__ -c show_run.txt -t routerdefense.conf
 }}}
 
 _show_run.txt_ is the Cisco IOS device configuration file.<br />
