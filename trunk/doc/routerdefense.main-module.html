@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>routerdefense.main</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="routerdefense-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://code.google.com/p/routerdefense/">routerdefense</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="routerdefense-module.html">Package&nbsp;routerdefense</a> ::
+        Module&nbsp;main
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="routerdefense.main-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module main</h1><p class="nomargin-top"><span class="codelink"><a href="routerdefense.main-pysrc.html">source&nbsp;code</a></span></p>
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        $Id$
+      </p>
+</div><!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="parser"></a><span class="summary-name">parser</span> = <code title="OptionParser()">OptionParser()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="config"></a><span class="summary-name">config</span> = <code title="ConfigParser.ConfigParser()">ConfigParser.ConfigParser()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="IP4outbound"></a><span class="summary-name">IP4outbound</span> = <code title="config.get('engine', 'IP4outbound')">config.get('engine', 'IP4outbound')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="IP4inbound"></a><span class="summary-name">IP4inbound</span> = <code title="config.get('engine', 'IP4inbound')">config.get('engine', 'IP4inbound')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="netManagement"></a><span class="summary-name">netManagement</span> = <code title="IP4outbound.split(',')">IP4outbound.split(',')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="netStations"></a><span class="summary-name">netStations</span> = <code title="IP4inbound.split(',')">IP4inbound.split(',')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="lines"></a><span class="summary-name">lines</span> = <code title="read_cfg(options.configurationFile)">read_cfg(options.configurationFile)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MgmtPlane"></a><span class="summary-name">MgmtPlane</span> = <code title="metrics()">metrics()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CtrlPlane"></a><span class="summary-name">CtrlPlane</span> = <code title="CPmetrics()">CPmetrics()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DataPlane"></a><span class="summary-name">DataPlane</span> = <code title="DPmetrics()">DPmetrics()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="interfaces"></a><span class="summary-name">interfaces</span> = <code title="IFSmetrics()">IFSmetrics()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="AclsV4"></a><span class="summary-name">AclsV4</span> = <code title="ACLV4metrics()">ACLV4metrics()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="AclsV6"></a><span class="summary-name">AclsV6</span> = <code title="ACLV6metrics()">ACLV6metrics()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ifaceCfg"></a><span class="summary-name">ifaceCfg</span> = <code title="populate_ifaces(lines, interfaces)">populate_ifaces(lines, interfaces)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="aclIPv4"></a><span class="summary-name">aclIPv4</span> = <code title="populate_acl_v4(lines, AclsV4)">populate_acl_v4(lines, AclsV4)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="aclIPv6"></a><span class="summary-name">aclIPv6</span> = <code title="populate_acl_v6(lines, AclsV6)">populate_acl_v6(lines, AclsV6)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CdpProtocol"></a><span class="summary-name">CdpProtocol</span> = <code title="MgmtPlane.add('cdp')">MgmtPlane.add('cdp')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LldpProtocol"></a><span class="summary-name">LldpProtocol</span> = <code title="MgmtPlane.add('lldp')">MgmtPlane.add('lldp')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="icmpUnreachable"></a><span class="summary-name">icmpUnreachable</span> = <code title="CtrlPlane.add('icmpunreach')">CtrlPlane.add('icmpunreach')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="proxyArp"></a><span class="summary-name">proxyArp</span> = <code title="CtrlPlane.add('proxyarp')">CtrlPlane.add('proxyarp')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="bannerMotd"></a><span class="summary-name">bannerMotd</span> = <code title="parse_motd(lines)">parse_motd(lines)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="bannerLogin"></a><span class="summary-name">bannerLogin</span> = <code title="parse_login_banner(lines)">parse_login_banner(lines)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="bannerExec"></a><span class="summary-name">bannerExec</span> = <code title="parse_exec_banner(lines)">parse_exec_banner(lines)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="consoleCfg"></a><span class="summary-name">consoleCfg</span> = <code title="parse_console(lines)">parse_console(lines)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="auxCfg"></a><span class="summary-name">auxCfg</span> = <code title="parse_aux(lines)">parse_aux(lines)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="vtyCfg"></a><span class="summary-name">vtyCfg</span> = <code title="parse_vty(lines)">parse_vty(lines)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="mode"></a><span class="summary-name">mode</span> = <code title="'Accounting'">'Accounting'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="icmpRedirects"></a><span class="summary-name">icmpRedirects</span> = <code title="DataPlane.add('icmpredirects')">DataPlane.add('icmpredirects')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="routerdefense.main-module.html#output" class="summary-name">output</a> = <code title="{'stdout': lambda: stdout_report(genericCfg, MgmtPlane.metrics_list, C\
+trlPlane.metrics_list, DataPlane.metrics_list), 'csv': lambda: csvRepo\
+rt(__builtin__.outputFile, MgmtPlane.metrics_list, CtrlPlane.metrics_l\
+ist, DataPlane.metrics_list), 'html': lambda: htmlReport(__builtin__.o\
+utputFile, genericCfg, MgmtPlane.metrics_list, CtrlPlane.metrics_list,\
+ DataPlane.metrics_list), 'pdf': lambda: pdfReport(__builtin__.outputF\
+ile, genericCfg, MgmtPlane.metrics_list, CtrlPlane.metrics_list, DataP\
+lane.metrics_list)} [outputType]()">{'stdout': lambda: stdout_report(genericCfg, MgmtPlan<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="output"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">output</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{'stdout': lambda: stdout_report(genericCfg, MgmtPlane.metrics_list, C<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+trlPlane.metrics_list, DataPlane.metrics_list), 'csv': lambda: csvRepo<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+rt(__builtin__.outputFile, MgmtPlane.metrics_list, CtrlPlane.metrics_l<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ist, DataPlane.metrics_list), 'html': lambda: htmlReport(__builtin__.o<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+utputFile, genericCfg, MgmtPlane.metrics_list, CtrlPlane.metrics_list,<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ DataPlane.metrics_list), 'pdf': lambda: pdfReport(__builtin__.outputF<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ile, genericCfg, MgmtPlane.metrics_list, CtrlPlane.metrics_list, DataP<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+lane.metrics_list)} [outputType]()
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="routerdefense-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://code.google.com/p/routerdefense/">routerdefense</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Jan 21 12:40:09 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
