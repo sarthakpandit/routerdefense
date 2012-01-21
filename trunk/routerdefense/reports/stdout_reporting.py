@@ -5,6 +5,9 @@ __version__ = '$Id$'
 
 from routerdefense.common import *
 from routerdefense.metrics import *
+import inspect
+import __builtin__
+
 
 def add(title, comment):
     strippedLine = line.lstrip().rstrip()
@@ -16,13 +19,13 @@ def stdout_header():
 ______            _             ______      __
 | ___ \          | |            |  _  \    / _|
 | |_/ /___  _   _| |_ ___ _ __  | | | |___| |_ ___ _ __  ___  ___
-|    // _ \| | | | __/ _ \ '__| | | | / _ \  _/ _ \ '_ \/ __|/ _ \
+|    // _ \| | | | __/ _ \ '__| | | | / _ \  _/ _ \ '_ \/ __|/ _ \\
 | |\ \ (_) | |_| | ||  __/ |    | |/ /  __/ ||  __/ | | \__ \  __/
 \_| \_\___/ \__,_|\__\___|_|    |___/ \___|_| \___|_| |_|___/\___|
 
 =[ Cisco IOS security assessment tool
 =[ http://code.google.com/p/routerdefense
-=[ version 2011.9
+=[ version 2012.1
 
 """
     return header;

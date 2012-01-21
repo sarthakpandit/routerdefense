@@ -112,7 +112,7 @@ def engine_console(consoleCfg,con0,lines):
 
     if con0.exec_timeout['cmdInCfg'] is not None:
         Checkexec_timeout(con0.exec_timeout)
-        items = search_xml('consoleexec_timeout')
+        items = search_xml('consoleExecTimeout')
         if Checkexec_timeout(con0.exec_timeout['cmdInCfg']) == False:
             cvssMetrics = str(cvss_score(items[5]))
             con0.exec_timeout = {
@@ -1482,7 +1482,7 @@ def engine_password_management(lines, pwdManagement):
     elif pwdManagement.retry_lockout['usernames'] is None:
         pwdManagement.retry_lockout['must_report'] = False
     else:
-        items = search_xml('retry_lockout')
+        items = search_xml('retryLockout')
         if __builtin__.iosVersion >= 12.314:
             cvssMetrics = str(cvss_score(items[5]))
             pwdManagement.retry_lockout = {

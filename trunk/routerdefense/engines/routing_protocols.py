@@ -59,7 +59,7 @@ def engine_bgp(lines, bgp, aclIPv4):
         bgp.maxpath_limit['must_report'] = True
 
     if bgp.ttl_security['must_report'] == True:
-        items = search_xml('bgpttl_security')
+        items = search_xml('bgpTTLsecurity')
         cvssMetrics = str(cvss_score(items[5]))
         bgp.ttl_security = {
         "must_report": True,
@@ -70,7 +70,7 @@ def engine_bgp(lines, bgp, aclIPv4):
         "cvss": (cvssMetrics)}
 
     if bgp.session_password['must_report'] == True:
-        items = search_xml('bgpsession_password')
+        items = search_xml('bgpSessionPassword')
         cvssMetrics = str(cvss_score(items[5]))
         bgp.session_password = {
         "must_report": True,
@@ -81,7 +81,7 @@ def engine_bgp(lines, bgp, aclIPv4):
         "cvss": (cvssMetrics)}
 
     if bgp.max_prefixes['must_report'] == True:
-        items = search_xml('bgpmax_prefixes')
+        items = search_xml('bgpMaxPrefixes')
         cvssMetrics = str(cvss_score(items[5]))
         bgp.max_prefixes = {
         "must_report": True,
@@ -92,7 +92,7 @@ def engine_bgp(lines, bgp, aclIPv4):
         "cvss": (cvssMetrics)}
 
     if bgp.prefix_list['must_report'] == True:
-        items = search_xml('bgpprefix_list')
+        items = search_xml('bgpPrefixList')
         cvssMetrics = str(cvss_score(items[5]))
         bgp.prefix_list = {
         "must_report": True,
@@ -103,7 +103,7 @@ def engine_bgp(lines, bgp, aclIPv4):
         "cvss": (cvssMetrics)}
 
     if bgp.aspath_list['must_report'] == True:
-        items = search_xml('bgpaspath_list')
+        items = search_xml('bgpaspathList')
         cvssMetrics = str(cvss_score(items[5]))
         bgp.aspath_list = {
         "must_report": True,
