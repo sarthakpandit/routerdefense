@@ -39,10 +39,8 @@ def engine_multicast(lines, multicast):
             "threatInfo": (items[2]),
             "howtofix": (items[3]),
             "cvss": (cvssMetrics)}
+            toBeReturned = multicast.msdp['definition'] + '\n' + multicast.msdp['threatInfo'] + '\n\n' + multicast.msdp['howtofix'] + '\n'
 
     else:
         toBeReturned = 'Multicast MSDP is not configured.'
-    if multicast.msdp['must_report'] == True:
-        toBeReturned = multicast.msdp['definition'] + '\n' + multicast.msdp['threatInfo'] + '\n\n' + multicast.msdp['howtofix'] + '\n'
-
     return toBeReturned

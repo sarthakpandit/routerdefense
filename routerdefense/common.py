@@ -21,7 +21,7 @@ def read_cfg(File):
         for line in open(File, 'r'):
             lines.append(line.rstrip())
     except IOError:
-        print "The configuration file does not exists."
+        print "The IOS configuration file does not exists. Please fix run_routerdefense."
         exit(1)
     return lines
 
@@ -334,7 +334,8 @@ def stdout_category_banner(categoryname):
     catname = ''
     if categoryname == 'ManagementPlane':
         catname = 'Management plane'
-        catdef = """The management plane consists of functions \
+        catdef = """
+The management plane consists of functions \
 that achieve the management goals of the network. \
 This includes interactive management sessions using SSH, \
 as well as statistics-gathering with SNMP or NetFlow. \
@@ -347,7 +348,8 @@ recover or stabilize the network.
 """
     if categoryname == 'ControlPlane':
         catname = 'Control plane'
-        catdef = """Control plane functions consist of the protocols \
+        catdef = """
+Control plane functions consist of the protocols \
 and processes that communicate between network devices to move data \
 from source to destination. This includes routing protocols such as \
 the Border Gateway Protocol, as well as protocols like ICMP and \
@@ -356,7 +358,8 @@ the Resource Reservation Protocol (RSVP).
 """
     if categoryname == 'DataPlane':
         catname = 'Data plane'
-        catdef = """Although the data plane is responsible for \
+        catdef = """
+Although the data plane is responsible for \
 moving data from source to destination, within the context of \
 security, the data plane is the least important of the three planes. \
 It is for this reason that when securing a network device it is \
