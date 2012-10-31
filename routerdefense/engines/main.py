@@ -1404,7 +1404,7 @@ def engine_password_management(lines, pwdManagement):
         # feature already configured
         pwdManagement.enable_secret['must_report'] = False
     else:
-        items = search_xml('enable_secret')
+        items = search_xml('enableSecret')
         cvssMetrics = str(cvss_score(items[5]))
         pwdManagement.enable_secret = {
         "must_report": True,
@@ -1440,7 +1440,7 @@ def engine_password_management(lines, pwdManagement):
         # feature already configured or not used
         pwdManagement.username_secret['must_report'] = False
     else:
-        items = search_xml('username_secret')
+        items = search_xml('usernameSecret')
         if __builtin__.iosVersion >= 12.28:
             cvssMetrics = str(cvss_score(items[5]))
             pwdManagement.username_secret = {
@@ -1536,7 +1536,7 @@ def engine_tacacs(lines, tacacs, mode):
             pass
 
         if tacacs.aaa_new_model['cmdInCfg'] is None:
-            items = search_xml('aaa_new_model')
+            items = search_xml('aaaNewModel')
             cvssMetrics = str(cvss_score(items[5]))
             tacacs.aaa_new_model = {
             "must_report": True,
@@ -2240,24 +2240,7 @@ def engine_syslog(lines, syslog):
     else:
         size = syslog.logging_buffered['cmdInCfg'].split(' ')[2]
         level = syslog.logging_buffered['cmdInCfg'].split(' ')[3]
-        if level.isdigit() == False:
-            if level.strip().lower() == "emergencies":
-                level = 0
-            if level.strip().lower() == "alerts":
-                level = 1
-            if level.strip().lower() == "critical":
-                level = 2
-            if level.strip().lower() == "errors":
-                level = 3
-            if level.strip().lower() == "warnings":
-                level = 4
-            if level.strip().lower() == "notification":
-                level = 5
-            if level.strip().lower() == "informational":
-                level = 6
-            if level.strip().lower() == "debugging":
-                level = 7
-        if ( (int(size) >= 16000) and (int(level) == 6) ):
+        if ( (int(size) >= 16000) and (int(level) == 6 or (level == "informational")) ): 
             syslog.logging_buffered['must_report'] = False
         else:
             items = search_xml('syslogBuffered')
@@ -2314,7 +2297,7 @@ def engine_syslog(lines, syslog):
         if syslog.server_arp['cmdInCfg'] is None:
             # feature not configured
             if __builtin__.iosVersion >= 12.3:
-                items = search_xml('syslogserver_arp')
+                items = search_xml('syslogServerArp')
                 cvssMetrics = str(cvss_score(items[5]))
                 syslog.server_arp = {
                 "must_report": True,
@@ -2325,7 +2308,7 @@ def engine_syslog(lines, syslog):
                 "cvss": (cvssMetrics)}
             else:
                 # upgrade to >= 12.3 to get the feature
-                items = search_xml('syslogserver_arp')
+                items = search_xml('syslogServerArp')
                 cvssMetrics = str(cvss_score(items[5]))
                 syslog.server_arp = {
                 "must_report": True,
@@ -2957,7 +2940,7 @@ def engine_ipsec(lines, ipsec):
         ipsec.cac_rsc['must_report'] = True
 
     if ipsec.cac_ike['must_report'] == True:
-        items = search_xml('IPSECcac_ike')
+        items = search_xml('IPSECcacIKE')
         cvssMetrics = str(cvss_score(items[5]))
         ipsec.cac_ike = {
         "must_report": True,
@@ -2968,7 +2951,7 @@ def engine_ipsec(lines, ipsec):
         "cvss": (cvssMetrics)}
 
     if ipsec.cac_rsc['must_report'] == True:
-        items = search_xml('IPSECcac_rsc')
+        items = search_xml('IPSECcacRSC')
         cvssMetrics = str(cvss_score(items[5]))
         ipsec.cac_rsc = {
         "must_report": True,
