@@ -29,7 +29,7 @@ PYTHONPATH=$DIR exec python -B -m routerdefense.__init__ -c show_run.txt -t rout
 _show_run.txt_ is the Cisco IOS device configuration file.<br />
 [routerdefenseconf routerdefense.conf] is a configuration file to tune the routerdefense tool.
 
-$ *./run_routerdefense*
+$ *./run_routerdefense -c show_run.txt -t routerdefense.conf*
 
 = Specific security checks =
 
@@ -194,4 +194,4 @@ $ *python -B onlyCONSOLE.sh show_run.txt*
 
 = Routerdefense code internals =
 
-Please refers to the doc/ directory.
+See doc/ directory.
