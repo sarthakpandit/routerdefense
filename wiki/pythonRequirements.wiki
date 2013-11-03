@@ -3,13 +3,12 @@
 
 = Python Version =
 
-Python 2.7 is great.
+Python 2.7.x.
 
 = Modules requirements =
 
- * optparse
+ * argparse
  * inspect
- * configparser
  * xml
  * csv
  * reportlab
